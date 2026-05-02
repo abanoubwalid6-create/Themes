@@ -7,85 +7,92 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --bg-color: #f1f5f9; --card-bg: #ffffff; --text-main: #0f172a; 
-            --text-muted: #475569; --xiaomi-orange: #ff6700; --telegram-blue: #0088cc; 
-            --whatsapp-green: #25d366; --header-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%); 
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); 
+            --bg-color: #f1f5f9; --card-bg: rgba(255, 255, 255, 0.9); 
+            --text-main: #0f172a; --text-muted: #475569; --xiaomi-orange: #ff6700; 
+            --telegram-blue: #0088cc; --whatsapp-green: #25d366; 
+            --header-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%); 
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --hyper-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         [data-theme="dark"] { 
-            --bg-color: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; 
-            --text-muted: #cbd5e1; --header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
+            --bg-color: #0f172a; --card-bg: rgba(30, 41, 59, 0.85); 
+            --text-main: #f8fafc; --text-muted: #cbd5e1; 
+            --header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
             --shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s var(--hyper-ease); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.4s, color 0.4s, transform 0.4s var(--hyper-ease); }
         body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; min-height: 100vh; overflow-x: hidden; }
         .container { max-width: 900px; margin: 0 auto; }
 
-        /* --- Animations & Effects --- */
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- Animations & Blur --- */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
-        
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s var(--hyper-ease); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s var(--hyper-ease); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Header & Top Bar */
-        .top-bar { position: sticky; top: 10px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; z-index: 1000; margin-bottom: 20px; animation: fadeInUp 0.8s var(--hyper-ease); }
-        .lang-switch, #theme-toggle { background: var(--card-bg); padding: 5px 15px; border-radius: 50px; border: 1px solid var(--text-muted); box-shadow: var(--shadow); cursor: pointer; }
-        .lang-btn { border: none; background: none; color: var(--text-main); cursor: pointer; padding: 5px 10px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; }
-        .lang-btn.active { background: var(--xiaomi-orange); color: white; }
-
-        header { text-align: center; padding: 50px 20px; margin-bottom: 30px; background: var(--header-bg); border-radius: 20px; border-bottom: 4px solid var(--xiaomi-orange); box-shadow: var(--shadow); animation: scaleIn 0.8s var(--hyper-ease); }
-        header h1 { font-size: 2.2rem; font-weight: 900; color: var(--xiaomi-orange); margin-bottom: 10px; }
+        /* Navbar with Blur */
+        .top-bar { 
+            position: sticky; top: 10px; display: flex; flex-wrap: wrap; justify-content: space-between; 
+            gap: 10px; z-index: 1000; margin-bottom: 20px; padding: 10px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            background: rgba(255,255,255,0.1); border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);
+        }
         
-        /* Grid & Cards */
+        .lang-switch { display: flex; gap: 5px; padding: 5px; border-radius: 50px; }
+        .lang-btn { border: none; background: none; color: var(--text-main); cursor: pointer; padding: 5px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; }
+        .lang-btn.active { background: var(--xiaomi-orange); color: white; box-shadow: 0 4px 15px rgba(255, 103, 0, 0.4); }
+        
+        #theme-toggle { background: var(--card-bg); border: 1px solid var(--text-muted); color: var(--text-main); padding: 8px 18px; border-radius: 50px; cursor: pointer; font-weight: 700; backdrop-filter: blur(5px); }
+
+        header { text-align: center; padding: 50px 20px; margin-bottom: 30px; background: var(--header-bg); border-radius: 30px; border-bottom: 4px solid var(--xiaomi-orange); box-shadow: var(--shadow); animation: scaleIn 0.8s var(--hyper-ease); }
+        header h1 { font-size: 2.5rem; font-weight: 900; color: var(--xiaomi-orange); text-shadow: 0 10px 20px rgba(255,103,0,0.2); }
+        
         .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .card { background-color: var(--card-bg); padding: 25px; border-radius: 15px; text-decoration: none; color: var(--text-main); position: relative; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
-        .card::before { content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background-color: var(--telegram-blue); }
+        
+        .card { 
+            background-color: var(--card-bg); padding: 30px; border-radius: 20px; text-decoration: none; 
+            color: var(--text-main); position: relative; overflow: hidden; box-shadow: var(--shadow); 
+            display: flex; flex-direction: column; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05);
+        }
+        .card::before { content: ''; position: absolute; top: 0; right: 0; width: 5px; height: 100%; background-color: var(--telegram-blue); }
         .card.orange::before { background-color: var(--xiaomi-orange); }
         .card.whatsapp::before { background-color: var(--whatsapp-green); }
         .card.coming-soon::before { background-color: #64748b; }
-
-        /* Shine Hover Effect */
-        .card::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); transition: 0.5s; }
-        .card:hover::after { left: 100%; }
-        .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-        .card:active { transform: scale(0.95); }
         
-        .card-icon { font-size: 2.5rem; margin-bottom: 15px; display: inline-block; }
-        .card:hover .card-icon { animation: float 2s infinite ease-in-out; }
-        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
-        .card-desc { font-size: 0.95rem; color: var(--text-muted); flex-grow: 1; }
-        .card-btn { margin-top: 20px; padding: 12px; text-align: center; background-color: rgba(0,0,0,0.05); border-radius: 10px; font-weight: 700; transition: 0.3s; }
-        .card:hover .card-btn { background-color: var(--xiaomi-orange); color: white; }
+        .card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .card-icon { font-size: 2.8rem; margin-bottom: 15px; display: inline-block; transition: 0.3s; }
+        .card:hover .card-icon { transform: rotate(10deg); animation: float 2s infinite; }
+        
+        .card-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 10px; }
+        .card-btn { margin-top: 20px; padding: 12px; text-align: center; background: rgba(255,103,0,0.1); color: var(--xiaomi-orange); border-radius: 12px; font-weight: 700; }
+        .card:hover .card-btn { background: var(--xiaomi-orange); color: white; }
 
         /* Codes Area */
         #codes-area { display: none; margin-top: 20px; }
-        .code-cat { background: var(--card-bg); padding: 20px; border-radius: 20px; margin-bottom: 20px; border-right: 6px solid var(--xiaomi-orange); box-shadow: var(--shadow); }
-        .code-cat h4 { color: var(--xiaomi-orange); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        .code-item { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed var(--text-muted); }
-        .code-line { background: #000; color: #25d366; padding: 12px; border-radius: 12px; font-family: monospace; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; }
-        .copy-s { background: var(--xiaomi-orange); color: #fff; border: none; padding: 6px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .code-cat { background: var(--card-bg); padding: 25px; border-radius: 25px; margin-bottom: 25px; border-right: 6px solid var(--xiaomi-orange); backdrop-filter: blur(10px); }
+        .code-line { background: #000; color: #25d366; padding: 15px; border-radius: 12px; font-family: monospace; position: relative; display: flex; justify-content: space-between; align-items: center; }
 
-        /* Modal Popup */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); }
-        .modal-content { background: var(--card-bg); margin: 12% auto; padding: 30px; border-radius: 25px; width: 90%; max-width: 480px; text-align: center; border: 2px solid var(--xiaomi-orange); animation: scaleIn 0.4s var(--hyper-ease); }
-        .modal-cancel-box { background: #000; color: #ff4d4d; padding: 15px; border-radius: 12px; margin: 15px 0; font-family: monospace; font-size: 0.9rem; word-break: break-all; }
+        /* Modal with Heavy Blur */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); }
+        .modal-content { background-color: var(--card-bg); margin: 12% auto; padding: 35px; border-radius: 30px; width: 90%; max-width: 500px; text-align: center; border: 2px solid var(--xiaomi-orange); animation: scaleIn 0.4s var(--hyper-ease); }
 
-        footer { text-align: center; padding: 50px 20px; margin-top: 40px; border-top: 1px solid rgba(148, 163, 184, 0.2); }
-        .dev-signature { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--xiaomi-orange); margin-top: 10px; }
+        footer { text-align: center; padding: 50px 20px; margin-top: 30px; border-top: 1px solid rgba(148, 163, 184, 0.2); }
+        .dev-signature { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--xiaomi-orange); }
     </style>
 </head>
 <body data-theme="dark">
     <div class="container">
         <div class="top-bar">
-            <button id="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀️</span> <span id="t-mode">الوضع الفاتح</span></button>
+            <button id="theme-toggle"><span id="theme-icon">☀️</span> <span id="t-mode">الوضع الفاتح</span></button>
             <div class="lang-switch">
                 <button class="lang-btn active" onclick="changeLang('ar')">AR</button>
                 <button class="lang-btn" onclick="changeLang('en')">EN</button>
                 <button class="lang-btn" onclick="changeLang('id')">ID</button>
+                <button class="lang-btn" onclick="changeLang('fr')">FR</button>
+                <button class="lang-btn" onclick="changeLang('es')">ES</button>
             </div>
         </div>
 
@@ -138,83 +145,65 @@
             </div>
         </div>
 
-        <div id="codes-area" class="reveal">
+        <div id="codes-area">
             <h2 style="text-align:center; margin-bottom:20px;" id="t-lib-t">🛠️ Xiaomi Fans Hub</h2>
-            
-            <div class="code-cat">
+            <div class="code-cat reveal">
                 <h4 id="t-cat-deb">🗑️ مسح تطبيقات شاومي (Bloatware)</h4>
                 <div class="code-item">
-                    <p>مسح تطبيق موسيقى شاومي:</p>
-                    <div class="code-line"><span id="d1">pm uninstall -k --user 0 com.miui.player</span><button class="copy-s" onclick="cp('d1', 'No cancel')">نسخ</button></div>
-                </div>
-                <div class="code-item">
-                    <p>مسح تطبيق مشغل الفيديو:</p>
-                    <div class="code-line"><span id="d2">pm uninstall -k --user 0 com.miui.videoplayer</span><button class="copy-s" onclick="cp('d2', 'No cancel')">نسخ</button></div>
-                </div>
-                <div class="code-item">
-                    <p>مسح تطبيق المتصفح:</p>
-                    <div class="code-line"><span id="d3">pm uninstall -k --user 0 com.mi.globalbrowser</span><button class="copy-s" onclick="cp('d3', 'No cancel')">نسخ</button></div>
+                    <p id="t-deb1">مسح تطبيق موسيقى شاومي:</p>
+                    <div class="code-line"><span id="d1">pm uninstall -k --user 0 com.miui.player</span><button class="copy-s" onclick="cp('d1', 'No cancel code needed')">نسخ</button></div>
                 </div>
             </div>
 
-            <div class="code-cat">
+            <div class="code-cat reveal">
                 <h4 id="t-cat-perf">⚡ تحسين الأداء (بدون روت)</h4>
                 <div class="code-item">
-                    <p>منع خنق المعالج (Throttling):</p>
+                    <p id="t-perf1">منع خنق المعالج (Throttling):</p>
                     <div class="code-line"><span id="p1">settings put global power_manager_constants "no_cached_processes_limit=true"</span><button class="copy-s" onclick="cp('p1', 'settings delete global power_manager_constants')">نسخ</button></div>
-                </div>
-                <div class="code-item">
-                    <p>تسريع فتح التطبيقات (FSTRIM):</p>
-                    <div class="code-line"><span id="p2">settings put global fstrim_mandatory_interval 3600</span><button class="copy-s" onclick="cp('p2', 'settings put global fstrim_mandatory_interval 172800')">نسخ</button></div>
-                </div>
-                <div class="code-item">
-                    <p>إجبار GPU على معالجة الواجهة:</p>
-                    <div class="code-line"><span id="p3">settings put global hardware_acceleration_enabled 1</span><button class="copy-s" onclick="cp('p3', 'settings put global hardware_acceleration_enabled 0')">نسخ</button></div>
                 </div>
             </div>
 
-            <div class="code-cat">
+            <div class="code-cat reveal">
                 <h4 id="t-cat-screen">🎮 الحساسية والشاشة</h4>
                 <div class="code-item">
-                    <p>حساسية اللمس القصوى (Free Fire Mode):</p>
+                    <p id="t-scr1">حساسية اللمس (Free Fire Speed):</p>
                     <div class="code-line"><span id="s1">settings put system pointer_speed 7</span><button class="copy-s" onclick="cp('s1', 'settings put system pointer_speed 0')">نسخ</button></div>
                 </div>
                 <div class="code-item">
-                    <p>تثبيت 120Hz إجباري:</p>
+                    <p id="t-scr2">تثبيت 120Hz إجباري:</p>
                     <div class="code-line"><span id="s2">settings put system peak_refresh_rate 120.0</span><button class="copy-s" onclick="cp('s2', 'settings delete system peak_refresh_rate')">نسخ</button></div>
                 </div>
             </div>
-
-            <button onclick="openCodes()" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:12px; cursor:pointer; margin-bottom:40px;">إغلاق 🔼</button>
+            <button onclick="openCodes()" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:15px; cursor:pointer; margin-bottom:40px;" id="t-close">إغلاق 🔼</button>
         </div>
 
         <div id="cancelModal" class="modal">
             <div class="modal-content">
-                <div class="modal-h" style="color:var(--xiaomi-orange); font-weight:900; font-size:1.5rem; margin-bottom:10px;">تم النسخ بنجاح! ✅</div>
-                <p style="color:var(--text-muted);">كود الإلغاء للرجوع للوضع الأصلي:</p>
+                <div class="modal-h" id="m-title">تم النسخ بنجاح! ✅</div>
+                <p id="m-body" style="color:var(--text-muted); margin-bottom:10px;">كود الإلغاء للرجوع للوضع الأصلي:</p>
                 <div class="modal-cancel-box" id="cancelCodeDisplay">---</div>
-                <button class="copy-s" style="width:100%; padding:15px; font-size:1rem;" onclick="copyCancel()">نسخ كود الإلغاء</button>
-                <button onclick="closeModal()" style="margin-top:15px; background:none; border:none; color:var(--text-muted); cursor:pointer; font-weight:bold;">إغلاق</button>
+                <button class="copy-s" style="width:100%; margin: 10px 0; padding:15px; background:var(--xiaomi-orange); color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer;" onclick="copyCancel()">نسخ كود الإلغاء</button>
+                <button class="close-modal" onclick="closeModal()">إغلاق النافذة</button>
             </div>
         </div>
 
         <footer>
             <p id="t-copy">جميع الحقوق محفوظة &copy; 2026</p>
-            <div class="dev-signature">Developed by <span style="color:var(--xiaomi-orange)">ElPop</span></div>
+            <div class="dev-signature">Developed by <span class="dev-name">ElPop</span></div>
         </footer>
     </div>
 
     <script>
-        // 1. Animation Observer
+        // --- Intersection Observer for Scroll Animations ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 2. Translations
+        // --- Same Logic as Original ---
         const translations = {
-            ar: { h1: "🚀 انضم إلى عالم شاومي الاحترافي", mode: "الوضع الفاتح", c1t: "جروب الدردشة", c1d: "المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا!", c1b: "انضم للدردشة", c2t: "القناة الرئيسية", c2d: "مستودع الأسرار! أخبار HyperOS وشروحات حصرية.", c2b: "اكتشف الأسرار", c3t: "قناة الخلفيات", c3d: "خلفيات بدقة Ultra HD وتصاميم سينمائية خرافية.", c3b: "تصفح الخلفيات", c4t: "قناة الواتس", c4d: "لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا!", c4b: "تابعنا على واتساب", c5t: "أكواد تسريع الأداء", c5d: "أقوى مكتبة أكواد لتسريع شاومي وحذف التطبيقات.", c5b: "فتح مكتبة الأكواد", c6t: "ثيمات حصرية", c6d: "الأيام اللي جاية هنزل ثيمات انتظروا..", c6b: "قريباً جداً", libt: "🛠️ Xiaomi Fans | محبي شاومي", cat_deb: "🗑️ مسح تطبيقات شاومي", cat_perf: "⚡ تحسين الأداء (بدون روت)", cat_screen: "🎮 الحساسية والشاشة", copy: "جميع الحقوق محفوظة © 2026" },
-            en: { h1: "🚀 Join Professional Xiaomi World", mode: "Light Mode", c1t: "Chat Group", c1d: "The place where we gather monsters to help each other!", c1b: "Join Chat", c2t: "Main Channel", c2d: "Secrets Warehouse! HyperOS news and exclusive tutorials.", c2b: "Discover", c3t: "Wallpapers", c3d: "Ultra HD wallpapers and cinematic designs.", c3b: "Browse", c4t: "WhatsApp", c4d: "Get news with one touch.. Follow us!", c4b: "Follow", c5t: "Performance Codes", c5d: "The strongest code library for speed and debloating.", c5b: "Open Library", c6t: "Exclusive Themes", c6d: "Themes coming soon, stay tuned!", c6b: "Very Soon", libt: "🛠️ Xiaomi Fans Hub", cat_deb: "🗑️ Debloat Xiaomi", cat_perf: "⚡ Performance (No Root)", cat_screen: "🎮 Screen & Touch", copy: "All rights reserved © 2026" }
+            ar: { h1: "🚀 انضم إلى عالم شاومي الاحترافي", mode: "الوضع الفاتح", c1t: "جروب الدردشة", c1d: "المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا!", c1b: "انضم للدردشة", c2t: "القناة الرئيسية", c2d: "مستودع الأسرار! أخبار HyperOS وشروحات حصرية.", c2b: "اكتشف الأسرار", c3t: "قناة الخلفيات", c3d: "خلفيات بدقة Ultra HD وتصاميم سينمائية خرافية.", c3b: "تصفح الخلفيات", c4t: "قناة الواتس", c4d: "لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا!", c4b: "تابعنا على واتساب", c5t: "أكواد تسريع الأداء", c5d: "أقوى مكتبة أكواد لتسريع شاومي وحذف التطبيقات.", c5b: "فتح مكتبة الأكواد", c6t: "ثيمات حصرية", c6d: "الأيام اللي جاية هنزل ثيمات انتظروا..", c6b: "قريباً جداً", libt: "🛠️ Xiaomi Fans | محبي شاومي", close: "إغلاق 🔼", copy: "جميع الحقوق محفوظة © 2026", cat_deb: "🗑️ مسح تطبيقات شاومي", cat_perf: "⚡ تحسين الأداء (بدون روت)", cat_screen: "🎮 الحساسية والشاشة" },
+            en: { h1: "🚀 Join Professional Xiaomi World", mode: "Light Mode", c1t: "Chat Group", c1d: "The place where we gather monsters to help each other!", c1b: "Join Chat", c2t: "Main Channel", c2d: "Secrets Warehouse! HyperOS news and tutorials.", c2b: "Discover", c3t: "Wallpapers", c3d: "Ultra HD wallpapers and cinematic designs.", c3b: "Browse", c4t: "WhatsApp", c4d: "Be the first to get news with one touch!", c4b: "Follow", c5t: "Performance Codes", c5d: "The strongest code library for debloating and speed.", c5b: "Open Library", c6t: "Themes", c6d: "Coming soon, stay tuned!", c6b: "Very Soon", libt: "🛠️ Xiaomi Fans Hub", close: "Close 🔼", copy: "All rights reserved © 2026", cat_deb: "🗑️ Debloat Xiaomi", cat_perf: "⚡ Performance (No Root)", cat_screen: "🎮 Sensitivity & Screen" }
         };
 
         function changeLang(lang) {
@@ -229,48 +218,40 @@
             document.getElementById('t-c4-t').innerText = t.c4t; document.getElementById('t-c4-d').innerText = t.c4d; document.getElementById('t-c4-b').innerText = t.c4b;
             document.getElementById('t-c5-t').innerText = t.c5t; document.getElementById('t-c5-d').innerText = t.c5d; document.getElementById('t-c5-b').innerText = t.c5b;
             document.getElementById('t-c6-t').innerText = t.c6t; document.getElementById('t-c6-d').innerText = t.c6d; document.getElementById('t-c6-b').innerText = t.c6b;
-            document.getElementById('t-lib-t').innerText = t.libt; document.getElementById('t-cat-deb').innerText = t.cat_deb;
-            document.getElementById('t-cat-perf').innerText = t.cat_perf; document.getElementById('t-cat-screen').innerText = t.cat_screen;
-            document.getElementById('t-copy').innerText = t.copy;
+            document.getElementById('t-lib-t').innerText = t.libt; document.getElementById('t-close').innerText = t.close; document.getElementById('t-copy').innerText = t.copy;
+            document.getElementById('t-cat-deb').innerText = t.cat_deb; document.getElementById('t-cat-perf').innerText = t.cat_perf; document.getElementById('t-cat-screen').innerText = t.cat_screen;
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
         }
 
-        // 3. Theme Toggle
-        function toggleTheme() {
-            const body = document.body;
-            const isDark = body.getAttribute('data-theme') === 'dark';
-            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        const toggleBtn = document.getElementById('theme-toggle');
+        toggleBtn.addEventListener('click', () => {
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
             document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';
             document.getElementById('t-mode').innerText = isDark ? 'الوضع الليلي' : 'الوضع الفاتح';
-        }
+        });
 
-        // 4. Codes Logic
         function openCodes() {
             const area = document.getElementById('codes-area');
-            if (area.style.display === 'block') {
-                area.style.opacity = '0';
-                setTimeout(() => area.style.display = 'none', 400);
-            } else {
-                area.style.display = 'block';
-                setTimeout(() => area.style.opacity = '1', 10);
-                area.scrollIntoView({ behavior: 'smooth' });
-            }
+            const isVisible = area.style.display === 'block';
+            area.style.display = isVisible ? 'none' : 'block';
+            if(!isVisible) area.scrollIntoView({behavior: 'smooth'});
         }
 
-        let currentCancel = "";
-        function cp(id, cancel) {
+        let currentCancelCode = "";
+        function cp(id, cancelCode) {
             navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => {
-                if (cancel !== 'No cancel') {
-                    currentCancel = cancel;
-                    document.getElementById('cancelCodeDisplay').innerText = cancel;
+                if(cancelCode !== "No cancel code needed") {
+                    currentCancelCode = cancelCode;
+                    document.getElementById('cancelCodeDisplay').innerText = cancelCode;
                     document.getElementById('cancelModal').style.display = 'block';
                 } else { alert("تم النسخ! ✅"); }
             });
         }
+        function copyCancel() { navigator.clipboard.writeText(currentCancelCode).then(() => alert("تم نسخ كود الإلغاء! ↩️")); }
         function closeModal() { document.getElementById('cancelModal').style.display = 'none'; }
-        function copyCancel() { navigator.clipboard.writeText(currentCancel).then(() => alert("تم نسخ الإلغاء! ↩️")); }
-        window.onclick = (e) => { if (e.target == document.getElementById('cancelModal')) closeModal(); }
+        window.onclick = function(event) { if (event.target == document.getElementById('cancelModal')) closeModal(); }
     </script>
 </body>
 </html>
