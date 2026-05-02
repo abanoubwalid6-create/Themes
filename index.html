@@ -23,11 +23,15 @@
     body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; min-height: 100vh; overflow-x: hidden; }  
     .container { max-width: 900px; margin: 0 auto; }  
 
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }  
+    /* --- Animations --- */
+    @keyframes fadeInUp { 
+        from { opacity: 0; transform: translateY(30px); } 
+        to { opacity: 1; transform: translateY(0); } 
+    }  
     @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }  
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s var(--hyper-ease); }  
-    .reveal.active { opacity: 1; transform: translateY(0); }  
+    .reveal { opacity: 1; transform: translateY(0); transition: all 0.7s var(--hyper-ease); }  
 
     .top-bar {   
         position: sticky; top: 10px; display: flex; flex-wrap: wrap; justify-content: space-between;   
@@ -71,16 +75,36 @@
     #themes-area { display: none; margin-top: 20px; animation: fadeInUp 0.5s ease; }  
     .section-title { text-align: center; margin-bottom: 25px; font-size: 1.8rem; color: var(--xiaomi-orange); font-weight: 900; }  
 
+    #dynamic-themes-container { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+        gap: 15px; 
+    }
+
     .theme-item {   
-        background: var(--card-bg); border-radius: 25px; padding: 20px; margin-bottom: 30px;   
-        border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow);  
+        background: var(--card-bg); border-radius: 15px; padding: 15px; 
+        border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow);
+        text-align: center; display: flex; flex-direction: column; justify-content: space-between;
+        opacity: 0; transform: translateY(20px); /* Initial state for animation */
     }  
-    .theme-img { width: 100%; border-radius: 15px; margin-bottom: 15px; }  
-    .theme-name { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; text-align: center; color: var(--xiaomi-orange); }  
+
+    /* تحريك الثيمات عند الفتح */
+    #themes-area[style*="display: block"] .theme-item {
+        animation: fadeInUp 0.5s var(--hyper-ease) forwards;
+    }
+
+    .theme-item:hover {
+        transform: translateY(-5px) scale(1.03);
+        border-color: var(--xiaomi-orange);
+        box-shadow: 0 8px 20px rgba(255, 103, 0, 0.2);
+    }
+
+    .theme-name { font-size: 1rem; font-weight: 900; margin-bottom: 15px; color: var(--text-main); }  
     .download-btn {   
-        display: block; width: fit-content; margin: 0 auto; padding: 12px 30px; background: var(--xiaomi-orange);   
-        color: white; text-decoration: none; border-radius: 50px; font-weight: 700;  
+        display: block; width: 100%; padding: 8px 5px; background: var(--xiaomi-orange);   
+        color: white; text-decoration: none; border-radius: 10px; font-size: 0.85rem; font-weight: 700;  
     }  
+    .download-btn:hover { animation: pulse 0.8s infinite ease-in-out; }
 
     #admin-panel {   
         display: none; background: rgba(255, 103, 0, 0.1); backdrop-filter: blur(10px);   
@@ -141,7 +165,7 @@
             <div class="card orange reveal" onclick="toggleArea('themes-area')">  
                 <div class="card-icon">🎨</div>  
                 <div class="card-title">قسم الثيمات الحصرية</div>  
-                <div class="card-desc">أقوى تشكيلة ثيمات HyperOS تدار من لوحة تحكم جوجل.</div>  
+                <div class="card-desc">أقوى تشكيلة ثيمات HyperOS المختارة بعناية.</div>  
                 <div class="card-btn">تصفح الثيمات</div>  
             </div>  
         </div>  
@@ -149,9 +173,54 @@
         <div id="themes-area">  
             <h2 class="section-title">🖼️ مكتبة الثيمات الحصرية</h2>  
             <div id="dynamic-themes-container">
-                <p style="text-align:center; color:var(--xiaomi-orange);">جارٍ جلب الثيمات من لوحة التحكم...</p>
+                
+                <div class="theme-item" style="animation-delay: 0.1s;">  
+                    <div class="theme-name">Super26 Pro</div>  
+                    <a href="https://www.miuithemer.com/themes/super26-pro-hyperos-theme-for-xiaomi-and-redmi-phones/" target="_blank" class="download-btn">تحميل 🔗</a>  
+                </div>
+
+                <div class="theme-item" style="animation-delay: 0.2s;">  
+                    <div class="theme-name">Blackess Pro</div>  
+                    <a href="https://www.miuithemer.com/themes/blackess-pro-the-most-customizable-ios-theme-for-hyperos-with-dynamic-island/" target="_blank" class="download-btn">تحميل 🔗</a>  
+                </div>
+
+                <div class="theme-item" style="animation-delay: 0.3s;">  
+                    <div class="theme-name">Tattooed boy</div>  
+                    <a href="https://www.mtzfile.pw/detail/82c82b07-c1de-4940-8b42-f384a5067c55?srsltid=AfmBOorEFT9RYLJQDLkjrtpmQLMb9ahPBWuvb_AT-QPv6N0dRLyuyX65" target="_blank" class="download-btn">تحميل 🔗</a>  
+                </div>
+
+                <div class="theme-item" style="animation-delay: 0.4s;">  
+                    <div class="theme-name">Nk0'S Edition ESP</div>  
+                    <a href="https://hyperosthemeshub.com/nk0s-edition-esp-hyperos-theme/" target="_blank" class="download-btn">تحميل 🔗</a>  
+                </div>
+
+                <div class="theme-item" style="animation-delay: 0.5s;">  
+                    <div class="theme-name">HyperMax</div>  
+                    <a href="https://www.miuithemer.com/themes/hypermax-hyperos-theme-for-xiaomi-and-redmi-phones/" target="_blank" class="download-btn">تحميل 🔗</a>  
+                </div>
+
+                <div class="theme-item" style="animation-delay: 0.6s;">  
+                    <div class="theme-name">Po-Blue</div>  
+                    <a href="https://hyperosthemeshub.com/po-blue-hyperos-theme/" target="_blank" class="download-btn">تحميل 🔗</a>  
+                </div>
+
+                <div class="theme-item" style="animation-delay: 0.7s;">  
+                    <div class="theme-name">Fluffy Dark</div>  
+                    <a href="https://www.miuithemer.com/themes/fluffy-dark-hyperos-theme-for-xiaomi-and-redmi-phones/" target="_blank" class="download-btn">تحميل 🔗</a>  
+                </div>
+
+                <div class="theme-item" style="animation-delay: 0.8s;">  
+                    <div class="theme-name">Colorful 15V3</div>  
+                    <a href="https://hyperosthemer.com/colorful-15v3-hyperos-theme-for-xiaomi-and-redmi-phones/" target="_blank" class="download-btn">تحميل 🔗</a>  
+                </div>
+
+                <div class="theme-item" style="animation-delay: 0.9s;">  
+                    <div class="theme-name">Businessman H3</div>  
+                    <a href="https://hyperosthemeshub.com/businessman-h3-hyperos-theme/" target="_blank" class="download-btn">تحميل 🔗</a>  
+                </div>
+
             </div>
-            <button onclick="toggleArea('themes-area')" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:15px; cursor:pointer; margin-top:20px; margin-bottom:40px;">إغلاق قسم الثيمات 🔼</button>  
+            <button onclick="toggleArea('themes-area')" style="width:100%; padding:12px; background:#475569; color:#fff; border:none; border-radius:15px; cursor:pointer; margin-top:20px; margin-bottom:40px;">إغلاق القسم 🔼</button>  
         </div>  
 
         <div id="admin-panel">  
@@ -165,40 +234,6 @@
     </div>  
 
     <script>  
-        // الرابط السحري (output=csv)
-        const sheetURL = 'حط_رابط_الـCSV_هنا_يا_برنس';
-
-        const observer = new IntersectionObserver((entries) => {  
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });  
-        }, { threshold: 0.1 });  
-
-        async function fetchThemes() {
-            try {
-                const response = await fetch(sheetURL);
-                const data = await response.text();
-                const rows = data.split('\n').slice(1);
-                const container = document.getElementById('dynamic-themes-container');
-                container.innerHTML = ''; 
-
-                rows.forEach((row, index) => {
-                    const columns = row.split(',');
-                    if (columns.length >= 3) {
-                        const name = columns[0].trim();
-                        const img = columns[1].trim();
-                        const url = columns[2].trim();
-                        const card = `
-                            <div class="theme-item reveal active">  
-                                <img src="${img}" class="theme-img" onerror="this.src='https://via.placeholder.com/400x250'">  
-                                <div class="theme-name">${index + 1}️⃣ ${name}</div>  
-                                <a href="${url}" target="_blank" class="download-btn">تحميل الثيم الآن</a>  
-                            </div>`;
-                        container.innerHTML += card;
-                    }
-                });
-                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-            } catch (e) { console.error(e); }
-        }
-
         function toggleArea(id) {  
             const area = document.getElementById(id);  
             const isVisible = area.style.display === 'block';  
@@ -236,8 +271,7 @@
                 clicks = 0;  
             }  
         });
-
-        window.onload = fetchThemes;
     </script>
 </body>  
 </html>
+
