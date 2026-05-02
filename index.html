@@ -80,7 +80,14 @@
         .modal-content { background-color: var(--card-bg); margin: 12% auto; padding: 35px; border-radius: 30px; width: 90%; max-width: 500px; text-align: center; border: 2px solid var(--xiaomi-orange); animation: scaleIn 0.4s var(--hyper-ease); }
 
         footer { text-align: center; padding: 50px 20px; margin-top: 30px; border-top: 1px solid rgba(148, 163, 184, 0.2); }
-        .dev-signature { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--xiaomi-orange); }
+        .dev-signature { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--xiaomi-orange); cursor: pointer; user-select: none; }
+
+        /* --- Admin Stats Panel --- */
+        #admin-panel { 
+            display: none; background: rgba(255, 103, 0, 0.1); backdrop-filter: blur(10px); 
+            border: 1px solid var(--xiaomi-orange); padding: 10px 20px; border-radius: 50px; 
+            margin: 20px auto; width: fit-content; font-weight: 900; animation: fadeInUp 0.5s ease;
+        }
     </style>
 </head>
 <body data-theme="dark">
@@ -187,9 +194,14 @@
             </div>
         </div>
 
+        <div id="admin-panel">
+            <span id="t-vis-title">إجمالي الزيارات: </span>
+            <span id="v-count">...</span>
+        </div>
+
         <footer>
             <p id="t-copy">جميع الحقوق محفوظة &copy; 2026</p>
-            <div class="dev-signature">Developed by <span class="dev-name">ElPop</span></div>
+            <div class="dev-signature" id="admin-trigger">Developed by <span class="dev-name">ElPop</span></div>
         </footer>
     </div>
 
@@ -202,8 +214,8 @@
 
         // --- Same Logic as Original ---
         const translations = {
-            ar: { h1: "🚀 انضم إلى عالم شاومي الاحترافي", mode: "الوضع الفاتح", c1t: "جروب الدردشة", c1d: "المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا!", c1b: "انضم للدردشة", c2t: "القناة الرئيسية", c2d: "مستودع الأسرار! أخبار HyperOS وشروحات حصرية.", c2b: "اكتشف الأسرار", c3t: "قناة الخلفيات", c3d: "خلفيات بدقة Ultra HD وتصاميم سينمائية خرافية.", c3b: "تصفح الخلفيات", c4t: "قناة الواتس", c4d: "لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا!", c4b: "تابعنا على واتساب", c5t: "أكواد تسريع الأداء", c5d: "أقوى مكتبة أكواد لتسريع شاومي وحذف التطبيقات.", c5b: "فتح مكتبة الأكواد", c6t: "ثيمات حصرية", c6d: "الأيام اللي جاية هنزل ثيمات انتظروا..", c6b: "قريباً جداً", libt: "🛠️ Xiaomi Fans | محبي شاومي", close: "إغلاق 🔼", copy: "جميع الحقوق محفوظة © 2026", cat_deb: "🗑️ مسح تطبيقات شاومي", cat_perf: "⚡ تحسين الأداء (بدون روت)", cat_screen: "🎮 الحساسية والشاشة" },
-            en: { h1: "🚀 Join Professional Xiaomi World", mode: "Light Mode", c1t: "Chat Group", c1d: "The place where we gather monsters to help each other!", c1b: "Join Chat", c2t: "Main Channel", c2d: "Secrets Warehouse! HyperOS news and tutorials.", c2b: "Discover", c3t: "Wallpapers", c3d: "Ultra HD wallpapers and cinematic designs.", c3b: "Browse", c4t: "WhatsApp", c4d: "Be the first to get news with one touch!", c4b: "Follow", c5t: "Performance Codes", c5d: "The strongest code library for debloating and speed.", c5b: "Open Library", c6t: "Themes", c6d: "Coming soon, stay tuned!", c6b: "Very Soon", libt: "🛠️ Xiaomi Fans Hub", close: "Close 🔼", copy: "All rights reserved © 2026", cat_deb: "🗑️ Debloat Xiaomi", cat_perf: "⚡ Performance (No Root)", cat_screen: "🎮 Sensitivity & Screen" }
+            ar: { h1: "🚀 انضم إلى عالم شاومي الاحترافي", mode: "الوضع الفاتح", c1t: "جروب الدردشة", c1d: "المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا!", c1b: "انضم للدردشة", c2t: "القناة الرئيسية", c2d: "مستودع الأسرار! أخبار HyperOS وشروحات حصرية.", c2b: "اكتشف الأسرار", c3t: "قناة الخلفيات", c3d: "خلفيات بدقة Ultra HD وتصاميم سينمائية خرافية.", c3b: "تصفح الخلفيات", c4t: "قناة الواتس", c4d: "لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا!", c4b: "تابعنا على واتساب", c5t: "أكواد تسريع الأداء", c5d: "أقوى مكتبة أكواد لتسريع شاومي وحذف التطبيقات.", c5b: "فتح مكتبة الأكواد", c6t: "ثيمات حصرية", c6d: "الأيام اللي جاية هنزل ثيمات انتظروا..", c6b: "قريباً جداً", libt: "🛠️ Xiaomi Fans | محبي شاومي", close: "إغلاق 🔼", copy: "جميع الحقوق محفوظة © 2026", cat_deb: "🗑️ مسح تطبيقات شاومي", cat_perf: "⚡ تحسين الأداء (بدون روت)", cat_screen: "🎮 الحساسية والشاشة", vis: "إجمالي الزيارات: " },
+            en: { h1: "🚀 Join Professional Xiaomi World", mode: "Light Mode", c1t: "Chat Group", c1d: "The place where we gather monsters to help each other!", c1b: "Join Chat", c2t: "Main Channel", c2d: "Secrets Warehouse! HyperOS news and tutorials.", c2b: "Discover", c3t: "Wallpapers", c3d: "Ultra HD wallpapers and cinematic designs.", c3b: "Browse", c4t: "WhatsApp", c4d: "Be the first to get news with one touch!", c4b: "Follow", c5t: "Performance Codes", c5d: "The strongest code library for debloating and speed.", c5b: "Open Library", c6t: "Themes", c6d: "Coming soon, stay tuned!", c6b: "Very Soon", libt: "🛠️ Xiaomi Fans Hub", close: "Close 🔼", copy: "All rights reserved © 2026", cat_deb: "🗑️ Debloat Xiaomi", cat_perf: "⚡ Performance (No Root)", cat_screen: "🎮 Sensitivity & Screen", vis: "Total Visits: " }
         };
 
         function changeLang(lang) {
@@ -220,8 +232,9 @@
             document.getElementById('t-c6-t').innerText = t.c6t; document.getElementById('t-c6-d').innerText = t.c6d; document.getElementById('t-c6-b').innerText = t.c6b;
             document.getElementById('t-lib-t').innerText = t.libt; document.getElementById('t-close').innerText = t.close; document.getElementById('t-copy').innerText = t.copy;
             document.getElementById('t-cat-deb').innerText = t.cat_deb; document.getElementById('t-cat-perf').innerText = t.cat_perf; document.getElementById('t-cat-screen').innerText = t.cat_screen;
+            document.getElementById('t-vis-title').innerText = t.vis;
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            if(event) event.target.classList.add('active');
         }
 
         const toggleBtn = document.getElementById('theme-toggle');
@@ -252,6 +265,24 @@
         function copyCancel() { navigator.clipboard.writeText(currentCancelCode).then(() => alert("تم نسخ كود الإلغاء! ↩️")); }
         function closeModal() { document.getElementById('cancelModal').style.display = 'none'; }
         window.onclick = function(event) { if (event.target == document.getElementById('cancelModal')) closeModal(); }
+
+        // --- Visitor Counter Engine ---
+        const siteID = "xiaomi_pop_world_2026";
+        fetch(`https://api.counterapi.dev/v1/${siteID}/hits/up`)
+            .then(res => res.json())
+            .then(data => { document.getElementById('v-count').innerText = data.count; });
+
+        // --- Secret Admin Trigger (Click ElPop 5 times) ---
+        let clicks = 0;
+        document.getElementById('admin-trigger').addEventListener('click', () => {
+            clicks++;
+            if(clicks === 5) {
+                const panel = document.getElementById('admin-panel');
+                panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+                clicks = 0;
+            }
+        });
     </script>
 </body>
-</html>
+    </html>
+    
