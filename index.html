@@ -1,259 +1,280 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عالم شاومي الاحترافي | Xiaomi World</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root { 
-            --bg-color: #f1f5f9; --card-bg: rgba(255, 255, 255, 0.9); 
-            --text-main: #0f172a; --text-muted: #475569; --xiaomi-orange: #ff6700; 
-            --telegram-blue: #0088cc; --whatsapp-green: #25d366; 
-            --header-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%); 
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --hyper-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        [data-theme="dark"] { 
-            --bg-color: #0f172a; --card-bg: rgba(30, 41, 59, 0.85); 
-            --text-main: #f8fafc; --text-muted: #cbd5e1; 
-            --header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
-            --shadow: 0 10px 30px rgba(0,0,0,0.5); 
-        }
+<!DOCTYPE html>  <html lang="ar" dir="rtl">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>عالم شاومي الاحترافي | Xiaomi World</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">  
+    <style>  
+        :root {   
+            --bg-color: #f1f5f9; --card-bg: rgba(255, 255, 255, 0.9);   
+            --text-main: #0f172a; --text-muted: #475569; --xiaomi-orange: #ff6700;   
+            --telegram-blue: #0088cc; --whatsapp-green: #25d366;   
+            --header-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);   
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);  
+            --hyper-ease: cubic-bezier(0.34, 1.56, 0.64, 1);  
+        }  
+        [data-theme="dark"] {   
+            --bg-color: #0f172a; --card-bg: rgba(30, 41, 59, 0.85);   
+            --text-main: #f8fafc; --text-muted: #cbd5e1;   
+            --header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);   
+            --shadow: 0 10px 30px rgba(0,0,0,0.5);   
+        }  
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.4s, color 0.4s, transform 0.4s var(--hyper-ease); }  
+    body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; min-height: 100vh; overflow-x: hidden; }  
+    .container { max-width: 900px; margin: 0 auto; }  
+
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }  
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }  
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }  
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s var(--hyper-ease); }  
+    .reveal.active { opacity: 1; transform: translateY(0); }  
+
+    .top-bar {   
+        position: sticky; top: 10px; display: flex; flex-wrap: wrap; justify-content: space-between;   
+        gap: 10px; z-index: 1000; margin-bottom: 20px; padding: 10px;  
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);  
+        background: rgba(255,255,255,0.1); border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);  
+    }  
+      
+    #theme-toggle { background: var(--card-bg); border: 1px solid var(--text-muted); color: var(--text-main); padding: 8px 18px; border-radius: 50px; cursor: pointer; font-weight: 700; backdrop-filter: blur(5px); }  
+
+    header { text-align: center; padding: 50px 20px; margin-bottom: 30px; background: var(--header-bg); border-radius: 30px; border-bottom: 4px solid var(--xiaomi-orange); box-shadow: var(--shadow); animation: scaleIn 0.8s var(--hyper-ease); }  
+    header h1 { font-size: 2.5rem; font-weight: 900; color: var(--xiaomi-orange); text-shadow: 0 10px 20px rgba(255,103,0,0.2); }  
+      
+    /* --- CSS تأثير البحث الزجاجي --- */
+    .search-container { margin: 0 auto 40px; max-width: 600px; position: relative; animation: fadeInUp 0.8s var(--hyper-ease); }
+    .glass-search {
+        width: 100%;
+        padding: 16px 25px;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        color: var(--text-main);
+        font-size: 1.1rem;
+        font-weight: 700;
+        outline: none;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+    }
+    .glass-search::placeholder { color: var(--text-muted); font-weight: 400; }
+    .glass-search:focus {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: var(--xiaomi-orange);
+        box-shadow: 0 0 20px rgba(255, 103, 0, 0.2);
+        transform: scale(1.02);
+    }
+    [data-theme="light"] .glass-search { background: rgba(0, 0, 0, 0.03); border: 1px solid rgba(0, 0, 0, 0.05); }
+    [data-theme="light"] .glass-search:focus { background: rgba(0, 0, 0, 0.05); }
+    /* ------------------------------ */
+
+    .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }  
+      
+    .card {   
+        background-color: var(--card-bg); padding: 30px; border-radius: 20px; text-decoration: none;   
+        color: var(--text-main); position: relative; overflow: hidden; box-shadow: var(--shadow);   
+        display: flex; flex-direction: column; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05);  
+        cursor: pointer;  
+    }  
+    .card::before { content: ''; position: absolute; top: 0; right: 0; width: 5px; height: 100%; background-color: var(--telegram-blue); }  
+    .card.orange::before { background-color: var(--xiaomi-orange); }  
+    .card.whatsapp::before { background-color: var(--whatsapp-green); }  
+    .card.purple::before { background-color: #a855f7; }  
+      
+    .card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }  
+    .card-icon { font-size: 2.8rem; margin-bottom: 15px; display: inline-block; transition: 0.3s; }  
+      
+    .card-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 10px; }  
+    .card-btn { margin-top: auto; padding: 12px; text-align: center; background: rgba(255,103,0,0.1); color: var(--xiaomi-orange); border-radius: 12px; font-weight: 700; }  
+    .card:hover .card-btn { background: var(--xiaomi-orange); color: white; }  
+
+    /* Area Themes */  
+    #themes-area { display: none; margin-top: 20px; animation: fadeInUp 0.5s ease; }  
+    .section-title { text-align: center; margin-bottom: 25px; font-size: 1.8rem; color: var(--xiaomi-orange); font-weight: 900; }  
+
+    /* Theme Item Style */  
+    .theme-item {   
+        background: var(--card-bg); border-radius: 25px; padding: 20px; margin-bottom: 30px;   
+        border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow); overflow: hidden;  
+    }  
+    .theme-img { width: 100%; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }  
+    .theme-info { text-align: center; }  
+    .theme-name { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; color: var(--xiaomi-orange); }  
+    .download-btn {   
+        display: inline-block; padding: 12px 30px; background: var(--xiaomi-orange);   
+        color: white; text-decoration: none; border-radius: 50px; font-weight: 700;  
+        box-shadow: 0 5px 15px rgba(255, 103, 0, 0.3); transition: 0.3s;  
+    }  
+    .download-btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(255, 103, 0, 0.5); }  
+
+    #admin-panel {   
+        display: none; background: rgba(255, 103, 0, 0.1); backdrop-filter: blur(10px);   
+        border: 1px solid var(--xiaomi-orange); padding: 10px 20px; border-radius: 50px;   
+        margin: 20px auto; width: fit-content; font-weight: 900;  
+    }  
+
+    footer { text-align: center; padding: 50px 20px; margin-top: 30px; border-top: 1px solid rgba(148, 163, 184, 0.2); }  
+    .dev-signature { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--xiaomi-orange); cursor: pointer; }  
+</style>
+
+</head>  
+<body data-theme="dark">  
+    <div class="container">  
+        <div class="top-bar">  
+            <button id="theme-toggle"><span id="theme-icon">☀️</span> <span id="t-mode">الوضع الفاتح</span></button>  
+            <div style="font-weight: 900; color: var(--xiaomi-orange);">Xiaomi World</div>  
+        </div>  
         
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.4s, color 0.4s, transform 0.4s var(--hyper-ease); }
-        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; min-height: 100vh; overflow-x: hidden; }
-        .container { max-width: 900px; margin: 0 auto; }
+        <header>  
+            <h1 id="t-h1">🚀 انضم إلى عالم شاومي الاحترافي</h1>  
+            <h2 id="t-h2">Xiaomi World 📱</h2>  
+        </header>  
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s var(--hyper-ease); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        .top-bar { 
-            position: sticky; top: 10px; display: flex; flex-wrap: wrap; justify-content: space-between; 
-            gap: 10px; z-index: 1000; margin-bottom: 20px; padding: 10px;
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            background: rgba(255,255,255,0.1); border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        #theme-toggle { background: var(--card-bg); border: 1px solid var(--text-muted); color: var(--text-main); padding: 8px 18px; border-radius: 50px; cursor: pointer; font-weight: 700; backdrop-filter: blur(5px); }
-
-        header { text-align: center; padding: 50px 20px; margin-bottom: 30px; background: var(--header-bg); border-radius: 30px; border-bottom: 4px solid var(--xiaomi-orange); box-shadow: var(--shadow); animation: scaleIn 0.8s var(--hyper-ease); }
-        header h1 { font-size: 2.5rem; font-weight: 900; color: var(--xiaomi-orange); text-shadow: 0 10px 20px rgba(255,103,0,0.2); }
-        
-        .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        
-        .card { 
-            background-color: var(--card-bg); padding: 30px; border-radius: 20px; text-decoration: none; 
-            color: var(--text-main); position: relative; overflow: hidden; box-shadow: var(--shadow); 
-            display: flex; flex-direction: column; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05);
-            cursor: pointer;
-        }
-        .card::before { content: ''; position: absolute; top: 0; right: 0; width: 5px; height: 100%; background-color: var(--telegram-blue); }
-        .card.orange::before { background-color: var(--xiaomi-orange); }
-        .card.whatsapp::before { background-color: var(--whatsapp-green); }
-        .card.purple::before { background-color: #a855f7; }
-        
-        .card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
-        .card-icon { font-size: 2.8rem; margin-bottom: 15px; display: inline-block; transition: 0.3s; }
-        
-        .card-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 10px; }
-        .card-btn { margin-top: auto; padding: 12px; text-align: center; background: rgba(255,103,0,0.1); color: var(--xiaomi-orange); border-radius: 12px; font-weight: 700; }
-        .card:hover .card-btn { background: var(--xiaomi-orange); color: white; }
-
-        /* Areas (Codes & Themes) */
-        #codes-area, #themes-area { display: none; margin-top: 20px; animation: fadeInUp 0.5s ease; }
-        .section-title { text-align: center; margin-bottom: 25px; font-size: 1.8rem; color: var(--xiaomi-orange); font-weight: 900; }
-
-        /* Theme Item Style */
-        .theme-item { 
-            background: var(--card-bg); border-radius: 25px; padding: 20px; margin-bottom: 30px; 
-            border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow); overflow: hidden;
-        }
-        .theme-img { width: 100%; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .theme-info { text-align: center; }
-        .theme-name { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; color: var(--xiaomi-orange); }
-        .download-btn { 
-            display: inline-block; padding: 12px 30px; background: var(--xiaomi-orange); 
-            color: white; text-decoration: none; border-radius: 50px; font-weight: 700;
-            box-shadow: 0 5px 15px rgba(255, 103, 0, 0.3); transition: 0.3s;
-        }
-        .download-btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(255, 103, 0, 0.5); }
-
-        .code-cat { background: var(--card-bg); padding: 25px; border-radius: 25px; margin-bottom: 25px; border-right: 6px solid var(--xiaomi-orange); backdrop-filter: blur(10px); }
-        .code-line { background: #000; color: #25d366; padding: 15px; border-radius: 12px; font-family: monospace; display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-        .copy-btn { background: var(--xiaomi-orange); border: none; color: white; padding: 5px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-
-        #admin-panel { 
-            display: none; background: rgba(255, 103, 0, 0.1); backdrop-filter: blur(10px); 
-            border: 1px solid var(--xiaomi-orange); padding: 10px 20px; border-radius: 50px; 
-            margin: 20px auto; width: fit-content; font-weight: 900;
-        }
-
-        footer { text-align: center; padding: 50px 20px; margin-top: 30px; border-top: 1px solid rgba(148, 163, 184, 0.2); }
-        .dev-signature { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--xiaomi-orange); cursor: pointer; }
-    </style>
-</head>
-<body data-theme="dark">
-    <div class="container">
-        <div class="top-bar">
-            <button id="theme-toggle"><span id="theme-icon">☀️</span> <span id="t-mode">الوضع الفاتح</span></button>
-            <div style="font-weight: 900; color: var(--xiaomi-orange);">Xiaomi World</div>
+        <div class="search-container">
+            <input type="text" id="glass-search" class="glass-search" placeholder="🔍 ابحث عن قسم أو ثيم...">
         </div>
+        <div class="links-grid">  
+        <a href="https://t.me/themes345" target="_blank" class="card reveal">  
+            <div class="card-icon">💬</div>  
+            <div class="card-title">جروب الدردشة</div>  
+            <div class="card-desc">المكان الذي نجمع فيه كل "الوحوش" لمساعدة بعضنا البعض!</div>  
+            <div class="card-btn">انضم للدردشة</div>  
+        </a>  
 
-        <header>
-            <h1 id="t-h1">🚀 انضم إلى عالم شاومي الاحترافي</h1>
-            <h2 id="t-h2">Xiaomi World 📱</h2>
-        </header>
+        <a href="https://t.me/redmi3321" target="_blank" class="card orange reveal">  
+            <div class="card-icon">🧠</div>  
+            <div class="card-title">القناة الرئيسية</div>  
+            <div class="card-desc">مستودع الأسرار! هنا ستجد أحدث أخبار HyperOS وشروحات حصرية.</div>  
+            <div class="card-btn">اكتشف الأسرار</div>  
+        </a>  
+
+        <a href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" class="card whatsapp reveal">  
+            <div class="card-icon">🟢</div>  
+            <div class="card-title">قناة الواتس</div>  
+            <div class="card-desc">لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا هنا!</div>  
+            <div class="card-btn">تابعنا على واتساب</div>  
+        </a>  
+
+        <div class="card purple reveal" onclick="toggleArea('themes-area')">  
+            <div class="card-icon">🎨</div>  
+            <div class="card-title">قسم الثيمات الحصرية</div>  
+            <div class="card-desc">أقوى تشكيلة ثيمات HyperOS من اختيارنا الخاص.</div>  
+            <div class="card-btn">تصفح الثيمات</div>  
+        </div>  
+    </div>  
+
+    <div id="themes-area">  
+        <h2 class="section-title">🖼️ مكتبة الثيمات الحصرية</h2>  
+          
+        <div class="theme-item reveal">  
+            <img src="23487.jpg" alt="Tattooed boy" class="theme-img">  
+            <div class="theme-info">  
+                <div class="theme-name">1️⃣ Tattooed boy</div>  
+                <a href="https://www.mtzfile.pw/detail/82c82b07-c1de-4940-8b42-f384a5067c55?srsltid=AfmBOorEFT9RYLJQDLkjrtpmQLMb9ahPBWuvb_AT-QPv6N0dRLyuyX65" target="_blank" class="download-btn">تحميل الثيم الآن</a>  
+            </div>  
+        </div>  
+
+        <div class="theme-item reveal">  
+            <img src="23485.jpg" alt="Nk0'S Edition" class="theme-img">  
+            <div class="theme-info">  
+                <div class="theme-name">2️⃣ Nk0'S Edition ESP</div>  
+                <a href="https://hyperosthemeshub.com/nk0s-edition-esp-hyperos-theme/" target="_blank" class="download-btn">تحميل الثيم الآن</a>  
+            </div>  
+        </div>  
+
+        <div class="theme-item reveal">  
+            <img src="23483.jpg" alt="HyperMax" class="theme-img">  
+            <div class="theme-info">  
+                <div class="theme-name">3️⃣ HyperMax</div>  
+                <a href="https://www.miuithemer.com/themes/hypermax-hyperos-theme-for-xiaomi-and-redmi-phones/" target="_blank" class="download-btn">تحميل الثيم الآن</a>  
+            </div>  
+        </div>  
+
+        <div class="theme-item reveal">  
+            <img src="23481.jpg" alt="Po-Blue" class="theme-img">  
+            <div class="theme-info">  
+                <div class="theme-name">4️⃣ Po-Blue</div>  
+                <a href="https://hyperosthemeshub.com/po-blue-hyperos-theme/" target="_blank" class="download-btn">تحميل الثيم الآن</a>  
+            </div>  
+        </div>  
+
+        <button onclick="toggleArea('themes-area')" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:15px; cursor:pointer; margin-bottom:40px;">إغلاق قسم الثيمات 🔼</button>  
+    </div>  
+
+    <div id="admin-panel">  
+        <span>إجمالي الزيارات: </span><span id="v-count">...</span>  
+    </div>  
+
+    <footer>  
+        <p>جميع الحقوق محفوظة &copy; 2026</p>  
+        <div class="dev-signature" id="admin-trigger">Developed by <span class="dev-name">ElPop</span></div>  
+    </footer>  
+</div>  
+
+<script>  
+    // أنيميشن الظهور  
+    const observer = new IntersectionObserver((entries) => {  
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });  
+    }, { threshold: 0.1 });  
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));  
+
+    // فتح وإغلاق الأقسام  
+    function toggleArea(id) {  
+        const area = document.getElementById(id);  
+        const isVisible = area.style.display === 'block';  
+        area.style.display = isVisible ? 'none' : 'block';  
+        if(!isVisible) area.scrollIntoView({behavior: 'smooth'});  
+    }  
+
+    // نظام البحث الجديد 
+    document.getElementById('glass-search').addEventListener('input', function() {
+        const query = this.value.toLowerCase();
         
-        <div class="links-grid">
-            <a href="https://t.me/themes345" target="_blank" class="card reveal">
-                <div class="card-icon">💬</div>
-                <div class="card-title">جروب الدردشة</div>
-                <div class="card-desc">المكان الذي نجمع فيه كل "الوحوش" لمساعدة بعضنا البعض!</div>
-                <div class="card-btn">انضم للدردشة</div>
-            </a>
-
-            <a href="https://t.me/redmi3321" target="_blank" class="card orange reveal">
-                <div class="card-icon">🧠</div>
-                <div class="card-title">القناة الرئيسية</div>
-                <div class="card-desc">مستودع الأسرار! هنا ستجد أحدث أخبار HyperOS وشروحات حصرية.</div>
-                <div class="card-btn">اكتشف الأسرار</div>
-            </a>
-
-            <a href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" class="card whatsapp reveal">
-                <div class="card-icon">🟢</div>
-                <div class="card-title">قناة الواتس</div>
-                <div class="card-desc">لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا هنا!</div>
-                <div class="card-btn">تابعنا على واتساب</div>
-            </a>
-
-            <div class="card purple reveal" onclick="toggleArea('themes-area')">
-                <div class="card-icon">🎨</div>
-                <div class="card-title">قسم الثيمات الحصرية</div>
-                <div class="card-desc">أقوى تشكيلة ثيمات HyperOS من اختيارنا الخاص.</div>
-                <div class="card-btn">تصفح الثيمات</div>
-            </div>
-
-            <div class="card orange reveal" onclick="toggleArea('codes-area')">
-                <div class="card-icon">⚡</div>
-                <div class="card-title">أكواد تسريع الأداء</div>
-                <div class="card-desc">أقوى مكتبة أكواد لتسريع شاومي وحذف التطبيقات الزائدة.</div>
-                <div class="card-btn">فتح مكتبة الأكواد</div>
-            </div>
-        </div>
-
-        <div id="themes-area">
-            <h2 class="section-title">🖼️ مكتبة الثيمات الحصرية</h2>
-            
-            <div class="theme-item reveal">
-                <img src="23487.jpg" alt="Tattooed boy" class="theme-img">
-                <div class="theme-info">
-                    <div class="theme-name">1️⃣ Tattooed boy</div>
-                    <a href="https://www.mtzfile.pw/detail/82c82b07-c1de-4940-8b42-f384a5067c55?srsltid=AfmBOorEFT9RYLJQDLkjrtpmQLMb9ahPBWuvb_AT-QPv6N0dRLyuyX65" target="_blank" class="download-btn">تحميل الثيم الآن</a>
-                </div>
-            </div>
-
-            <div class="theme-item reveal">
-                <img src="23485.jpg" alt="Nk0'S Edition" class="theme-img">
-                <div class="theme-info">
-                    <div class="theme-name">2️⃣ Nk0'S Edition ESP</div>
-                    <a href="https://hyperosthemeshub.com/nk0s-edition-esp-hyperos-theme/" target="_blank" class="download-btn">تحميل الثيم الآن</a>
-                </div>
-            </div>
-
-            <div class="theme-item reveal">
-                <img src="23483.jpg" alt="HyperMax" class="theme-img">
-                <div class="theme-info">
-                    <div class="theme-name">3️⃣ HyperMax</div>
-                    <a href="https://www.miuithemer.com/themes/hypermax-hyperos-theme-for-xiaomi-and-redmi-phones/" target="_blank" class="download-btn">تحميل الثيم الآن</a>
-                </div>
-            </div>
-
-            <div class="theme-item reveal">
-                <img src="23481.jpg" alt="Po-Blue" class="theme-img">
-                <div class="theme-info">
-                    <div class="theme-name">4️⃣ Po-Blue</div>
-                    <a href="https://hyperosthemeshub.com/po-blue-hyperos-theme/" target="_blank" class="download-btn">تحميل الثيم الآن</a>
-                </div>
-            </div>
-
-            <button onclick="toggleArea('themes-area')" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:15px; cursor:pointer; margin-bottom:40px;">إغلاق قسم الثيمات 🔼</button>
-        </div>
-
-        <div id="codes-area">
-            <h2 class="section-title">🛠️ مكتبة الأكواد</h2>
-            <div class="code-cat reveal">
-                <h4>🗑️ مسح تطبيقات شاومي (Bloatware)</h4>
-                <div class="code-line">
-                    <span id="c1">pm uninstall -k --user 0 com.miui.player</span>
-                    <button class="copy-btn" onclick="cp('c1')">نسخ</button>
-                </div>
-            </div>
-            <button onclick="toggleArea('codes-area')" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:15px; cursor:pointer; margin-bottom:40px;">إغلاق مكتبة الأكواد 🔼</button>
-        </div>
-
-        <div id="admin-panel">
-            <span>إجمالي الزيارات: </span><span id="v-count">...</span>
-        </div>
-
-        <footer>
-            <p>جميع الحقوق محفوظة &copy; 2026</p>
-            <div class="dev-signature" id="admin-trigger">Developed by <span class="dev-name">ElPop</span></div>
-        </footer>
-    </div>
-
-    <script>
-        // أنيميشن الظهور
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // فتح وإغلاق الأقسام
-        function toggleArea(id) {
-            const area = document.getElementById(id);
-            const otherId = (id === 'codes-area') ? 'themes-area' : 'codes-area';
-            document.getElementById(otherId).style.display = 'none'; // إغلاق القسم التاني
-            
-            const isVisible = area.style.display === 'block';
-            area.style.display = isVisible ? 'none' : 'block';
-            if(!isVisible) area.scrollIntoView({behavior: 'smooth'});
-        }
-
-        // نسخ الأكواد
-        function cp(id) {
-            navigator.clipboard.writeText(document.getElementById(id).innerText);
-            alert("تم النسخ بنجاح! ✅");
-        }
-
-        // وضع الليل/النهار
-        const toggleBtn = document.getElementById('theme-toggle');
-        toggleBtn.addEventListener('click', () => {
-            const isDark = document.body.getAttribute('data-theme') === 'dark';
-            document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';
-            document.getElementById('t-mode').innerText = isDark ? 'الوضع الليلي' : 'الوضع الفاتح';
+        // بحث في الكروت الرئيسية
+        document.querySelectorAll('.links-grid .card').forEach(card => {
+            const text = card.innerText.toLowerCase();
+            card.style.display = text.includes(query) ? 'flex' : 'none';
         });
 
-        // عداد الزيارات
-        fetch(`https://api.counterapi.dev/v1/xiaomi_pop_world_2026/hits/up`)
-            .then(res => res.json())
-            .then(data => { document.getElementById('v-count').innerText = data.count; });
-
-        // تفعيل لوحة الأدمن
-        let clicks = 0;
-        document.getElementById('admin-trigger').addEventListener('click', () => {
-            clicks++;
-            if(clicks === 5) {
-                const panel = document.getElementById('admin-panel');
-                panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
-                clicks = 0;
-            }
+        // بحث في الثيمات
+        document.querySelectorAll('.theme-item').forEach(theme => {
+            const text = theme.innerText.toLowerCase();
+            theme.style.display = text.includes(query) ? 'block' : 'none';
         });
-    </script>
-</body>
+
+        // لو بيكتب حاجة، يفضل نفتح الأقسام المستخبية عشان يشوف نتيجة البحث
+        if(query.trim() !== "") {
+            document.getElementById('themes-area').style.display = 'block';
+        }
+    });
+
+    // وضع الليل/النهار  
+    const toggleBtn = document.getElementById('theme-toggle');  
+    toggleBtn.addEventListener('click', () => {  
+        const isDark = document.body.getAttribute('data-theme') === 'dark';  
+        document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');  
+        document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';  
+        document.getElementById('t-mode').innerText = isDark ? 'الوضع الليلي' : 'الوضع الفاتح';  
+    });  
+
+    // عداد الزيارات  
+    fetch(`https://api.counterapi.dev/v1/xiaomi_pop_world_2026/hits/up`)  
+        .then(res => res.json())  
+        .then(data => { document.getElementById('v-count').innerText = data.count; });  
+
+    // تفعيل لوحة الأدمن  
+    let clicks = 0;  
+    document.getElementById('admin-trigger').addEventListener('click', () => {  
+        clicks++;  
+        if(clicks === 5) {  
+            const panel = document.getElementById('admin-panel');  
+            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';  
+            clicks = 0;  
+        }  
+    });  
+</script>
+
+</body>  
 </html>
