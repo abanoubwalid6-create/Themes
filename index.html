@@ -9,142 +9,165 @@
         :root { --bg-color: #f1f5f9; --card-bg: #ffffff; --text-main: #0f172a; --text-muted: #475569; --xiaomi-orange: #ff6700; --telegram-blue: #0088cc; --whatsapp-green: #25d366; --header-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%); --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
         [data-theme="dark"] { --bg-color: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-muted: #cbd5e1; --header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); --shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: all 0.3s ease; }
         body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; min-height: 100vh; }
         .container { max-width: 900px; margin: 0 auto; }
         
-        .theme-switch { position: fixed; top: 20px; left: 20px; z-index: 1000; }
-        #theme-toggle { background-color: var(--card-bg); border: 1px solid var(--text-muted); color: var(--text-main); padding: 10px 15px; border-radius: 50px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow); }
+        /* شريط الأدوات العلوي */
+        .top-bar { position: sticky; top: 10px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; z-index: 1000; margin-bottom: 20px; }
+        .lang-switch { display: flex; gap: 5px; background: var(--card-bg); padding: 5px; border-radius: 50px; box-shadow: var(--shadow); border: 1px solid var(--text-muted); }
+        .lang-btn { border: none; background: none; color: var(--text-main); cursor: pointer; padding: 5px 10px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; }
+        .lang-btn.active { background: var(--xiaomi-orange); color: white; }
         
-        header { text-align: center; padding: 40px 20px; margin-bottom: 30px; background: var(--header-bg); border-radius: 20px; border-bottom: 4px solid var(--xiaomi-orange); box-shadow: var(--shadow); margin-top: 40px; }
+        #theme-toggle { background-color: var(--card-bg); border: 1px solid var(--text-muted); color: var(--text-main); padding: 10px 15px; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: var(--shadow); }
+
+        header { text-align: center; padding: 40px 20px; margin-bottom: 30px; background: var(--header-bg); border-radius: 20px; border-bottom: 4px solid var(--xiaomi-orange); box-shadow: var(--shadow); }
         header h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; color: var(--xiaomi-orange); }
-        header h2 { font-size: 1.3rem; color: var(--text-main); font-weight: 700; }
         
         .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .card { background-color: var(--card-bg); padding: 25px; border-radius: 15px; text-decoration: none; color: var(--text-main); transition: all 0.3s ease; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); position: relative; overflow: hidden; box-shadow: var(--shadow); }
+        .card { background-color: var(--card-bg); padding: 25px; border-radius: 15px; text-decoration: none; color: var(--text-main); position: relative; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
         .card::before { content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background-color: var(--telegram-blue); }
-        .card.whatsapp::before { background-color: var(--whatsapp-green); }
         .card.orange::before { background-color: var(--xiaomi-orange); }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .card.whatsapp::before { background-color: var(--whatsapp-green); }
+        .card:hover { transform: translateY(-8px); }
         
         .card-icon { font-size: 2.2rem; margin-bottom: 15px; }
         .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
         .card-desc { font-size: 0.95rem; color: var(--text-muted); flex-grow: 1; }
-        .card-btn { margin-top: 20px; padding: 12px; text-align: center; background-color: rgba(0,0,0,0.05); border-radius: 8px; font-weight: 700; color: var(--text-main); }
-        
+        .card-btn { margin-top: 20px; padding: 12px; text-align: center; background-color: rgba(0,0,0,0.05); border-radius: 8px; font-weight: 700; }
+
         #codes-area { display: none; margin-top: 20px; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-        
         .code-cat { background: var(--card-bg); padding: 20px; border-radius: 15px; margin-bottom: 20px; border-right: 5px solid var(--xiaomi-orange); box-shadow: var(--shadow); }
-        .code-cat h4 { color: var(--xiaomi-orange); margin-bottom: 10px; }
-        .code-line { background: #000; color: #25d366; padding: 10px; border-radius: 8px; font-family: monospace; font-size: 0.85rem; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; }
-        .copy-s { background: var(--xiaomi-orange); color: #fff; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
+        .code-line { background: #000; color: #25d366; padding: 10px; border-radius: 8px; font-family: monospace; display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+        .copy-s { background: var(--xiaomi-orange); color: #fff; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; }
 
-        /* التوقيع المزخرف الجديد */
         footer { text-align: center; padding: 40px 20px; margin-top: 30px; border-top: 1px solid rgba(148, 163, 184, 0.2); }
-        .dev-signature { 
-            font-family: 'Dancing Script', cursive; /* الخط المزخرف */
-            font-size: 1.8rem; 
-            color: var(--text-main);
-            margin-top: 10px;
-        }
+        .dev-signature { font-family: 'Dancing Script', cursive; font-size: 1.8rem; margin-top: 10px; }
         .dev-name { color: var(--xiaomi-orange); }
-        .copyright { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 5px; font-weight: bold; }
     </style>
 </head>
 <body data-theme="dark">
-    <div class="theme-switch"><button id="theme-toggle"><span id="theme-icon">☀️</span> <span id="theme-text">الوضع الفاتح</span></button></div>
-    
     <div class="container">
-        <header><h1>🚀 انضم إلى عالم شاومي الاحترافي</h1><h2>Xiaomi World 📱</h2></header>
+        <div class="top-bar">
+            <button id="theme-toggle"><span id="theme-icon">☀️</span> <span id="t-mode">الوضع الفاتح</span></button>
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="changeLang('ar')">AR</button>
+                <button class="lang-btn" onclick="changeLang('en')">EN</button>
+                <button class="lang-btn" onclick="changeLang('id')">ID</button>
+                <button class="lang-btn" onclick="changeLang('fr')">FR</button>
+                <button class="lang-btn" onclick="changeLang('es')">ES</button>
+            </div>
+        </div>
+
+        <header>
+            <h1 id="t-h1">🚀 انضم إلى عالم شاومي الاحترافي</h1>
+            <h2 id="t-h2">Xiaomi World 📱</h2>
+        </header>
         
         <div class="links-grid">
             <a href="https://t.me/themes345" target="_blank" class="card">
-                <div class="card-icon">💬 🔥</div>
-                <div class="card-title">جروب الدردشة</div>
-                <div class="card-desc">المكان الذي نجمع فيه كل "الوحوش" لمساعدة بعضنا وحل مشاكل الموبايل!</div>
-                <div class="card-btn">انضم للدردشة</div>
+                <div class="card-icon">💬</div>
+                <div class="card-title" id="t-c1-t">جروب الدردشة</div>
+                <div class="card-desc" id="t-c1-d">المكان الذي نجمع فيه كل "الوحوش" لمساعدة بعضنا البعض!</div>
+                <div class="card-btn" id="t-c1-b">انضم للدردشة</div>
             </a>
 
             <a href="https://t.me/redmi3321" target="_blank" class="card orange">
-                <div class="card-icon">🧠 ✨</div>
-                <div class="card-title">القناة الرئيسية</div>
-                <div class="card-desc">هنا ستجد أحدث أخبار HyperOS، وشروحات حصرية، وأقوى الأكواد.</div>
-                <div class="card-btn">اكتشف الأسرار</div>
+                <div class="card-icon">🧠</div>
+                <div class="card-title" id="t-c2-t">القناة الرئيسية</div>
+                <div class="card-desc" id="t-c2-d">مستودع الأسرار! هنا ستجد أحدث أخبار HyperOS وشروحات حصرية.</div>
+                <div class="card-btn" id="t-c2-b">اكتشف الأسرار</div>
             </a>
 
             <a href="https://t.me/themesXiaomia" target="_blank" class="card">
-                <div class="card-icon">🖼️ 🎨</div>
-                <div class="card-title">قناة الخلفيات</div>
-                <div class="card-desc">خلفيات بدقة Ultra HD وتصاميم سينمائية خرافية لموبايلك.</div>
-                <div class="card-btn">تصفح الخلفيات</div>
+                <div class="card-icon">🖼️</div>
+                <div class="card-title" id="t-c3-t">قناة الخلفيات</div>
+                <div class="card-desc" id="t-c3-d">خلفيات بدقة Ultra HD وتصاميم سينمائية خرافية لموبايلك.</div>
+                <div class="card-btn" id="t-c3-b">تصفح الخلفيات</div>
             </a>
 
             <a href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" class="card whatsapp">
-                <div class="card-icon">🟢 ↪️</div>
-                <div class="card-title">قناة الواتس</div>
-                <div class="card-desc">لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا هنا!</div>
-                <div class="card-btn">تابعنا على واتساب</div>
+                <div class="card-icon">🟢</div>
+                <div class="card-title" id="t-c4-t">قناة الواتس</div>
+                <div class="card-desc" id="t-c4-d">لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا هنا!</div>
+                <div class="card-btn" id="t-c4-b">تابعنا على واتساب</div>
             </a>
 
             <div class="card orange" onclick="openCodes()" style="cursor:pointer;">
                 <div class="card-icon">⚡</div>
-                <div class="card-title">أكواد تسريع الأداء</div>
-                <div class="card-desc">أقوى أكواد Brevent و LADB لتحسين الألعاب وسلاسة النظام.</div>
-                <div class="card-btn">فتح مكتبة الأكواد</div>
+                <div class="card-title" id="t-c5-t">أكواد تسريع الأداء</div>
+                <div class="card-desc" id="t-c5-d">أقوى أكواد Brevent و LADB لتحسين الألعاب وسلاسة النظام.</div>
+                <div class="card-btn" id="t-c5-b">فتح مكتبة الأكواد</div>
             </div>
         </div>
 
         <div id="codes-area">
-            <h2 style="text-align:center; margin-bottom:20px;">🛠️ مكتبة الأكواد</h2>
+            <h2 style="text-align:center; margin-bottom:20px;" id="t-lib-t">🛠️ مكتبة الأكواد</h2>
             <div class="code-cat">
-                <h4>🚀 تسريع الأداء والألعاب</h4>
-                <p>منع خنق المعالج (Throttling):</p>
-                <div class="code-line"><span id="x1">settings put global power_manager_constants "no_cached_processes_limit=true"</span><button class="copy-s" onclick="cp('x1')">نسخ</button></div>
-                <p style="margin-top:15px;">إجبار GPU على المعالجة (Smoothness):</p>
-                <div class="code-line"><span id="x2">settings put global hardware_acceleration_enabled 1</span><button class="copy-s" onclick="cp('x2')">نسخ</button></div>
+                <h4 id="t-cat1">🚀 تسريع الأداء والألعاب</h4>
+                <div class="code-line"><span id="x1">settings put global power_manager_constants "no_cached_processes_limit=true"</span><button class="copy-s" onclick="cp('x1')">Copy</button></div>
             </div>
-            <div class="code-cat">
-                <h4>🎮 الحساسية والشاشة</h4>
-                <p>حساسية اللمس القصوى (Pointer Speed):</p>
-                <div class="code-line"><span id="x3">settings put system pointer_speed 7</span><button class="copy-s" onclick="cp('x3')">نسخ</button></div>
-                <p style="margin-top:15px;">تثبيت 120Hz إجباري:</p>
-                <div class="code-line"><span id="x4">settings put system peak_refresh_rate 120.0</span><button class="copy-s" onclick="cp('x4')">نسخ</button></div>
-            </div>
-            <button onclick="openCodes()" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:12px; cursor:pointer; margin-bottom:40px; font-weight:bold;">إغلاق 🔼</button>
+            <button onclick="openCodes()" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:12px; cursor:pointer; margin-bottom:40px;" id="t-close">إغلاق 🔼</button>
         </div>
 
         <footer>
-            <p class="copyright">جميع الحقوق محفوظة &copy; 2026</p>
-            <div class="dev-signature">
-                2026 | Developed by <span class="dev-name">ElPop</span>
-            </div>
+            <p id="t-copy">جميع الحقوق محفوظة &copy; 2026</p>
+            <div class="dev-signature">2026 | Developed by <span class="dev-name"><𝓔𝓵𝓹𝓸𝓹 ✍︎/span></div>
         </footer>
     </div>
 
     <script>
+        const translations = {
+            ar: { h1: "🚀 انضم إلى عالم شاومي الاحترافي", mode: "الوضع الفاتح", c1t: "جروب الدردشة", c1d: "المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا!", c1b: "انضم للدردشة", c2t: "القناة الرئيسية", c2d: "مستودع الأسرار! أخبار HyperOS وشروحات حصرية.", c2b: "اكتشف الأسرار", c3t: "قناة الخلفيات", c3d: "خلفيات بدقة Ultra HD وتصاميم سينمائية خرافية.", c3b: "تصفح الخلفيات", c4t: "قناة الواتس", c4d: "لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا!", c4b: "تابعنا على واتساب", c5t: "أكواد تسريع الأداء", c5d: "أقوى أكواد Brevent و LADB لتحسين الألعاب.", c5b: "فتح مكتبة الأكواد", libt: "🛠️ مكتبة الأكواد", close: "إغلاق 🔼", copy: "جميع الحقوق محفوظة © 2026" },
+            en: { h1: "🚀 Join Professional Xiaomi World", mode: "Light Mode", c1t: "Chat Group", c1d: "The place where we gather 'monsters' to help each other!", c1b: "Join Chat", c2t: "Main Channel", c2d: "Secrets Warehouse! HyperOS news and exclusive tutorials.", c2b: "Discover Secrets", c3t: "Wallpapers Channel", c3d: "Ultra HD wallpapers and cinematic designs for your phone.", c3b: "Browse Wallpapers", c4t: "WhatsApp Channel", c4d: "Be the first to get the news with one touch.. Follow us!", c4b: "Follow on WhatsApp", c5t: "Performance Codes", c5d: "Strongest Brevent & LADB codes for gaming and system.", c5b: "Open Code Library", libt: "🛠️ Code Library", close: "Close 🔼", copy: "All rights reserved © 2026" },
+            id: { h1: "🚀 Bergabunglah dengan Dunia Xiaomi", mode: "Mode Terang", c1t: "Grup Obrolan", c1d: "Tempat berkumpulnya para 'monster' untuk saling membantu!", c1b: "Gabung Obrolan", c2t: "Saluran Utama", c2d: "Gudang Rahasia! Berita HyperOS dan panduan eksklusif.", c2b: "Temukan Rahasia", c3t: "Saluran Wallpaper", c3d: "Wallpaper Ultra HD dan desain sinematik untuk ponsel Anda.", c3b: "Lihat Wallpaper", c4t: "Saluran WhatsApp", c4d: "Jadilah yang pertama tahu berita dalam satu sentuhan!", c4b: "Ikuti di WhatsApp", c5t: "Kode Performa", c5d: "Kode Brevent & LADB terkuat untuk game dan sistem.", c5b: "Buka Perpustakaan Kode", libt: "🛠️ Perpustakaan Kode", close: "Tutup 🔼", copy: "Semua hak dilindungi © 2026" },
+            fr: { h1: "🚀 Rejoignez le monde professionnel Xiaomi", mode: "Mode Clair", c1t: "Groupe de Discussion", c1d: "Lieu où les 'monstres' s'entraident!", c1b: "Rejoindre", c2t: "Chaîne Principale", c2d: "Entrepôt de Secrets! Nouvelles HyperOS et tutos exclusifs.", c2b: "Découvrir", c3t: "Chaîne de Fonds d'écran", c3d: "Fonds d'écran Ultra HD et designs cinématographiques.", c3b: "Parcourir", c4t: "Chaîne WhatsApp", c4d: "Soyez le premier informé en un seul clic!", c4b: "Suivre sur WhatsApp", c5t: "Codes de Performance", c5d: "Les meilleurs codes Brevent & LADB pour le gaming.", c5b: "Ouvrir la bibliothèque", libt: "🛠️ Bibliothèque", close: "Fermer 🔼", copy: "Tous droits réservés © 2026" },
+            es: { h1: "🚀 Únete al Mundo Xiaomi Profesional", mode: "Modo Claro", c1t: "Grupo de Chat", c1d: "¡El lugar donde los 'monstruos' se ayudan mutuamente!", c1b: "Unirse al Chat", c2t: "Canal Principal", c2d: "¡Almacén de Secretos! Noticias de HyperOS y tutoriales.", c2b: "Descubrir Secretos", c3t: "Canal de Fondos", c3d: "Fondos Ultra HD y diseños cinematográficos.", c3b: "Ver Fondos", c4t: "Canal de WhatsApp", c4d: "Sé el primero en recibir noticias con un toque.", c4b: "Seguir en WhatsApp", c5t: "Códigos de Rendimiento", c5d: "Los mejores códigos Brevent y LADB para juegos.", c5b: "Abrir Biblioteca", libt: "🛠️ Biblioteca de Códigos", close: "Cerrar 🔼", copy: "Todos los derechos reservados © 2026" }
+        };
+
+        function changeLang(lang) {
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+            document.getElementById('t-h1').innerText = translations[lang].h1;
+            document.getElementById('t-mode').innerText = translations[lang].mode;
+            document.getElementById('t-c1-t').innerText = translations[lang].c1t;
+            document.getElementById('t-c1-d').innerText = translations[lang].c1d;
+            document.getElementById('t-c1-b').innerText = translations[lang].c1b;
+            document.getElementById('t-c2-t').innerText = translations[lang].c2t;
+            document.getElementById('t-c2-d').innerText = translations[lang].c2d;
+            document.getElementById('t-c2-b').innerText = translations[lang].c2b;
+            document.getElementById('t-c3-t').innerText = translations[lang].c3t;
+            document.getElementById('t-c3-d').innerText = translations[lang].c3d;
+            document.getElementById('t-c3-b').innerText = translations[lang].c3b;
+            document.getElementById('t-c4-t').innerText = translations[lang].c4t;
+            document.getElementById('t-c4-d').innerText = translations[lang].c4d;
+            document.getElementById('t-c4-b').innerText = translations[lang].c4b;
+            document.getElementById('t-c5-t').innerText = translations[lang].c5t;
+            document.getElementById('t-c5-d').innerText = translations[lang].c5d;
+            document.getElementById('t-c5-b').innerText = translations[lang].c5b;
+            document.getElementById('t-lib-t').innerText = translations[lang].libt;
+            document.getElementById('t-close').innerText = translations[lang].close;
+            document.getElementById('t-copy').innerText = translations[lang].copy;
+            
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
         const toggleBtn = document.getElementById('theme-toggle');
-        const body = document.body;
         toggleBtn.addEventListener('click', () => {
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.setAttribute('data-theme', 'light');
-                document.getElementById('theme-icon').textContent = '🌙';
-                document.getElementById('theme-text').textContent = 'الوضع الليلي';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                document.getElementById('theme-icon').textContent = '☀️';
-                document.getElementById('theme-text').textContent = 'الوضع الفاتح';
-            }
+            document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+            document.getElementById('theme-icon').textContent = document.body.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
         });
+
         function openCodes() {
             const area = document.getElementById('codes-area');
             area.style.display = (area.style.display === 'block') ? 'none' : 'block';
             if(area.style.display === 'block') area.scrollIntoView({behavior: 'smooth'});
         }
+
         function cp(id) {
-            const t = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(t).then(() => { alert("تم نسخ الكود! ✅"); });
+            navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => alert("Copied! ✅"));
         }
     </script>
 </body>
