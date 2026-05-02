@@ -3,111 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عالم شاومي | Xiaomi World</title>
+    <title>عالم شاومي الاحترافي | Xiaomi World</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #cbd5e1;
-            --xiaomi-orange: #ff6700;
-            --code-bg: #000000;
-            --shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+        :root { --bg-color: #f1f5f9; --card-bg: #ffffff; --text-main: #0f172a; --text-muted: #475569; --xiaomi-orange: #ff6700; --telegram-blue: #0088cc; --whatsapp-green: #25d366; --header-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%); --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        [data-theme="dark"] { --bg-color: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-muted: #cbd5e1; --header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); --shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .theme-switch { position: fixed; top: 20px; left: 20px; z-index: 1000; }
+        #theme-toggle { background-color: var(--card-bg); border: 1px solid var(--text-muted); color: var(--text-main); padding: 10px 15px; border-radius: 50px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow); }
+        header { text-align: center; padding: 40px 20px; margin-bottom: 30px; background: var(--header-bg); border-radius: 20px; border-bottom: 4px solid var(--xiaomi-orange); box-shadow: var(--shadow); margin-top: 40px; }
+        header h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; color: var(--xiaomi-orange); }
+        header h2 { font-size: 1.3rem; color: var(--text-main); font-weight: 700; }
+        .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .card { background-color: var(--card-bg); padding: 25px; border-radius: 15px; text-decoration: none; color: var(--text-main); transition: all 0.3s ease; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); position: relative; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; }
+        .card::before { content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background-color: var(--telegram-blue); }
+        .card.orange::before { background-color: var(--xiaomi-orange); }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .card-icon { font-size: 2.2rem; margin-bottom: 15px; }
+        .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+        .card-btn { margin-top: 20px; padding: 12px; text-align: center; background-color: rgba(0,0,0,0.05); border-radius: 8px; font-weight: 700; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        /* --- تصميم قسم الأكواد الجديد --- */
+        #codes-section { display: none; margin-top: 20px; animation: slideDown 0.4s ease; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding: 20px;
+        .code-category { background: var(--card-bg); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-right: 5px solid var(--xiaomi-orange); box-shadow: var(--shadow); }
+        .code-category h3 { margin-bottom: 15px; color: var(--xiaomi-orange); font-size: 1.1rem; }
+        .code-item { background: #000; color: #25d366; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 0.9rem; position: relative; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .copy-mini { background: var(--xiaomi-orange); color: white; border: none; padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
+        
+        footer { text-align: center; padding: 30px; margin-top: 20px; border-top: 1px solid var(--text-muted); opacity: 0.8; }
+        .signature { font-weight: 900; color: var(--xiaomi-orange); font-size: 1.1rem; }
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="theme-switch"><button id="theme-toggle"><span id="theme-icon">☀️</span> <span id="theme-text">الوضع الفاتح</span></button></div>
+    
+    <div class="container">
+        <header><h1>🚀 انضم إلى عالم شاومي الاحترافي</h1><h2>Xiaomi World 📱</h2></header>
+
+        <div class="links-grid">
+            <div class="card orange" onclick="toggleCodes()">
+                <div class="card-icon">⚡</div>
+                <div class="card-title">مركز أكواد الأداء (Brevent)</div>
+                <p class="card-desc">اضغط هنا لتظهر لك كل الأكواد مقسمة حسب الفائدة (تسريع، ألعاب، شاشة).</p>
+                <div class="card-btn">فتح مكتبة الأكواد</div>
+            </div>
+
+            <a href="https://t.me/themes345" target="_blank" class="card"><div class="card-icon">💬 🔥</div><div class="card-title">جروب الدردشة</div><div class="card-desc">المكان الذي نجمع فيه كل "الوحوش" لمساعدة بعضنا البعض!</div><div class="card-btn">انضم للدردشة</div></a>
+        </div>
+
+        <div id="codes-section">
+            <h2 style="text-align: center; margin-bottom: 20px;">🛠️ مكتبة الأكواد الاحترافية</h2>
+            
+            <div class="code-category">
+                <h3>🚀 قسم تسريع النظام والألعاب</h3>
+                <p>منع خنق المعالج (Throttling):</p>
+                <div class="code-item">
+                    <span id="c1">settings put global power_manager_constants "no_cached_processes_limit=true"</span>
+                    <button class="copy-mini" onclick="copyC('c1')">نسخ</button>
+                </div>
+                <p style="margin-top:10px;">إجبار GPU على معالجة الواجهة (Smoothness):</p>
+                <div class="code-item">
+                    <span id="c2">settings put global hardware_acceleration_enabled 1</span>
+                    <button class="copy-mini" onclick="copyC('c2')">نسخ</button>
+                </div>
+            </div>
+
+            <div class="code-category">
+                <h3>🎮 قسم الحساسية واللمس</h3>
+                <p>رفع حساسية اللمس (Pointer Speed):</p>
+                <div class="code-item">
+                    <span id="c3">settings put system pointer_speed 7</span>
+                    <button class="copy-mini" onclick="copyC('c3')">نسخ</button>
+                </div>
+            </div>
+
+            <div class="code-category">
+                <h3>📱 قسم الشاشة والبطارية</h3>
+                <p>تثبيت 120Hz إجباري:</p>
+                <div class="code-item">
+                    <span id="c4">settings put system peak_refresh_rate 120.0</span>
+                    <button class="copy-mini" onclick="copyC('c4')">نسخ</button>
+                </div>
+            </div>
+            
+            <button onclick="toggleCodes()" style="width:100%; padding:10px; border-radius:10px; background:#475569; color:white; border:none; cursor:pointer;">إغلاق الأكواد 🔼</button>
+        </div>
+
+        <footer><p>جميع الحقوق محفوظة &copy; 2026</p><p class="signature">Created by themes345</p></footer>
+    </div>
+
+    <script>
+        // تبديل الوضع الليلي
+        const toggleBtn = document.getElementById('theme-toggle');
+        toggleBtn.addEventListener('click', () => {
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                document.getElementById('theme-icon').textContent = '🌙';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').textContent = '☀️';
+            }
+        });
+
+        // إظهار وإخفاء قسم الأكواد
+        function toggleCodes() {
+            const section = document.getElementById('codes-section');
+            if (section.style.display === "block") {
+                section.style.display = "none";
+            } else {
+                section.style.display = "block";
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
-        .container { max-width: 800px; margin: 0 auto; }
-
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border-radius: 20px;
-            border-bottom: 4px solid var(--xiaomi-orange);
-            margin-bottom: 30px;
-            box-shadow: var(--shadow);
+        // وظيفة النسخ
+        function copyC(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text);
+            alert("تم نسخ الكود بنجاح يا وحش! ✅");
         }
-
-        header h1 { font-size: 1.8rem; font-weight: 900; color: var(--xiaomi-orange); margin-bottom: 10px; }
-        header p { font-size: 1rem; color: var(--text-muted); }
-
-        .section-title {
-            margin: 30px 0 15px;
-            font-weight: 900;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-right: 4px solid var(--xiaomi-orange);
-            padding-right: 15px;
-        }
-
-        .code-card {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .code-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-
-        .code-info h3 { color: var(--xiaomi-orange); font-size: 1.1rem; margin-bottom: 5px; }
-        .code-info p { font-size: 0.9rem; color: var(--text-muted); }
-
-        .code-box {
-            background-color: var(--code-bg);
-            padding: 12px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            color: #25d366;
-            word-break: break-all;
-            margin-top: 10px;
-            position: relative;
-            border: 1px solid #334155;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .copy-btn {
-            background-color: var(--xiaomi-orange);
-            color: white;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .copy-btn:active { transform: scale(0.95); }
-
-        .links-area {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
+    </script>
+</body>
+</html>
         .link-btn {
             background: var(--card-bg);
             padding: 15px;
