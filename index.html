@@ -34,8 +34,11 @@
         .code-line { background: #000; color: #25d366; padding: 10px; border-radius: 8px; font-family: monospace; font-size: 0.85rem; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; }
         .copy-s { background: var(--xiaomi-orange); color: #fff; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
 
-        footer { text-align: center; padding: 30px; margin-top: 20px; border-top: 1px solid var(--text-muted); opacity: 0.8; }
-        .signature { font-weight: 900; color: var(--xiaomi-orange); font-size: 1.1rem; }
+        /* ستايل التوقيع الاحترافي */
+        footer { text-align: center; padding: 40px 20px; margin-top: 30px; border-top: 1px solid rgba(148, 163, 184, 0.2); opacity: 0.9; }
+        .dev-signature { font-weight: 900; font-size: 1.2rem; letter-spacing: 0.5px; margin-top: 10px; }
+        .dev-name { color: var(--xiaomi-orange); text-transform: uppercase; border-bottom: 2px solid var(--xiaomi-orange); padding-bottom: 2px; }
+        .copyright { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 5px; }
     </style>
 </head>
 <body data-theme="dark">
@@ -99,7 +102,10 @@
             <button onclick="openCodes()" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:12px; cursor:pointer; margin-bottom:40px; font-weight:bold;">إغلاق 🔼</button>
         </div>
 
-        <footer><p>جميع الحقوق محفوظة &copy; 2026</p><p class="signature">Created by themes345</p></footer>
+        <footer>
+            <p class="copyright">جميع الحقوق محفوظة &copy; 2026</p>
+            <p class="dev-signature">2026 | Developed by <span class="dev-name">ElPop</span></p>
+        </footer>
     </div>
 
     <script>
