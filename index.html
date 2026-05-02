@@ -25,7 +25,6 @@
 
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }  
     @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }  
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }  
 
     .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s var(--hyper-ease); }  
     .reveal.active { opacity: 1; transform: translateY(0); }  
@@ -42,33 +41,13 @@
     header { text-align: center; padding: 50px 20px; margin-bottom: 30px; background: var(--header-bg); border-radius: 30px; border-bottom: 4px solid var(--xiaomi-orange); box-shadow: var(--shadow); animation: scaleIn 0.8s var(--hyper-ease); }  
     header h1 { font-size: 2.5rem; font-weight: 900; color: var(--xiaomi-orange); text-shadow: 0 10px 20px rgba(255,103,0,0.2); }  
       
-    /* --- CSS تأثير البحث الزجاجي --- */
     .search-container { margin: 0 auto 40px; max-width: 600px; position: relative; animation: fadeInUp 0.8s var(--hyper-ease); }
     .glass-search {
-        width: 100%;
-        padding: 16px 25px;
-        border-radius: 50px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        color: var(--text-main);
-        font-size: 1.1rem;
-        font-weight: 700;
-        outline: none;
-        box-shadow: var(--shadow);
-        transition: all 0.3s ease;
+        width: 100%; padding: 16px 25px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        color: var(--text-main); font-size: 1.1rem; font-weight: 700; outline: none; box-shadow: var(--shadow);
     }
-    .glass-search::placeholder { color: var(--text-muted); font-weight: 400; }
-    .glass-search:focus {
-        background: rgba(255, 255, 255, 0.2);
-        border-color: var(--xiaomi-orange);
-        box-shadow: 0 0 20px rgba(255, 103, 0, 0.2);
-        transform: scale(1.02);
-    }
-    [data-theme="light"] .glass-search { background: rgba(0, 0, 0, 0.03); border: 1px solid rgba(0, 0, 0, 0.05); }
-    [data-theme="light"] .glass-search:focus { background: rgba(0, 0, 0, 0.05); }
-    /* ------------------------------ */
+    .glass-search:focus { border-color: var(--xiaomi-orange); background: rgba(255, 255, 255, 0.2); }
 
     .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }  
       
@@ -83,31 +62,25 @@
     .card.whatsapp::before { background-color: var(--whatsapp-green); }  
     .card.purple::before { background-color: #a855f7; }  
       
-    .card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }  
-    .card-icon { font-size: 2.8rem; margin-bottom: 15px; display: inline-block; transition: 0.3s; }  
-      
+    .card:hover { transform: translateY(-12px) scale(1.02); }  
+    .card-icon { font-size: 2.8rem; margin-bottom: 15px; }  
     .card-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 10px; }  
     .card-btn { margin-top: auto; padding: 12px; text-align: center; background: rgba(255,103,0,0.1); color: var(--xiaomi-orange); border-radius: 12px; font-weight: 700; }  
     .card:hover .card-btn { background: var(--xiaomi-orange); color: white; }  
 
-    /* Area Themes */  
     #themes-area { display: none; margin-top: 20px; animation: fadeInUp 0.5s ease; }  
     .section-title { text-align: center; margin-bottom: 25px; font-size: 1.8rem; color: var(--xiaomi-orange); font-weight: 900; }  
 
-    /* Theme Item Style */  
     .theme-item {   
         background: var(--card-bg); border-radius: 25px; padding: 20px; margin-bottom: 30px;   
-        border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow); overflow: hidden;  
+        border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow);  
     }  
-    .theme-img { width: 100%; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }  
-    .theme-info { text-align: center; }  
-    .theme-name { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; color: var(--xiaomi-orange); }  
+    .theme-img { width: 100%; border-radius: 15px; margin-bottom: 15px; }  
+    .theme-name { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; text-align: center; color: var(--xiaomi-orange); }  
     .download-btn {   
-        display: inline-block; padding: 12px 30px; background: var(--xiaomi-orange);   
+        display: block; width: fit-content; margin: 0 auto; padding: 12px 30px; background: var(--xiaomi-orange);   
         color: white; text-decoration: none; border-radius: 50px; font-weight: 700;  
-        box-shadow: 0 5px 15px rgba(255, 103, 0, 0.3); transition: 0.3s;  
     }  
-    .download-btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(255, 103, 0, 0.5); }  
 
     #admin-panel {   
         display: none; background: rgba(255, 103, 0, 0.1); backdrop-filter: blur(10px);   
@@ -135,146 +108,136 @@
         <div class="search-container">
             <input type="text" id="glass-search" class="glass-search" placeholder="🔍 ابحث عن قسم أو ثيم...">
         </div>
+
         <div class="links-grid">  
-        <a href="https://t.me/themes345" target="_blank" class="card reveal">  
-            <div class="card-icon">💬</div>  
-            <div class="card-title">جروب الدردشة</div>  
-            <div class="card-desc">المكان الذي نجمع فيه كل "الوحوش" لمساعدة بعضنا البعض!</div>  
-            <div class="card-btn">انضم للدردشة</div>  
-        </a>  
+            <a href="https://t.me/themes345" target="_blank" class="card reveal">  
+                <div class="card-icon">💬</div>  
+                <div class="card-title">جروب الدردشة</div>  
+                <div class="card-desc">المكان الذي نجمع فيه كل "الوحوش" لمساعدة بعضنا البعض!</div>  
+                <div class="card-btn">انضم للدردشة</div>  
+            </a>  
 
-        <a href="https://t.me/redmi3321" target="_blank" class="card orange reveal">  
-            <div class="card-icon">🧠</div>  
-            <div class="card-title">القناة الرئيسية</div>  
-            <div class="card-desc">مستودع الأسرار! هنا ستجد أحدث أخبار HyperOS وشروحات حصرية.</div>  
-            <div class="card-btn">اكتشف الأسرار</div>  
-        </a>  
+            <a href="https://t.me/redmi3321" target="_blank" class="card orange reveal">  
+                <div class="card-icon">🧠</div>  
+                <div class="card-title">القناة الرئيسية</div>  
+                <div class="card-desc">مستودع الأسرار! هنا ستجد أحدث أخبار HyperOS وشروحات حصرية.</div>  
+                <div class="card-btn">اكتشف الأسرار</div>  
+            </a>  
 
-        <a href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" class="card whatsapp reveal">  
-            <div class="card-icon">🟢</div>  
-            <div class="card-title">قناة الواتس</div>  
-            <div class="card-desc">لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا هنا!</div>  
-            <div class="card-btn">تابعنا على واتساب</div>  
-        </a>  
+            <a href="https://t.me/walper1" target="_blank" class="card purple reveal">  
+                <div class="card-icon">🖼️</div>  
+                <div class="card-title">قناة الخلفيات</div>  
+                <div class="card-desc">خلفيات 4K حصرية تليق بموبايلك الشاومي.. جرب ولن تندم!</div>  
+                <div class="card-btn">تصفح الخلفيات</div>  
+            </a>  
 
-        <div class="card purple reveal" onclick="toggleArea('themes-area')">  
-            <div class="card-icon">🎨</div>  
-            <div class="card-title">قسم الثيمات الحصرية</div>  
-            <div class="card-desc">أقوى تشكيلة ثيمات HyperOS من اختيارنا الخاص.</div>  
-            <div class="card-btn">تصفح الثيمات</div>  
+            <a href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" class="card whatsapp reveal">  
+                <div class="card-icon">🟢</div>  
+                <div class="card-title">قناة الواتس</div>  
+                <div class="card-desc">لكي تكون أول من يصله الخبر بلمسة واحدة.. تابعنا هنا!</div>  
+                <div class="card-btn">تابعنا على واتساب</div>  
+            </a>  
+
+            <div class="card orange reveal" onclick="toggleArea('themes-area')">  
+                <div class="card-icon">🎨</div>  
+                <div class="card-title">قسم الثيمات الحصرية</div>  
+                <div class="card-desc">أقوى تشكيلة ثيمات HyperOS تدار من لوحة تحكم جوجل.</div>  
+                <div class="card-btn">تصفح الثيمات</div>  
+            </div>  
         </div>  
+
+        <div id="themes-area">  
+            <h2 class="section-title">🖼️ مكتبة الثيمات الحصرية</h2>  
+            <div id="dynamic-themes-container">
+                <p style="text-align:center; color:var(--xiaomi-orange);">جارٍ جلب الثيمات من لوحة التحكم...</p>
+            </div>
+            <button onclick="toggleArea('themes-area')" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:15px; cursor:pointer; margin-top:20px; margin-bottom:40px;">إغلاق قسم الثيمات 🔼</button>  
+        </div>  
+
+        <div id="admin-panel">  
+            <span>إجمالي الزيارات: </span><span id="v-count">...</span>  
+        </div>  
+
+        <footer>  
+            <p>جميع الحقوق محفوظة &copy; 2026</p>  
+            <div class="dev-signature" id="admin-trigger">Developed by <span class="dev-name">ElPop</span></div>  
+        </footer>  
     </div>  
 
-    <div id="themes-area">  
-        <h2 class="section-title">🖼️ مكتبة الثيمات الحصرية</h2>  
-          
-        <div class="theme-item reveal">  
-            <img src="23487.jpg" alt="Tattooed boy" class="theme-img">  
-            <div class="theme-info">  
-                <div class="theme-name">1️⃣ Tattooed boy</div>  
-                <a href="https://www.mtzfile.pw/detail/82c82b07-c1de-4940-8b42-f384a5067c55?srsltid=AfmBOorEFT9RYLJQDLkjrtpmQLMb9ahPBWuvb_AT-QPv6N0dRLyuyX65" target="_blank" class="download-btn">تحميل الثيم الآن</a>  
-            </div>  
-        </div>  
+    <script>  
+        // الرابط السحري (output=csv)
+        const sheetURL = 'حط_رابط_الـCSV_هنا_يا_برنس';
 
-        <div class="theme-item reveal">  
-            <img src="23485.jpg" alt="Nk0'S Edition" class="theme-img">  
-            <div class="theme-info">  
-                <div class="theme-name">2️⃣ Nk0'S Edition ESP</div>  
-                <a href="https://hyperosthemeshub.com/nk0s-edition-esp-hyperos-theme/" target="_blank" class="download-btn">تحميل الثيم الآن</a>  
-            </div>  
-        </div>  
+        const observer = new IntersectionObserver((entries) => {  
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });  
+        }, { threshold: 0.1 });  
 
-        <div class="theme-item reveal">  
-            <img src="23483.jpg" alt="HyperMax" class="theme-img">  
-            <div class="theme-info">  
-                <div class="theme-name">3️⃣ HyperMax</div>  
-                <a href="https://www.miuithemer.com/themes/hypermax-hyperos-theme-for-xiaomi-and-redmi-phones/" target="_blank" class="download-btn">تحميل الثيم الآن</a>  
-            </div>  
-        </div>  
+        async function fetchThemes() {
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1);
+                const container = document.getElementById('dynamic-themes-container');
+                container.innerHTML = ''; 
 
-        <div class="theme-item reveal">  
-            <img src="23481.jpg" alt="Po-Blue" class="theme-img">  
-            <div class="theme-info">  
-                <div class="theme-name">4️⃣ Po-Blue</div>  
-                <a href="https://hyperosthemeshub.com/po-blue-hyperos-theme/" target="_blank" class="download-btn">تحميل الثيم الآن</a>  
-            </div>  
-        </div>  
-
-        <button onclick="toggleArea('themes-area')" style="width:100%; padding:15px; background:#475569; color:#fff; border:none; border-radius:15px; cursor:pointer; margin-bottom:40px;">إغلاق قسم الثيمات 🔼</button>  
-    </div>  
-
-    <div id="admin-panel">  
-        <span>إجمالي الزيارات: </span><span id="v-count">...</span>  
-    </div>  
-
-    <footer>  
-        <p>جميع الحقوق محفوظة &copy; 2026</p>  
-        <div class="dev-signature" id="admin-trigger">Developed by <span class="dev-name">ElPop</span></div>  
-    </footer>  
-</div>  
-
-<script>  
-    // أنيميشن الظهور  
-    const observer = new IntersectionObserver((entries) => {  
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });  
-    }, { threshold: 0.1 });  
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));  
-
-    // فتح وإغلاق الأقسام  
-    function toggleArea(id) {  
-        const area = document.getElementById(id);  
-        const isVisible = area.style.display === 'block';  
-        area.style.display = isVisible ? 'none' : 'block';  
-        if(!isVisible) area.scrollIntoView({behavior: 'smooth'});  
-    }  
-
-    // نظام البحث الجديد 
-    document.getElementById('glass-search').addEventListener('input', function() {
-        const query = this.value.toLowerCase();
-        
-        // بحث في الكروت الرئيسية
-        document.querySelectorAll('.links-grid .card').forEach(card => {
-            const text = card.innerText.toLowerCase();
-            card.style.display = text.includes(query) ? 'flex' : 'none';
-        });
-
-        // بحث في الثيمات
-        document.querySelectorAll('.theme-item').forEach(theme => {
-            const text = theme.innerText.toLowerCase();
-            theme.style.display = text.includes(query) ? 'block' : 'none';
-        });
-
-        // لو بيكتب حاجة، يفضل نفتح الأقسام المستخبية عشان يشوف نتيجة البحث
-        if(query.trim() !== "") {
-            document.getElementById('themes-area').style.display = 'block';
+                rows.forEach((row, index) => {
+                    const columns = row.split(',');
+                    if (columns.length >= 3) {
+                        const name = columns[0].trim();
+                        const img = columns[1].trim();
+                        const url = columns[2].trim();
+                        const card = `
+                            <div class="theme-item reveal active">  
+                                <img src="${img}" class="theme-img" onerror="this.src='https://via.placeholder.com/400x250'">  
+                                <div class="theme-name">${index + 1}️⃣ ${name}</div>  
+                                <a href="${url}" target="_blank" class="download-btn">تحميل الثيم الآن</a>  
+                            </div>`;
+                        container.innerHTML += card;
+                    }
+                });
+                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            } catch (e) { console.error(e); }
         }
-    });
 
-    // وضع الليل/النهار  
-    const toggleBtn = document.getElementById('theme-toggle');  
-    toggleBtn.addEventListener('click', () => {  
-        const isDark = document.body.getAttribute('data-theme') === 'dark';  
-        document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');  
-        document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';  
-        document.getElementById('t-mode').innerText = isDark ? 'الوضع الليلي' : 'الوضع الفاتح';  
-    });  
-
-    // عداد الزيارات  
-    fetch(`https://api.counterapi.dev/v1/xiaomi_pop_world_2026/hits/up`)  
-        .then(res => res.json())  
-        .then(data => { document.getElementById('v-count').innerText = data.count; });  
-
-    // تفعيل لوحة الأدمن  
-    let clicks = 0;  
-    document.getElementById('admin-trigger').addEventListener('click', () => {  
-        clicks++;  
-        if(clicks === 5) {  
-            const panel = document.getElementById('admin-panel');  
-            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';  
-            clicks = 0;  
+        function toggleArea(id) {  
+            const area = document.getElementById(id);  
+            const isVisible = area.style.display === 'block';  
+            area.style.display = isVisible ? 'none' : 'block';  
+            if(!isVisible) area.scrollIntoView({behavior: 'smooth'});  
         }  
-    });  
-</script>
 
+        document.getElementById('glass-search').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            document.querySelectorAll('.card, .theme-item').forEach(el => {
+                const text = el.innerText.toLowerCase();
+                el.style.display = text.includes(query) ? (el.classList.contains('card') ? 'flex' : 'block') : 'none';
+            });
+            if(query.trim() !== "") document.getElementById('themes-area').style.display = 'block';
+        });
+
+        const toggleBtn = document.getElementById('theme-toggle');  
+        toggleBtn.addEventListener('click', () => {  
+            const isDark = document.body.getAttribute('data-theme') === 'dark';  
+            document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');  
+            document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';  
+            document.getElementById('t-mode').innerText = isDark ? 'الوضع الليلي' : 'الوضع الفاتح';  
+        });  
+
+        fetch(`https://api.counterapi.dev/v1/xiaomi_pop_world_2026/hits/up`)  
+            .then(res => res.json())  
+            .then(data => { document.getElementById('v-count').innerText = data.count; });  
+
+        let clicks = 0;  
+        document.getElementById('admin-trigger').addEventListener('click', () => {  
+            clicks++;  
+            if(clicks === 5) {  
+                const panel = document.getElementById('admin-panel');  
+                panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';  
+                clicks = 0;  
+            }  
+        });
+
+        window.onload = fetchThemes;
+    </script>
 </body>  
 </html>
