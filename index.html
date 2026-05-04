@@ -29,7 +29,9 @@
         header p { font-size: 1.1rem; color: var(--text-muted); font-weight: 700; }
 
         .top-bar { position: sticky; top: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; margin-bottom: 20px; padding: 10px 20px; backdrop-filter: blur(12px); background: rgba(255,255,255,0.1); border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); }
-        #theme-toggle { background: var(--card-bg); border: none; color: var(--text-main); padding: 8px 18px; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: var(--shadow); }
+        .btn-ui { background: var(--card-bg); border: none; color: var(--text-main); padding: 8px 18px; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: var(--shadow); font-size: 0.8rem; }
+        
+        .visitor-counter { background: var(--xiaomi-orange); color: white; padding: 5px 15px; border-radius: 50px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
 
         .search-container { margin-bottom: 40px; }
         .glass-search { width: 100%; padding: 16px 25px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.15); background: var(--card-bg); color: var(--text-main); font-size: 1.1rem; outline: none; box-shadow: var(--shadow); }
@@ -59,7 +61,7 @@
         
         .download-btn { background: var(--xiaomi-orange); color: white; text-decoration: none; padding: 8px; border-radius: 8px; display: block; font-weight: 700; font-size: 0.9rem; }
 
-        #backToTop { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; background: var(--xiaomi-orange); color: white; border-radius: 50%; border: none; cursor: pointer; display: none; font-size: 1.5rem; }
+        #backToTop { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; background: var(--xiaomi-orange); color: white; border-radius: 50%; border: none; cursor: pointer; display: none; font-size: 1.5rem; z-index: 1000; }
         footer { text-align: center; padding: 40px; margin-top: 40px; border-top: 1px solid rgba(0,0,0,0.1); }
         .dev-signature { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--xiaomi-orange); margin-top: 10px; }
     </style>
@@ -68,13 +70,18 @@
 
 <div class="container">
     <div class="top-bar">
-        <button id="theme-toggle">☀️ الوضع الفاتح</button>
-        <div style="font-weight: 900;">XIAOMI WORLD</div>
+        <div>
+            <button id="theme-toggle" class="btn-ui">☀️ الوضع الفاتح</button>
+            <button id="lang-toggle" class="btn-ui" onclick="toggleLanguage()">English 🇺🇸</button>
+        </div>
+        <div class="visitor-counter">
+            <span id="txt-visitor">زائر</span> <span id="v-count">...</span> 👁️
+        </div>
     </div>
 
     <header>
-        <h1>🚀 انضم إلى عالم شاومي الاحترافي</h1>
-        <p>كل ما يخص هواتف شاومي، ريدمي، وبوكو في مكان واحد</p>
+        <h1 id="txt-h1">🚀 انضم إلى عالم شاومي الاحترافي</h1>
+        <p id="txt-p">كل ما يخص هواتف شاومي، ريدمي، وبوكو في مكان واحد</p>
     </header>
 
     <div class="search-container">
@@ -84,49 +91,48 @@
     <div class="links-grid">
         <a href="https://t.me/themes345" target="_blank" class="card">
             <div class="card-icon">💬</div>
-            <div class="card-title">جروب الدردشة</div>
-            <div class="card-desc">المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا في حل المشاكل وتخصيص الهواتف!</div>
-            <div class="card-btn">انضم للوحوش</div>
+            <div class="card-title" id="txt-c1">جروب الدردشة</div>
+            <div class="card-desc" id="txt-d1">المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا في حل المشاكل وتخصيص الهواتف!</div>
+            <div class="card-btn" id="txt-b1">انضم للوحوش</div>
         </a>
 
         <a href="https://t.me/redmi3321" target="_blank" class="card orange">
             <div class="card-icon">🧠</div>
-            <div class="card-title">القناة الرئيسية</div>
-            <div class="card-desc">مستودع الأسرار وأحدث أخبار واجهة HyperOS الحصرية والتحديثات الرسمية أولاً بأول.</div>
-            <div class="card-btn">اكتشف الأسرار</div>
+            <div class="card-title" id="txt-c2">القناة الرئيسية</div>
+            <div class="card-desc" id="txt-d2">مستودع الأسرار وأحدث أخبار واجهة HyperOS الحصرية والتحديثات الرسمية أولاً بأول.</div>
+            <div class="card-btn" id="txt-b2">اكتشف الأسرار</div>
         </a>
 
         <a href="https://t.me/themesXiaomia" target="_blank" class="card purple">
             <div class="card-icon">🖼️</div>
-            <div class="card-title">قناة الخلفيات</div>
-            <div class="card-desc">خلفيات 4K حصرية ومنتقاة بعناية تليق بجمال شاشة موبايلك الشاومي.</div>
-            <div class="card-btn">تصفح الخلفيات</div>
+            <div class="card-title" id="txt-c3">قناة الخلفيات</div>
+            <div class="card-desc" id="txt-d3">خلفيات 4K حصرية ومنتقاة بعناية تليق بجمال شاشة موبايلك الشاومي.</div>
+            <div class="card-btn" id="txt-b3">تصفح الخلفيات</div>
         </a>
 
         <a href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" class="card whatsapp">
             <div class="card-icon">🟢</div>
-            <div class="card-title">قناة الواتساب</div>
-            <div class="card-desc">لكي تكون أول من يصله الخبر بلمسة واحدة مباشرة على تطبيقك المفضل.</div>
-            <div class="card-btn">تابعنا على واتساب</div>
+            <div class="card-title" id="txt-c4">قناة الواتساب</div>
+            <div class="card-desc" id="txt-d4">لكي تكون أول من يصله الخبر بلمسة واحدة مباشرة على تطبيقك المفضل.</div>
+            <div class="card-btn" id="txt-b4">تابعنا على واتساب</div>
         </a>
 
         <div class="card orange" style="cursor:pointer" onclick="toggleThemes()">
             <div class="card-icon">🎨</div>
-            <div class="card-title">قسم الثيمات</div>
-            <div class="card-desc">أقوى تشكيلة ثيمات HyperOS و MIUI المختارة بعناية لتغيير شكل هاتفك بالكامل.</div>
-            <div class="card-btn">عرض 27 ثيم حصري</div>
+            <div class="card-title" id="txt-c5">قسم الثيمات</div>
+            <div class="card-desc" id="txt-d5">أقوى تشكيلة ثيمات HyperOS و MIUI المختارة بعناية لتغيير شكل هاتفك بالكامل.</div>
+            <div class="card-btn" id="txt-b5">عرض 27 ثيم حصري</div>
         </div>
     </div>
 
     <div id="themes-area">
-        <h2 style="text-align:center; margin-bottom:20px; color:var(--xiaomi-orange)">🖼️ مكتبة الثيمات (تفاعل وحمل)</h2>
-        <div class="themes-grid" id="themes-container">
-            </div>
-        <button onclick="toggleThemes()" style="width:100%; padding:15px; margin-top:20px; border-radius:15px; border:none; background:#475569; color:white; cursor:pointer">إغلاق المكتبة 🔼</button>
+        <h2 style="text-align:center; margin-bottom:20px; color:var(--xiaomi-orange)" id="txt-th-title">🖼️ مكتبة الثيمات (تفاعل وحمل)</h2>
+        <div class="themes-grid" id="themes-container"></div>
+        <button onclick="toggleThemes()" id="txt-close-lib" style="width:100%; padding:15px; margin-top:20px; border-radius:15px; border:none; background:#475569; color:white; cursor:pointer">إغلاق المكتبة 🔼</button>
     </div>
 
     <footer>
-        <p>جميع الحقوق محفوظة &copy; 2026 لـ Xiaomi World</p>
+        <p id="txt-footer">جميع الحقوق محفوظة &copy; 2026 لـ Xiaomi World</p>
         <div class="dev-signature">Developed by ElPop</div>
     </footer>
 </div>
@@ -134,7 +140,6 @@
 <button id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">🔝</button>
 
 <script>
-    // بيانات الـ 27 ثيم كاملة
     const themesData = [
         { id: 't1', name: 'Super26 Pro', link: 'https://www.miuithemer.com/themes/super26-pro-hyperos-theme-for-xiaomi-and-redmi-phones/' },
         { id: 't2', name: 'Blackess Pro', link: 'https://www.miuithemer.com/themes/blackess-pro-the-most-customizable-ios-theme-for-hyperos-with-dynamic-island/' },
@@ -153,25 +158,85 @@
         { id: 't15', name: 'Crypto Minimalist', link: 'https://www.miuithemer.com/themes/crypto-minimalist-masterpiece-with-immersive-3d-depth-of-field/' },
         { id: 't16', name: 'iOS 26', link: 'https://www.miuithemer.com/themes/ios-26-hyperos-theme-for-xiaomi-and-redmi-phones/' },
         { id: 't17', name: 'Blue HOS3', link: 'https://www.miuithemer.com/themes/blue-hos3-elevate-your-hyperos-with-immersive-3d-aesthetic/' },
-        { id: 't18', name: 'Pengpai Life', link: 'https://www.miuithemez.com/2026/04/pengpai-life-hyperos-theme-with-premium-design.html?m=1' },
-        { id: 't19', name: 'Glass 26M', link: 'https://www.miuithemez.com/2026/04/glass-26m-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't20', name: 'Colourful V2', link: 'https://www.miuithemez.com/2026/04/colourful-v2-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't21', name: 'Black HyperOS', link: 'https://www.miuithemez.com/2026/04/black-hyperos-theme-with-big-lock-screen-clock.html?m=1' },
-        { id: 't22', name: 'Liquid Fruit', link: 'https://www.miuithemez.com/2026/04/liquid-fruit-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't23', name: 'PO One', link: 'https://www.miuithemez.com/2026/05/po-one-hyperos-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't24', name: 'Dog Fruit', link: 'https://www.miuithemez.com/2026/04/dog-fruit-hyperos-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't25', name: 'Poo Dark', link: 'https://www.miuithemez.com/2026/05/poo-dark-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't26', name: 'RCLB2112 Dark', link: 'https://www.miuithemez.com/2026/04/rclb2112-hyperos-theme-with-dark-mode.html?m=1' },
+        { id: 't18', name: 'Pengpai Life', link: 'https://www.miuitthemez.com/2026/04/pengpai-life-hyperos-theme-with-premium-design.html?m=1' },
+        { id: 't19', name: 'Glass 26M', link: 'https://www.miuitthemez.com/2026/04/glass-26m-theme-for-xiaomi-redmi-phones.html?m=1' },
+        { id: 't20', name: 'Colourful V2', link: 'https://www.miuitthemez.com/2026/04/colourful-v2-theme-for-xiaomi-redmi-phones.html?m=1' },
+        { id: 't21', name: 'Black HyperOS', link: 'https://www.miuitthemez.com/2026/04/black-hyperos-theme-with-big-lock-screen-clock.html?m=1' },
+        { id: 't22', name: 'Liquid Fruit', link: 'https://www.miuitthemez.com/2026/04/liquid-fruit-theme-for-xiaomi-redmi-phones.html?m=1' },
+        { id: 't23', name: 'PO One', link: 'https://www.miuitthemez.com/2026/05/po-one-hyperos-theme-for-xiaomi-redmi-phones.html?m=1' },
+        { id: 't24', name: 'Dog Fruit', link: 'https://www.miuitthemez.com/2026/04/dog-fruit-hyperos-theme-for-xiaomi-redmi-phones.html?m=1' },
+        { id: 't25', name: 'Poo Dark', link: 'https://www.miuitthemez.com/2026/05/poo-dark-theme-for-xiaomi-redmi-phones.html?m=1' },
+        { id: 't26', name: 'RCLB2112 Dark', link: 'https://www.miuitthemez.com/2026/04/rclb2112-hyperos-theme-with-dark-mode.html?m=1' },
         { id: 't27', name: 'Dmoon in Aug', link: 'https://www.miuitthemez.com/2026/04/dmoon-in-aug-hyperos-theme-for-xiaomi-phones.html?m=1' }
     ];
 
-    // وظيفة بناء الثيمات في الصفحة
+    let currentLang = 'ar';
+    const langData = {
+        ar: {
+            h1: "🚀 انضم إلى عالم شاومي الاحترافي", p: "كل ما يخص هواتف شاومي، ريدمي، وبوكو في مكان واحد",
+            search: "🔍 ابحث عن قناة، جروب، أو ثيم معين...", c1: "جروب الدردشة", d1: "المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا في حل المشاكل وتخصيص الهواتف!", b1: "انضم للوحوش",
+            c2: "القناة الرئيسية", d2: "مستودع الأسرار وأحدث أخبار واجهة HyperOS الحصرية والتحديثات الرسمية أولاً بأول.", b2: "اكتشف الأسرار",
+            c3: "قناة الخلفيات", d3: "خلفيات 4K حصرية ومنتقاة بعناية تليق بجمال شاشة موبايلك الشاومي.", b3: "تصفح الخلفيات",
+            c4: "قناة الواتساب", d4: "لكي تكون أول من يصله الخبر بلمسة واحدة مباشرة على تطبيقك المفضل.", b4: "تابعنا على واتساب",
+            c5: "قسم الثيمات", d5: "أقوى تشكيلة ثيمات HyperOS و MIUI المختارة بعناية لتغيير شكل هاتفك بالكامل.", b5: "عرض 27 ثيم حصري",
+            thT: "🖼️ مكتبة الثيمات (تفاعل وحمل)", closeLib: "إغلاق المكتبة 🔼", foot: "جميع الحقوق محفوظة © 2026 لـ Xiaomi World", dl: "تحميل مباشر",
+            visitor: "زائر", lightM: "☀️ الوضع الفاتح", darkM: "🌙 الوضع الليلي"
+        },
+        en: {
+            h1: "🚀 Join Xiaomi Pro World", p: "Everything about Xiaomi, Redmi, & Poco in one place",
+            search: "🔍 Search for channel, group, or theme...", c1: "Chat Group", d1: "The place where we gather all monsters to help each other solve problems!", b1: "Join Monsters",
+            c2: "Main Channel", d2: "The secrets vault and latest exclusive HyperOS news and official updates.", b2: "Discover Secrets",
+            c3: "Wallpaper Channel", d3: "Exclusive 4K wallpapers carefully selected for your Xiaomi screen beauty.", b3: "Browse Wallpapers",
+            c4: "WhatsApp Channel", d4: "To be the first to receive the news with one touch directly on your app.", b4: "Follow on WhatsApp",
+            c5: "Themes Section", d5: "The strongest selection of HyperOS & MIUI themes to fully change your phone style.", b5: "Show 27 Exclusive Themes",
+            thT: "🖼️ Themes Library (Interact & Download)", closeLib: "Close Library 🔼", foot: "All Rights Reserved © 2026 - Xiaomi World", dl: "Direct Download",
+            visitor: "Visitors", lightM: "☀️ Light Mode", darkM: "🌙 Dark Mode"
+        }
+    };
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        const t = langData[currentLang];
+        document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        document.getElementById('txt-h1').innerText = t.h1;
+        document.getElementById('txt-p').innerText = t.p;
+        document.getElementById('main-search').placeholder = t.search;
+        document.getElementById('txt-c1').innerText = t.c1; document.getElementById('txt-d1').innerText = t.d1; document.getElementById('txt-b1').innerText = t.b1;
+        document.getElementById('txt-c2').innerText = t.c2; document.getElementById('txt-d2').innerText = t.d2; document.getElementById('txt-b2').innerText = t.b2;
+        document.getElementById('txt-c3').innerText = t.c3; document.getElementById('txt-d3').innerText = t.d3; document.getElementById('txt-b3').innerText = t.b3;
+        document.getElementById('txt-c4').innerText = t.c4; document.getElementById('txt-d4').innerText = t.d4; document.getElementById('txt-b4').innerText = t.b4;
+        document.getElementById('txt-c5').innerText = t.c5; document.getElementById('txt-d5').innerText = t.d5; document.getElementById('txt-b5').innerText = t.b5;
+        document.getElementById('txt-th-title').innerText = t.thT;
+        document.getElementById('txt-close-lib').innerText = t.closeLib;
+        document.getElementById('txt-footer').innerText = t.foot;
+        document.getElementById('txt-visitor').innerText = t.visitor;
+        document.getElementById('lang-toggle').innerText = currentLang === 'ar' ? "English 🇺🇸" : "العربية 🇪🇬";
+        buildThemes();
+    }
+
+    function updateVisitors() {
+        // الاتصال بـ API مجاني لحساب الزيارات الفعلية عالمياً
+        fetch('https://api.counterapi.dev/v1/xiaomiworld_elpop/pagevisits/up')
+            .then(response => response.json())
+            .then(data => {
+                // عرض الرقم الحقيقي من السيرفر
+                document.getElementById('v-count').innerText = data.count;
+            })
+            .catch(error => {
+                // خطة بديلة (Fallback): لو النت فصل أو السيرفر ماردش، نرجع للعداد المحلي القديم
+                let count = localStorage.getItem('site_visits') || 1042;
+                count = parseInt(count) + 1;
+                localStorage.setItem('site_visits', count);
+                document.getElementById('v-count').innerText = count;
+            });
+    }
+
     function buildThemes() {
         const container = document.getElementById('themes-container');
+        container.innerHTML = '';
         themesData.forEach(theme => {
             const savedLikes = localStorage.getItem('likes_' + theme.id) || 0;
             const isLiked = localStorage.getItem('user_liked_' + theme.id) ? 'active' : '';
-            
             container.innerHTML += `
                 <div class="theme-item">
                     <span class="theme-name">${theme.name}</span>
@@ -179,39 +244,31 @@
                         <span class="heart-icon ${isLiked}">❤️</span>
                         <span class="heart-count" id="count-${theme.id}">${savedLikes}</span>
                     </div>
-                    <a href="${theme.link}" target="_blank" class="download-btn">تحميل مباشر</a>
+                    <a href="${theme.link}" target="_blank" class="download-btn">${langData[currentLang].dl}</a>
                 </div>
             `;
         });
     }
 
-    // نظام اللايكات التفاعلي
     function handleLike(id, element) {
         const heart = element.querySelector('.heart-icon');
         const countSpan = document.getElementById('count-' + id);
         let count = parseInt(countSpan.innerText);
-
         if (!localStorage.getItem('user_liked_' + id)) {
-            count++;
-            heart.classList.add('active');
-            localStorage.setItem('user_liked_' + id, 'true');
+            count++; heart.classList.add('active'); localStorage.setItem('user_liked_' + id, 'true');
         } else {
-            count--;
-            heart.classList.remove('active');
-            localStorage.removeItem('user_liked_' + id);
+            count--; heart.classList.remove('active'); localStorage.removeItem('user_liked_' + id);
         }
         countSpan.innerText = count;
         localStorage.setItem('likes_' + id, count);
     }
 
-    // إظهار وإخفاء قسم الثيمات
     function toggleThemes() {
         const area = document.getElementById('themes-area');
         area.style.display = (area.style.display === 'none' || area.style.display === '') ? 'block' : 'none';
         if(area.style.display === 'block') area.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // البحث
     document.getElementById('main-search').addEventListener('input', function(e) {
         const term = e.target.value.toLowerCase();
         document.querySelectorAll('.card, .theme-item').forEach(item => {
@@ -220,19 +277,14 @@
         if(term.length > 0) document.getElementById('themes-area').style.display = 'block';
     });
 
-    // الوضع الليلي
     document.getElementById('theme-toggle').addEventListener('click', function() {
         const isDark = document.body.getAttribute('data-theme') === 'dark';
         document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
         this.innerText = isDark ? '🌙 الوضع الليلي' : '☀️ الوضع الفاتح';
     });
 
-    // سهم الصعود
     window.onscroll = () => { document.getElementById('backToTop').style.display = window.scrollY > 400 ? 'block' : 'none'; };
-
-    // تشغيل البناء عند التحميل
-    window.onload = buildThemes;
+    window.onload = () => { updateVisitors(); buildThemes(); };
 </script>
-
 </body>
 </html>
