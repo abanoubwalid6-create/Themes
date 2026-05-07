@@ -28,13 +28,100 @@
         header h1 { font-size: 2.5rem; font-weight: 900; color: var(--xiaomi-orange); margin-bottom: 10px; }
         header p { font-size: 1.1rem; color: var(--text-muted); font-weight: 700; }
 
-        .top-bar { position: sticky; top: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; margin-bottom: 20px; padding: 10px 20px; backdrop-filter: blur(12px); background: rgba(255,255,255,0.1); border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); }
-        .btn-ui { background: var(--card-bg); border: none; color: var(--text-main); padding: 8px 18px; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: var(--shadow); font-size: 0.8rem; }
-        
-        .visitor-counter { background: var(--xiaomi-orange); color: white; padding: 5px 15px; border-radius: 50px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
+        /* الشريط العلوي المدمج مع البحث */
+        .top-bar {
+            position: sticky;
+            top: 10px;
+            z-index: 1000;
+            margin-bottom: 30px;
+            backdrop-filter: blur(12px);
+            background: rgba(255,255,255,0.1);
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: var(--shadow);
+        }
+        .top-left-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-ui {
+            background: var(--card-bg);
+            border: none;
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.75rem;
+            box-shadow: var(--shadow);
+            white-space: nowrap;
+        }
+        .search-mini {
+            flex: 1;
+            min-width: 180px;
+        }
+        .search-mini input {
+            width: 100%;
+            padding: 8px 15px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .visitor-counter {
+            background: var(--xiaomi-orange);
+            color: white;
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-weight: 900;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+        @media (max-width: 650px) {
+            .top-bar { flex-direction: column; align-items: stretch; border-radius: 30px; }
+            .top-left-buttons { justify-content: center; }
+            .visitor-counter { justify-content: center; }
+        }
 
-        .search-container { margin-bottom: 40px; }
-        .glass-search { width: 100%; padding: 16px 25px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.15); background: var(--card-bg); color: var(--text-main); font-size: 1.1rem; outline: none; box-shadow: var(--shadow); }
+        .daily-theme-box {
+            background: linear-gradient(135deg, var(--xiaomi-orange), #ff8c42);
+            border-radius: 30px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            color: white;
+        }
+        .daily-theme-box h3 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .daily-theme-box p {
+            font-size: 1rem;
+            background: rgba(0,0,0,0.2);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+        }
+        .daily-theme-box a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid white;
+        }
 
         .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .card { background-color: var(--card-bg); padding: 30px; border-radius: 20px; text-decoration: none; color: var(--text-main); position: relative; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
@@ -42,7 +129,6 @@
         .card.orange::before { background: var(--xiaomi-orange); }
         .card.purple::before { background: #a855f7; }
         .card.whatsapp::before { background: var(--whatsapp-green); }
-        
         .card:hover { transform: translateY(-10px); }
         .card-icon { font-size: 2.5rem; margin-bottom: 15px; }
         .card-title { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
@@ -54,11 +140,6 @@
         .themes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
         .theme-item { background: var(--card-bg); padding: 15px; border-radius: 15px; text-align: center; box-shadow: var(--shadow); }
         .theme-name { font-weight: 900; margin-bottom: 10px; display: block; }
-        
-        .theme-stats { display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer; background: rgba(0,0,0,0.05); padding: 5px; border-radius: 8px; }
-        .heart-icon { color: #cbd5e1; font-size: 1.2rem; }
-        .heart-icon.active { color: #ff4757; }
-        
         .download-btn { background: var(--xiaomi-orange); color: white; text-decoration: none; padding: 8px; border-radius: 8px; display: block; font-weight: 700; font-size: 0.9rem; }
 
         #backToTop { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; background: var(--xiaomi-orange); color: white; border-radius: 50%; border: none; cursor: pointer; display: none; font-size: 1.5rem; z-index: 1000; }
@@ -69,10 +150,14 @@
 <body data-theme="dark">
 
 <div class="container">
+    <!-- الشريط العلوي المدمج مع مربع البحث والأزرار -->
     <div class="top-bar">
-        <div>
+        <div class="top-left-buttons">
             <button id="theme-toggle" class="btn-ui">☀️ الوضع الفاتح</button>
-            <button id="lang-toggle" class="btn-ui" onclick="toggleLanguage()">English 🇺🇸</button>
+            <button id="lang-toggle" class="btn-ui">English 🇺🇸</button>
+        </div>
+        <div class="search-mini">
+            <input type="text" id="main-search" placeholder="🔍 ابحث عن قناة، جروب، أو ثيم...">
         </div>
         <div class="visitor-counter">
             <span id="txt-visitor">زائر</span> <span id="v-count">...</span> 👁️
@@ -84,8 +169,10 @@
         <p id="txt-p">كل ما يخص هواتف شاومي، ريدمي، وبوكو في مكان واحد</p>
     </header>
 
-    <div class="search-container">
-        <input type="text" id="main-search" class="glass-search" placeholder="🔍 ابحث عن قناة، جروب، أو ثيم معين...">
+    <!-- ثيم اليوم + رابط التحميل -->
+    <div class="daily-theme-box">
+        <h3>🎯 THEME OF THE DAY</h3>
+        <p>📢 DOWNLOAD THEME IN THE LAST VIDEO in telegram link : <a href="https://t.me/redmi3321" target="_blank">https://t.me/redmi3321</a></p>
     </div>
 
     <div class="links-grid">
@@ -126,7 +213,7 @@
     </div>
 
     <div id="themes-area">
-        <h2 style="text-align:center; margin-bottom:20px; color:var(--xiaomi-orange)" id="txt-th-title">🖼️ مكتبة الثيمات (تفاعل وحمل)</h2>
+        <h2 style="text-align:center; margin-bottom:20px; color:var(--xiaomi-orange)" id="txt-th-title">🖼️ مكتبة الثيمات (تحميل مباشر)</h2>
         <div class="themes-grid" id="themes-container"></div>
         <button onclick="toggleThemes()" id="txt-close-lib" style="width:100%; padding:15px; margin-top:20px; border-radius:15px; border:none; background:#475569; color:white; cursor:pointer">إغلاق المكتبة 🔼</button>
     </div>
@@ -174,12 +261,12 @@
     const langData = {
         ar: {
             h1: "🚀 انضم إلى عالم شاومي الاحترافي", p: "كل ما يخص هواتف شاومي، ريدمي، وبوكو في مكان واحد",
-            search: "🔍 ابحث عن قناة، جروب، أو ثيم معين...", c1: "جروب الدردشة", d1: "المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا في حل المشاكل وتخصيص الهواتف!", b1: "انضم للوحوش",
+            search: "🔍 ابحث عن قناة، جروب، أو ثيم...", c1: "جروب الدردشة", d1: "المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا في حل المشاكل وتخصيص الهواتف!", b1: "انضم للوحوش",
             c2: "القناة الرئيسية", d2: "مستودع الأسرار وأحدث أخبار واجهة HyperOS الحصرية والتحديثات الرسمية أولاً بأول.", b2: "اكتشف الأسرار",
             c3: "قناة الخلفيات", d3: "خلفيات 4K حصرية ومنتقاة بعناية تليق بجمال شاشة موبايلك الشاومي.", b3: "تصفح الخلفيات",
             c4: "قناة الواتساب", d4: "لكي تكون أول من يصله الخبر بلمسة واحدة مباشرة على تطبيقك المفضل.", b4: "تابعنا على واتساب",
             c5: "قسم الثيمات", d5: "أقوى تشكيلة ثيمات HyperOS و MIUI المختارة بعناية لتغيير شكل هاتفك بالكامل.", b5: "عرض 27 ثيم حصري",
-            thT: "🖼️ مكتبة الثيمات (تفاعل وحمل)", closeLib: "إغلاق المكتبة 🔼", foot: "جميع الحقوق محفوظة © 2026 لـ Xiaomi World", dl: "تحميل مباشر",
+            thT: "🖼️ مكتبة الثيمات (تحميل مباشر)", closeLib: "إغلاق المكتبة 🔼", foot: "جميع الحقوق محفوظة © 2026 لـ Xiaomi World", dl: "تحميل مباشر",
             visitor: "زائر", lightM: "☀️ الوضع الفاتح", darkM: "🌙 الوضع الليلي"
         },
         en: {
@@ -189,7 +276,7 @@
             c3: "Wallpaper Channel", d3: "Exclusive 4K wallpapers carefully selected for your Xiaomi screen beauty.", b3: "Browse Wallpapers",
             c4: "WhatsApp Channel", d4: "To be the first to receive the news with one touch directly on your app.", b4: "Follow on WhatsApp",
             c5: "Themes Section", d5: "The strongest selection of HyperOS & MIUI themes to fully change your phone style.", b5: "Show 27 Exclusive Themes",
-            thT: "🖼️ Themes Library (Interact & Download)", closeLib: "Close Library 🔼", foot: "All Rights Reserved © 2026 - Xiaomi World", dl: "Direct Download",
+            thT: "🖼️ Themes Library (Direct Download)", closeLib: "Close Library 🔼", foot: "All Rights Reserved © 2026 - Xiaomi World", dl: "Direct Download",
             visitor: "Visitors", lightM: "☀️ Light Mode", darkM: "🌙 Dark Mode"
         }
     };
@@ -210,20 +297,18 @@
         document.getElementById('txt-close-lib').innerText = t.closeLib;
         document.getElementById('txt-footer').innerText = t.foot;
         document.getElementById('txt-visitor').innerText = t.visitor;
-        document.getElementById('lang-toggle').innerText = currentLang === 'ar' ? "English 🇺🇸" : "العربية 🇪🇬";
+        const langBtn = document.getElementById('lang-toggle');
+        if (langBtn) langBtn.innerText = currentLang === 'ar' ? "English 🇺🇸" : "العربية 🇪🇬";
         buildThemes();
     }
 
     function updateVisitors() {
-        // الاتصال بـ API مجاني لحساب الزيارات الفعلية عالمياً
         fetch('https://api.counterapi.dev/v1/xiaomiworld_elpop/pagevisits/up')
             .then(response => response.json())
             .then(data => {
-                // عرض الرقم الحقيقي من السيرفر
                 document.getElementById('v-count').innerText = data.count;
             })
-            .catch(error => {
-                // خطة بديلة (Fallback): لو النت فصل أو السيرفر ماردش، نرجع للعداد المحلي القديم
+            .catch(() => {
                 let count = localStorage.getItem('site_visits') || 1042;
                 count = parseInt(count) + 1;
                 localStorage.setItem('site_visits', count);
@@ -233,58 +318,72 @@
 
     function buildThemes() {
         const container = document.getElementById('themes-container');
+        if (!container) return;
         container.innerHTML = '';
         themesData.forEach(theme => {
-            const savedLikes = localStorage.getItem('likes_' + theme.id) || 0;
-            const isLiked = localStorage.getItem('user_liked_' + theme.id) ? 'active' : '';
             container.innerHTML += `
                 <div class="theme-item">
                     <span class="theme-name">${theme.name}</span>
-                    <div class="theme-stats" onclick="handleLike('${theme.id}', this)">
-                        <span class="heart-icon ${isLiked}">❤️</span>
-                        <span class="heart-count" id="count-${theme.id}">${savedLikes}</span>
-                    </div>
                     <a href="${theme.link}" target="_blank" class="download-btn">${langData[currentLang].dl}</a>
                 </div>
             `;
         });
     }
 
-    function handleLike(id, element) {
-        const heart = element.querySelector('.heart-icon');
-        const countSpan = document.getElementById('count-' + id);
-        let count = parseInt(countSpan.innerText);
-        if (!localStorage.getItem('user_liked_' + id)) {
-            count++; heart.classList.add('active'); localStorage.setItem('user_liked_' + id, 'true');
-        } else {
-            count--; heart.classList.remove('active'); localStorage.removeItem('user_liked_' + id);
-        }
-        countSpan.innerText = count;
-        localStorage.setItem('likes_' + id, count);
-    }
-
     function toggleThemes() {
         const area = document.getElementById('themes-area');
-        area.style.display = (area.style.display === 'none' || area.style.display === '') ? 'block' : 'none';
-        if(area.style.display === 'block') area.scrollIntoView({ behavior: 'smooth' });
+        if (area.style.display === 'none' || area.style.display === '') {
+            area.style.display = 'block';
+            area.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            area.style.display = 'none';
+        }
     }
 
-    document.getElementById('main-search').addEventListener('input', function(e) {
-        const term = e.target.value.toLowerCase();
-        document.querySelectorAll('.card, .theme-item').forEach(item => {
-            item.style.display = item.innerText.toLowerCase().includes(term) ? '' : 'none';
+    // البحث المباشر (في البطاقات والثيمات)
+    const searchInput = document.getElementById('main-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            // تصفية البطاقات
+            document.querySelectorAll('.links-grid .card').forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(term) ? '' : 'none';
+            });
+            // تصفية الثيمات داخل المكتبة (إذا ظهرت)
+            document.querySelectorAll('#themes-container .theme-item').forEach(item => {
+                const name = item.querySelector('.theme-name')?.innerText.toLowerCase() || '';
+                item.style.display = name.includes(term) ? '' : 'none';
+            });
+            if (term.length > 0 && document.getElementById('themes-area').style.display !== 'block') {
+                document.getElementById('themes-area').style.display = 'block';
+            }
         });
-        if(term.length > 0) document.getElementById('themes-area').style.display = 'block';
-    });
+    }
 
-    document.getElementById('theme-toggle').addEventListener('click', function() {
-        const isDark = document.body.getAttribute('data-theme') === 'dark';
-        document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        this.innerText = isDark ? '🌙 الوضع الليلي' : '☀️ الوضع الفاتح';
-    });
+    // تبديل الوضع الليلي
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            themeToggle.innerText = isDark ? (currentLang === 'ar' ? '🌙 الوضع الليلي' : '🌙 Dark Mode') : (currentLang === 'ar' ? '☀️ الوضع الفاتح' : '☀️ Light Mode');
+        });
+    }
 
-    window.onscroll = () => { document.getElementById('backToTop').style.display = window.scrollY > 400 ? 'block' : 'none'; };
-    window.onload = () => { updateVisitors(); buildThemes(); };
+    // زر العودة للأعلى
+    window.onscroll = () => {
+        const btn = document.getElementById('backToTop');
+        if (btn) btn.style.display = window.scrollY > 400 ? 'block' : 'none';
+    };
+
+    window.onload = () => {
+        updateVisitors();
+        buildThemes();
+        const langBtn = document.getElementById('lang-toggle');
+        if (langBtn) langBtn.addEventListener('click', toggleLanguage);
+    };
 </script>
 </body>
 </html>
+```
