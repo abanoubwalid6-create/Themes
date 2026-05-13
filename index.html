@@ -136,12 +136,6 @@
         .card-btn { margin-top: auto; padding: 12px; text-align: center; background: rgba(255,103,0,0.1); color: var(--xiaomi-orange); border-radius: 12px; font-weight: 900; }
         .card:hover .card-btn { background: var(--xiaomi-orange); color: white; }
 
-        #themes-area { display: none; margin-top: 30px; }
-        .themes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
-        .theme-item { background: var(--card-bg); padding: 15px; border-radius: 15px; text-align: center; box-shadow: var(--shadow); }
-        .theme-name { font-weight: 900; margin-bottom: 10px; display: block; }
-        .download-btn { background: var(--xiaomi-orange); color: white; text-decoration: none; padding: 8px; border-radius: 8px; display: block; font-weight: 700; font-size: 0.9rem; }
-
         #backToTop { position: fixed; bottom: 20px; left: 20px; width: 50px; height: 50px; background: var(--xiaomi-orange); color: white; border-radius: 50%; border: none; cursor: pointer; display: none; font-size: 1.5rem; z-index: 1000; }
         footer { text-align: center; padding: 40px; margin-top: 40px; border-top: 1px solid rgba(0,0,0,0.1); }
         .dev-signature { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--xiaomi-orange); margin-top: 10px; }
@@ -157,7 +151,7 @@
             <button id="lang-toggle" class="btn-ui">English 🇺🇸</button>
         </div>
         <div class="search-mini">
-            <input type="text" id="main-search" placeholder="🔍 ابحث عن قناة، جروب، أو ثيم...">
+            <input type="text" id="main-search" placeholder="🔍 ابحث عن قناة، جروب...">
         </div>
         <div class="visitor-counter">
             <span id="txt-visitor">زائر</span> <span id="v-count">...</span> 👁️
@@ -203,19 +197,6 @@
             <div class="card-desc" id="txt-d4">لكي تكون أول من يصله الخبر بلمسة واحدة مباشرة على تطبيقك المفضل.</div>
             <div class="card-btn" id="txt-b4">تابعنا على واتساب</div>
         </a>
-
-        <div class="card orange" style="cursor:pointer" onclick="toggleThemes()">
-            <div class="card-icon">🎨</div>
-            <div class="card-title" id="txt-c5">قسم الثيمات</div>
-            <div class="card-desc" id="txt-d5">أقوى تشكيلة ثيمات HyperOS و MIUI المختارة بعناية لتغيير شكل هاتفك بالكامل.</div>
-            <div class="card-btn" id="txt-b5">عرض 27 ثيم حصري</div>
-        </div>
-    </div>
-
-    <div id="themes-area">
-        <h2 style="text-align:center; margin-bottom:20px; color:var(--xiaomi-orange)" id="txt-th-title">🖼️ مكتبة الثيمات (تحميل مباشر)</h2>
-        <div class="themes-grid" id="themes-container"></div>
-        <button onclick="toggleThemes()" id="txt-close-lib" style="width:100%; padding:15px; margin-top:20px; border-radius:15px; border:none; background:#475569; color:white; cursor:pointer">إغلاق المكتبة 🔼</button>
     </div>
 
     <footer>
@@ -227,57 +208,23 @@
 <button id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">🔝</button>
 
 <script>
-    const themesData = [
-        { id: 't1', name: 'Super26 Pro', link: 'https://www.miuithemer.com/themes/super26-pro-hyperos-theme-for-xiaomi-and-redmi-phones/' },
-        { id: 't2', name: 'Blackess Pro', link: 'https://www.miuithemer.com/themes/blackess-pro-the-most-customizable-ios-theme-for-hyperos-with-dynamic-island/' },
-        { id: 't3', name: 'Tattooed boy', link: 'https://www.mtzfile.pw/detail/82c82b07-c1de-4940-8b42-f384a5067c55' },
-        { id: 't4', name: 'Nk0\'S Edition', link: 'https://hyperosthemeshub.com/nk0s-edition-esp-hyperos-theme/' },
-        { id: 't5', name: 'HyperMax', link: 'https://www.miuithemer.com/themes/hypermax-hyperos-theme-for-xiaomi-and-redmi-phones/' },
-        { id: 't6', name: 'Po-Blue', link: 'https://hyperosthemeshub.com/po-blue-hyperos-theme/' },
-        { id: 't7', name: 'Fluffy Dark', link: 'https://www.miuithemer.com/themes/fluffy-dark-hyperos-theme-for-xiaomi-and-redmi-phones/' },
-        { id: 't8', name: 'Colorful 15V3', link: 'https://hyperosthemer.com/colorful-15v3-hyperos-theme-for-xiaomi-and-redmi-phones/' },
-        { id: 't9', name: 'Businessman H3', link: 'https://hyperosthemeshub.com/businessman-h3-hyperos-theme/' },
-        { id: 't10', name: 'Mango HOS3', link: 'https://hyperosthemer.com/mango-hos3-hyperos-theme-for-xiaomi-and-redmi-phones/' },
-        { id: 't11', name: 'Covalent V2', link: 'https://hyperosthemeshub.com/covalent-v2-hyperos-theme/' },
-        { id: 't12', name: 'OX GR1 Pro', link: 'https://www.miuithemer.com/themes/ox-gr1-hyperos-theme-for-xiaomi-and-redmi-phones/' },
-        { id: 't13', name: 'Super26', link: 'https://share.google/EdqzHIFKg2DgaDNZ5' },
-        { id: 't14', name: 'Xiaomi Vision GT', link: 'https://share.google/qZ2jfrfsjw3A4wD8N' },
-        { id: 't15', name: 'Crypto Minimalist', link: 'https://www.miuithemer.com/themes/crypto-minimalist-masterpiece-with-immersive-3d-depth-of-field/' },
-        { id: 't16', name: 'iOS 26', link: 'https://www.miuithemer.com/themes/ios-26-hyperos-theme-for-xiaomi-and-redmi-phones/' },
-        { id: 't17', name: 'Blue HOS3', link: 'https://www.miuithemer.com/themes/blue-hos3-elevate-your-hyperos-with-immersive-3d-aesthetic/' },
-        { id: 't18', name: 'Pengpai Life', link: 'https://www.miuitthemez.com/2026/04/pengpai-life-hyperos-theme-with-premium-design.html?m=1' },
-        { id: 't19', name: 'Glass 26M', link: 'https://www.miuitthemez.com/2026/04/glass-26m-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't20', name: 'Colourful V2', link: 'https://www.miuitthemez.com/2026/04/colourful-v2-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't21', name: 'Black HyperOS', link: 'https://www.miuitthemez.com/2026/04/black-hyperos-theme-with-big-lock-screen-clock.html?m=1' },
-        { id: 't22', name: 'Liquid Fruit', link: 'https://www.miuitthemez.com/2026/04/liquid-fruit-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't23', name: 'PO One', link: 'https://www.miuitthemez.com/2026/05/po-one-hyperos-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't24', name: 'Dog Fruit', link: 'https://www.miuitthemez.com/2026/04/dog-fruit-hyperos-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't25', name: 'Poo Dark', link: 'https://www.miuitthemez.com/2026/05/poo-dark-theme-for-xiaomi-redmi-phones.html?m=1' },
-        { id: 't26', name: 'RCLB2112 Dark', link: 'https://www.miuitthemez.com/2026/04/rclb2112-hyperos-theme-with-dark-mode.html?m=1' },
-        { id: 't27', name: 'Dmoon in Aug', link: 'https://www.miuitthemez.com/2026/04/dmoon-in-aug-hyperos-theme-for-xiaomi-phones.html?m=1' }
-    ];
-
     let currentLang = 'ar';
     const langData = {
         ar: {
             h1: "🚀 انضم إلى عالم شاومي الاحترافي", p: "كل ما يخص هواتف شاومي، ريدمي، وبوكو في مكان واحد",
-            search: "🔍 ابحث عن قناة، جروب، أو ثيم...", c1: "جروب الدردشة", d1: "المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا في حل المشاكل وتخصيص الهواتف!", b1: "انضم للوحوش",
+            search: "🔍 ابحث عن قناة، جروب...", c1: "جروب الدردشة", d1: "المكان الذي نجمع فيه كل الوحوش لمساعدة بعضنا في حل المشاكل وتخصيص الهواتف!", b1: "انضم للوحوش",
             c2: "القناة الرئيسية", d2: "مستودع الأسرار وأحدث أخبار واجهة HyperOS الحصرية والتحديثات الرسمية أولاً بأول.", b2: "اكتشف الأسرار",
             c3: "قناة الخلفيات", d3: "خلفيات 4K حصرية ومنتقاة بعناية تليق بجمال شاشة موبايلك الشاومي.", b3: "تصفح الخلفيات",
             c4: "قناة الواتساب", d4: "لكي تكون أول من يصله الخبر بلمسة واحدة مباشرة على تطبيقك المفضل.", b4: "تابعنا على واتساب",
-            c5: "قسم الثيمات", d5: "أقوى تشكيلة ثيمات HyperOS و MIUI المختارة بعناية لتغيير شكل هاتفك بالكامل.", b5: "عرض 27 ثيم حصري",
-            thT: "🖼️ مكتبة الثيمات (تحميل مباشر)", closeLib: "إغلاق المكتبة 🔼", foot: "جميع الحقوق محفوظة © 2026 لـ Xiaomi World", dl: "تحميل مباشر",
-            visitor: "زائر", lightM: "☀️ الوضع الفاتح", darkM: "🌙 الوضع الليلي"
+            foot: "جميع الحقوق محفوظة © 2026 لـ Xiaomi World", visitor: "زائر"
         },
         en: {
             h1: "🚀 Join Xiaomi Pro World", p: "Everything about Xiaomi, Redmi, & Poco in one place",
-            search: "🔍 Search for channel, group, or theme...", c1: "Chat Group", d1: "The place where we gather all monsters to help each other solve problems!", b1: "Join Monsters",
+            search: "🔍 Search for channel, group...", c1: "Chat Group", d1: "The place where we gather all monsters to help each other solve problems!", b1: "Join Monsters",
             c2: "Main Channel", d2: "The secrets vault and latest exclusive HyperOS news and official updates.", b2: "Discover Secrets",
             c3: "Wallpaper Channel", d3: "Exclusive 4K wallpapers carefully selected for your Xiaomi screen beauty.", b3: "Browse Wallpapers",
             c4: "WhatsApp Channel", d4: "To be the first to receive the news with one touch directly on your app.", b4: "Follow on WhatsApp",
-            c5: "Themes Section", d5: "The strongest selection of HyperOS & MIUI themes to fully change your phone style.", b5: "Show 27 Exclusive Themes",
-            thT: "🖼️ Themes Library (Direct Download)", closeLib: "Close Library 🔼", foot: "All Rights Reserved © 2026 - Xiaomi World", dl: "Direct Download",
-            visitor: "Visitors", lightM: "☀️ Light Mode", darkM: "🌙 Dark Mode"
+            foot: "All Rights Reserved © 2026 - Xiaomi World", visitor: "Visitors"
         }
     };
 
@@ -292,14 +239,17 @@
         document.getElementById('txt-c2').innerText = t.c2; document.getElementById('txt-d2').innerText = t.d2; document.getElementById('txt-b2').innerText = t.b2;
         document.getElementById('txt-c3').innerText = t.c3; document.getElementById('txt-d3').innerText = t.d3; document.getElementById('txt-b3').innerText = t.b3;
         document.getElementById('txt-c4').innerText = t.c4; document.getElementById('txt-d4').innerText = t.d4; document.getElementById('txt-b4').innerText = t.b4;
-        document.getElementById('txt-c5').innerText = t.c5; document.getElementById('txt-d5').innerText = t.d5; document.getElementById('txt-b5').innerText = t.b5;
-        document.getElementById('txt-th-title').innerText = t.thT;
-        document.getElementById('txt-close-lib').innerText = t.closeLib;
         document.getElementById('txt-footer').innerText = t.foot;
         document.getElementById('txt-visitor').innerText = t.visitor;
         const langBtn = document.getElementById('lang-toggle');
         if (langBtn) langBtn.innerText = currentLang === 'ar' ? "English 🇺🇸" : "العربية 🇪🇬";
-        buildThemes();
+        
+        // تحديث نص زر الوضع الليلي حسب اللغة الحالية
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            themeBtn.innerText = isDark ? (currentLang === 'ar' ? '🌙 الوضع الليلي' : '🌙 Dark Mode') : (currentLang === 'ar' ? '☀️ الوضع الفاتح' : '☀️ Light Mode');
+        }
     }
 
     function updateVisitors() {
@@ -316,31 +266,7 @@
             });
     }
 
-    function buildThemes() {
-        const container = document.getElementById('themes-container');
-        if (!container) return;
-        container.innerHTML = '';
-        themesData.forEach(theme => {
-            container.innerHTML += `
-                <div class="theme-item">
-                    <span class="theme-name">${theme.name}</span>
-                    <a href="${theme.link}" target="_blank" class="download-btn">${langData[currentLang].dl}</a>
-                </div>
-            `;
-        });
-    }
-
-    function toggleThemes() {
-        const area = document.getElementById('themes-area');
-        if (area.style.display === 'none' || area.style.display === '') {
-            area.style.display = 'block';
-            area.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            area.style.display = 'none';
-        }
-    }
-
-    // البحث المباشر (في البطاقات والثيمات)
+    // البحث المباشر (في البطاقات فقط)
     const searchInput = document.getElementById('main-search');
     if (searchInput) {
         searchInput.addEventListener('input', function(e) {
@@ -350,14 +276,6 @@
                 const text = card.innerText.toLowerCase();
                 card.style.display = text.includes(term) ? '' : 'none';
             });
-            // تصفية الثيمات داخل المكتبة (إذا ظهرت)
-            document.querySelectorAll('#themes-container .theme-item').forEach(item => {
-                const name = item.querySelector('.theme-name')?.innerText.toLowerCase() || '';
-                item.style.display = name.includes(term) ? '' : 'none';
-            });
-            if (term.length > 0 && document.getElementById('themes-area').style.display !== 'block') {
-                document.getElementById('themes-area').style.display = 'block';
-            }
         });
     }
 
@@ -379,11 +297,9 @@
 
     window.onload = () => {
         updateVisitors();
-        buildThemes();
         const langBtn = document.getElementById('lang-toggle');
         if (langBtn) langBtn.addEventListener('click', toggleLanguage);
     };
 </script>
 </body>
 </html>
-```
