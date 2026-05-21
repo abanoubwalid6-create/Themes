@@ -18,7 +18,7 @@
         ::-webkit-scrollbar-thumb { background: var(--xiaomi-orange); border-radius: 10px; }
         .scroll-progress { position: fixed; top: 0; right: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--xiaomi-orange), #ffb347, var(--xiaomi-orange)); background-size: 200% auto; z-index: 9999; border-radius: 0 0 4px 0; transition: width 0.1s ease-out; box-shadow: 0 0 6px var(--xiaomi-orange); animation: gradientShift 3s ease infinite; }
         @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .glass-card, .top-bar, .hero, .card, .category-main-btn, .option-card, .modal-content, .legend-counter { backdrop-filter: blur(12px); background: var(--card-bg); box-shadow: var(--shadow-glass); border: 1px solid rgba(255,255,255,0.2); }
+        .glass-card, .top-bar, .hero, .card, .category-main-btn, .option-card, .modal-content, .legend-counter, .advanced-codes-section { backdrop-filter: blur(12px); background: var(--card-bg); box-shadow: var(--shadow-glass); border: 1px solid rgba(255,255,255,0.2); }
         @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
         .links-grid .card, .category-main-btn, .options-panel .option-card { animation: fadeSlideUp 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards; opacity: 0; }
         .links-grid .card:nth-child(1) { animation-delay: 0.05s; }
@@ -62,18 +62,28 @@
         .close-modal { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--text-main); }
         .code-group { margin-bottom: 25px; }
         .code-group h4 { color: var(--xiaomi-orange); margin-bottom: 12px; display: flex; gap: 8px; align-items: center; }
-        .code-item { background: #0f172a; color: #facc15; padding: 12px; border-radius: 20px; margin-bottom: 12px; direction: ltr; text-align: left; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
-        .code-text { font-family: monospace; font-size: 0.75rem; word-break: break-all; flex: 1; }
-        .code-benefit { font-size: 0.7rem; color: #aaa; width: 100%; text-align: right; margin-top: 5px; }
-        .copy-code-btn { background: var(--xiaomi-orange); border: none; padding: 5px 12px; border-radius: 30px; color: white; cursor: pointer; transition: 0.1s; }
-        .copy-code-btn:active { transform: scale(0.94); background: #cc5500; }
+        .code-item, .advanced-code-item { background: #0f172a; color: #facc15; padding: 12px; border-radius: 20px; margin-bottom: 12px; direction: ltr; text-align: left; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+        .code-text, .advanced-code-text { font-family: monospace; font-size: 0.75rem; word-break: break-all; flex: 1; }
+        .code-benefit, .advanced-code-benefit { font-size: 0.7rem; color: #aaa; width: 100%; text-align: right; margin-top: 5px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .copy-code-btn, .copy-adv-btn { background: var(--xiaomi-orange); border: none; padding: 5px 12px; border-radius: 30px; color: white; cursor: pointer; transition: 0.1s; }
+        .copy-code-btn:active, .copy-adv-btn:active { transform: scale(0.94); background: #cc5500; }
         .note-box { background: rgba(255,103,0,0.2); border-radius: 20px; padding: 10px; font-size: 0.75rem; text-align: center; margin-top: 15px; }
         .legend-counter { border-radius: 60px; padding: 16px; text-align: center; font-weight: bold; margin: 30px 0; }
         footer { text-align: center; margin-top: 30px; padding: 20px; }
         .dev-signature { font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: var(--xiaomi-orange); }
         #backToTop { position: fixed; bottom: 20px; left: 20px; width: 48px; height: 48px; background: var(--xiaomi-orange); border-radius: 50%; display: none; justify-content: center; align-items: center; color: white; cursor: pointer; z-index: 99; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .status-badge { display: inline-block; background: #10b981; color: white; padding: 2px 10px; border-radius: 50px; font-size: 0.7rem; margin-right: 12px; vertical-align: middle; }
-        @media (max-width: 650px) { .top-bar { flex-direction: column; align-items: stretch; } .hero h1 { font-size: 1.5rem; } }
+        /* new advanced codes section styles */
+        .advanced-codes-section { border-radius: 32px; padding: 28px; margin: 30px 0; transition: all 0.3s; }
+        .advanced-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; border-right: 4px solid var(--xiaomi-orange); padding-right: 16px; }
+        .advanced-header i { font-size: 2rem; color: var(--xiaomi-orange); }
+        .advanced-header h2 { font-size: 1.7rem; margin: 0; }
+        .advanced-grid { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+        .advanced-code-item { background: rgba(0,0,0,0.35); border-radius: 24px; transition: 0.2s; }
+        .advanced-code-item:hover { background: rgba(255,103,0,0.15); }
+        .harm-note { color: #ffaa66; font-size: 0.7rem; margin-right: 12px; border-right: 1px solid #ff884d; padding-right: 10px; }
+        .warning-developer { background: rgba(220, 38, 38, 0.2); border: 1px solid #ff884d; border-radius: 24px; padding: 15px; margin-top: 20px; }
+        @media (max-width: 650px) { .top-bar { flex-direction: column; align-items: stretch; } .hero h1 { font-size: 1.5rem; } .advanced-header h2 { font-size: 1.2rem; } }
     </style>
 </head>
 <body data-theme="dark">
@@ -144,6 +154,22 @@
         </div>
     </div>
 
+    <!-- القسم الجديد: حزمة الأكواد المتقدمة Vulkan + أداء خارق (10 أكواد) بدون أي تغيير في باقي الموقع -->
+    <div class="advanced-codes-section glass-card">
+        <div class="advanced-header">
+            <i class="fas fa-fire"></i>
+            <h2>🔥 حزمة الأكواد الخارقة | Vulkan + فك الخنق + سلاسة أسطورية</h2>
+        </div>
+        <p style="margin-bottom: 12px; opacity:0.9;"><i class="fas fa-microchip"></i> أكواد احترافية لمحرك Vulkan، رفع أداء GPU، منع الخنق الحراري، تسريع اللمس — لـ LADB / Brevent</p>
+        <div class="advanced-grid" id="advancedCodesList"></div>
+        <div class="warning-developer">
+            <i class="fas fa-exclamation-triangle" style="color:#ffaa33;"></i> <strong>⚠️ تنبيهات المطورين للمتابعين (Important Notes):</strong><br>
+            • <strong>تفعيل الأكواد:</strong> بعد كتابة الأكواد في تطبيق بريفينت أو LADB، يجب عمل <strong>إعادة تشغيل (Restart)</strong> للهاتف عشان السيستم يطبق الإعدادات العميقة دي على نظافة.<br>
+            • <strong>الأمان:</strong> الأكواد آمنة تماماً ولا تفرمت الجهاز، وإذا حبيت تلغي أي كود بيبدأ بـ persist أو setprop وتجبره يرجع للوضع الافتراضي، اكتبه تاني واستبدل القيمة (مثلاً 1 خليها 0 أو true خليها false).<br>
+            • <strong>ملاحظة الأداء:</strong> بعض الأكواد مثل thermal throttle قد تزيد الحرارة في الألعاب الثقيلة، استخدمها بحكمة.
+        </div>
+    </div>
+
     <div class="legend-counter"><span data-i18n="legends_prefix">🏆 أساطير القناة:</span> <span id="legendCount">0</span> <span data-i18n="legends_suffix">شخص انضم عبر الموقع</span></div>
     <footer><p id="txt-footer" data-i18n="footer_rights">جميع الحقوق محفوظة بواسطة ELPOP</p><div class="dev-signature">Developed by ElPop</div></footer>
 </div>
@@ -158,6 +184,20 @@
 </div>
 
 <script>
+    // ======================= البيانات الجديدة للأكواد المتقدمة (10 أكواد خارقة) =======================
+    const advancedPerformanceCodes = [
+        { title: "1️⃣ تحويل رندرة الواجهة لمحرك Vulkan الأسرع", code: "setprop debug.hwui.renderer vulkan", benefit: "سلاسة فائقة في التنقل وحركة القوائم.", harm: "قد يسبب وميض (Flicker) في بعض الرومات غير المستقرة." },
+        { title: "2️⃣ إجبار النظام على ترجمة التطبيقات بأقصى سرعة فتح", code: "setprop dalvik.vm.dex2oat-filter speed", benefit: "فتح التطبيقات بشكل فوري وسريع جداً.", harm: "استهلاك أكبر بسيط في المساحة الداخلية للتطبيقات." },
+        { title: "3️⃣ تسريع أنيميشن النوافذ بشكل خارق", code: "settings put global window_animation_scale 0.35", benefit: "سرعة خاطفة في تنقلات النظام واستجابة الواجهة.", harm: "لا يوجد ضرر، مجرد حركة بصرية سريعة جداً." },
+        { title: "4️⃣ معالجة جرافيكس الواجهة في خيوط منفصلة", code: "setprop view.draw_with_render_thread true", benefit: "التخلص من التقطيع (Stutter) أثناء تصفح الواجهة.", harm: "زيادة طفيفة جداً في استهلاك المعالج أثناء الضغط." },
+        { title: "5️⃣ إيقاف خنق المعالج (Thermal Throttling) لثبات الفريمات", code: "setprop debug.mono.thermal 0", benefit: "ثبات جبار في فريمات الألعاب الثقيلة ومنع الهبوط المفاجئ.", harm: "ارتفاع حرارة الجهاز لو ضغطت عليه لفترات طويلة (استخدمه بحذر)." },
+        { title: "6️⃣ تقليل زمن استجابة الشاشة للمس ليكون فورياً", code: "settings put system touch_response_forwarding 1", benefit: "استجابة لمس (Touch Latency) سريعة جداً وممتازة للألعاب.", harm: "قد يستهلك طاقة بطارية ميكروسكوبية زيادة." },
+        { title: "7️⃣ تحجيم تطبيقات الخلفية العشوائية لتوفير الرام", code: "setprop ro.vendor.qti.sys.fw.bg_apps_limit 6", benefit: "توفير مساحة كبيرة في الرام للتركيز على التطبيق الحالي أو اللعبة.", harm: "إعادة تحميل التطبيقات القديمة في الخلفية عند فتحها مجدداً." },
+        { title: "8️⃣ تفريغ ذاكرة الجرافيكس المؤقتة فوراً", code: "setprop persist.sys.purgeable_assets 1", benefit: "الحفاظ على خفة النظام وعدم تراكم كاش الجرافيكس المستهلك للرام.", harm: "قد تلاحظ تأخر أجزاء من الثانية عند العودة لصور أو ملفات قديمة جداً." },
+        { title: "9️⃣ إلغاء قفل فريمات السستم الداخلي لإعطاء كارت الشاشة حريته", code: "setprop debug.gr.swapinterval 0", benefit: "استغلال كامل طاقة كارت الشاشة (GPU) بدون قيود برمجية.", harm: "احتمال حدوث تقطع بصري (Tearing) في الشاشات العادية 60Hz." },
+        { title: "🔟 تسريع كاش التصفح (Scrolling) لمنع أي تعليق", code: "setprop persist.sys.scrolling.cache 3", benefit: "نعومة تامة وسلاسة أثناء عمل سكرول في فيسبوك، تيك توك، أو المتصفح.", harm: "استهلاك مساحة ضئيلة جداً من الرام للاحتفاظ بالكاش." }
+    ];
+
     // الترجمة الكاملة لكل حرف في الموقع
     const translations = {
         ar: {
@@ -243,46 +283,74 @@
     let currentLang = 'ar';
     function updateAllTranslations() {
         const t = translations[currentLang];
-        // تحديث العناصر التي تحمل data-i18n
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (t[key]) el.innerText = t[key];
         });
-        // تحديث الـ placeholder
         const searchInput = document.getElementById('main-search');
         if (searchInput && t.search_placeholder) searchInput.placeholder = t.search_placeholder;
-        // تحديث أزرار النسخ الديناميكية (إن وجدت) سيتم التعامل معها داخل المودال
-        // تحديث عنوان المودال ديناميكيًا لاحقًا عند فتح الفئة، لكننا نخزن الترجمات
-        // تحديث نص زر الرجوع للأعلى (title)
         const backBtn = document.getElementById('backToTop');
         if(backBtn && t.back_top) backBtn.setAttribute('title', t.back_top);
-         // تحديث نص زر تبديل اللغة نفسه
         const langToggle = document.getElementById('lang-toggle');
         if(langToggle) langToggle.innerText = currentLang === 'ar' ? 'English 🇺🇸' : 'العربية 🇪🇬';
-        // تحديث نص زر الثيم (يحتوي على ايقونة ونص - نحافظ على الايقونة)
         const themeBtn = document.getElementById('theme-toggle');
-        if(themeBtn && t.theme_btn) themeBtn.innerText = t.theme_btn;
-        // حفظ الترجمة المخصصة للأكواد في كائن عام لاستخدامها داخل المودال
+        if(themeBtn && t.theme_btn) {
+            const mode = document.body.getAttribute('data-theme');
+            themeBtn.innerText = mode === 'dark' ? t.theme_btn : t.theme_btn.replace('🌙', '☀️');
+        }
         window.modalTitlesMap = {
             gaming: t.gaming_modal_title,
             smooth: t.smooth_modal_title,
             battery: t.battery_modal_title
         };
-        // تحديث حالة "أساطير القناة" التي تحتوي على جزءين
         const legendPrefix = document.querySelector('[data-i18n="legends_prefix"]');
         const legendSuffix = document.querySelector('[data-i18n="legends_suffix"]');
         if(legendPrefix) legendPrefix.innerText = t.legends_prefix;
         if(legendSuffix) legendSuffix.innerText = t.legends_suffix;
     }
 
-    // تبديل اللغة مع تغيير اتجاه الصفحة
     document.getElementById('lang-toggle').addEventListener('click', () => {
         currentLang = currentLang === 'ar' ? 'en' : 'ar';
         document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
         updateAllTranslations();
     });
 
-    // الكودات الثابتة
+    // بناء قائمة الأكواد المتقدمة ديناميكيًا
+    function buildAdvancedCodesSection() {
+        const container = document.getElementById('advancedCodesList');
+        if(!container) return;
+        container.innerHTML = '';
+        advancedPerformanceCodes.forEach(item => {
+            const codeDiv = document.createElement('div');
+            codeDiv.className = 'advanced-code-item';
+            codeDiv.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                    <strong style="color: #ffb347; font-size: 0.85rem;">${item.title}</strong>
+                    <button class="copy-adv-btn" data-advcode="${item.code.replace(/"/g, '&quot;')}">📋 نسخ</button>
+                </div>
+                <div class="advanced-code-text" dir="ltr" style="font-family: monospace; font-size: 0.75rem; background: #00000055; padding: 8px; border-radius: 14px; margin: 6px 0;">${item.code}</div>
+                <div class="advanced-code-benefit">
+                    <span><i class="fas fa-star" style="color: #4caf50;"></i> <strong>الفائدة:</strong> ${item.benefit}</span>
+                    <span class="harm-note"><i class="fas fa-exclamation-circle" style="color: #ffaa66;"></i> <strong>الضرر:</strong> ${item.harm}</span>
+                </div>
+            `;
+            container.appendChild(codeDiv);
+        });
+        // إضافة مستمعات النسخ للأزرار الجديدة
+        document.querySelectorAll('.copy-adv-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const codeVal = btn.getAttribute('data-advcode');
+                navigator.clipboard.writeText(codeVal).then(() => {
+                    const originalText = btn.innerText;
+                    btn.innerText = currentLang === 'ar' ? '✅ تم!' : '✅ Done!';
+                    setTimeout(() => { btn.innerText = originalText; }, 1200);
+                }).catch(() => alert(currentLang === 'ar' ? 'نسخ يدوي' : 'Manual copy'));
+            });
+        });
+    }
+
+    // الكودات الثابتة للمودال الأصلي
     const codesLib = {
         gaming: { name: "🎮 أكواد رفع الأداء في الألعاب (120Hz ثابت)", codes: [
             { code: "settings put system peak_refresh_rate 120; settings put system min_refresh_rate 120", benefit: "رفع التردد إلى 120 فريم في كل التطبيقات والألعاب" },
@@ -305,7 +373,6 @@
         ]}
     };
 
-    // ترجمة فوائد الأكواد ديناميكيًا (تبقى بالعربية/الإنجليزية حسب اللغة)
     function getLocalizedBenefit(benefitAr) {
         if (currentLang === 'ar') return benefitAr;
         const benefitMap = {
@@ -326,7 +393,6 @@
         return benefitMap[benefitAr] || benefitAr;
     }
 
-    // فتح المودال مع ترجمة العناوين والفوائد حسب اللغة الحالية
     function openModalWithCategory(cat) {
         const group = codesLib[cat];
         if (!group) return;
@@ -358,25 +424,18 @@
                 navigator.clipboard.writeText(codeVal).then(() => {
                     const doneText = currentLang === 'ar' ? translations.ar.copied_btn : translations.en.copied_btn;
                     btn.innerText = doneText;
-                    setTimeout(() => { 
-                        const resetText = currentLang === 'ar' ? translations.ar.copy_btn : translations.en.copy_btn;
-                        btn.innerText = resetText; 
-                    }, 1200);
+                    setTimeout(() => { const resetText = currentLang === 'ar' ? translations.ar.copy_btn : translations.en.copy_btn; btn.innerText = resetText; }, 1200);
                 }).catch(() => alert(currentLang === 'ar' ? "نسخ يدوي" : "Manual copy"));
             });
         });
         const modal = document.getElementById('codeModal');
         modal.style.display = 'flex';
         const modalTitleEl = document.getElementById('modalTitle');
-        let titleKey = '';
-        if(cat === 'gaming') titleKey = 'gaming_modal_title';
-        else if(cat === 'smooth') titleKey = 'smooth_modal_title';
-        else titleKey = 'battery_modal_title';
+        let titleKey = cat === 'gaming' ? 'gaming_modal_title' : (cat === 'smooth' ? 'smooth_modal_title' : 'battery_modal_title');
         const translatedTitle = (currentLang === 'ar' ? translations.ar[titleKey] : translations.en[titleKey]) || (currentLang === 'ar' ? "الأكواد المتقدمة" : "Advanced Codes");
         modalTitleEl.innerHTML = `<i class="fas fa-code"></i> ${translatedTitle}`;
     }
 
-    // باقي المنطق (الثيم، الكاونتر، البحث، زر الرجوع)
     const mainBtn = document.getElementById('mainCodeBtn');
     const optionsPanel = document.getElementById('optionsPanel');
     const modal = document.getElementById('codeModal');
@@ -398,8 +457,6 @@
         localStorage.setItem('theme', mode);
         const t = translations[currentLang];
         themeToggle.innerText = mode === 'dark' ? (t?.theme_btn || "🌙 الوضع الليلي") : (t?.theme_btn?.replace('🌙', '☀️') || "☀️ الوضع الفاتح");
-        if(mode === 'light' && themeToggle.innerText.indexOf('☀️') === -1) themeToggle.innerText = "☀️ " + (currentLang === 'ar' ? "الوضع الفاتح" : "Light Mode");
-        if(mode === 'dark' && themeToggle.innerText.indexOf('🌙') === -1) themeToggle.innerText = "🌙 " + (currentLang === 'ar' ? "الوضع الليلي" : "Dark Mode");
     }
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
@@ -408,44 +465,21 @@
         setTheme(cur === 'dark' ? 'light' : 'dark');
     });
 
-    // تحديث عند تغيير اللغة لتحديث نص زر الثيم بشكل صحيح
-    const originalSetTheme = setTheme;
-    window.setTheme = setTheme;
-    const applyThemeText = () => {
-        const mode = document.body.getAttribute('data-theme');
-        const t = translations[currentLang];
-        if(mode === 'dark') themeToggle.innerText = t.theme_btn.includes('🌙') ? t.theme_btn : "🌙 " + (currentLang === 'ar' ? "الوضع الليلي" : "Dark Mode");
-        else themeToggle.innerText = t.theme_btn.includes('☀️') ? t.theme_btn.replace('🌙', '☀️') : "☀️ " + (currentLang === 'ar' ? "الوضع الفاتح" : "Light Mode");
-    };
-    const origUpdate = updateAllTranslations;
-    window.updateAllTranslations = function() {
-        origUpdate();
-        applyThemeText();
-    };
-    updateAllTranslations = function() {
-        origUpdate();
-        applyThemeText();
-    };
-    updateAllTranslations();
+    // Initialize advanced codes and counter
+    buildAdvancedCodesSection();
 
-    // عداد الزوار والأساطير
-    fetch('https://api.counterapi.dev/v1/xiaomiworld_elpop/pagevisits/up')
-        .then(r=>r.json()).then(d=>{ document.getElementById('v-count').innerText = d.count; })
-        .catch(()=>{ let c = localStorage.getItem('site_visits')||1320; c++; localStorage.setItem('site_visits',c); document.getElementById('v-count').innerText = c; });
     let legends = parseInt(localStorage.getItem('legendJoins')||'415');
     document.getElementById('legendCount').innerText = legends;
     function incLegend() { legends++; localStorage.setItem('legendJoins', legends); document.getElementById('legendCount').innerText = legends; }
     document.querySelectorAll('.card .card-btn').forEach(btn => btn.addEventListener('click', () => setTimeout(incLegend, 200)));
 
-    // بحث فوري
     document.getElementById('main-search').addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
-        document.querySelectorAll('.links-grid .card, .category-main-btn, .options-panel .option-card').forEach(el => {
+        document.querySelectorAll('.links-grid .card, .category-main-btn, .options-panel .option-card, .advanced-codes-section').forEach(el => {
             if(el.innerText.toLowerCase().includes(term)) el.style.display = ''; else el.style.display = 'none';
         });
     });
 
-    // شريط التقدم وزر الرجوع
     window.addEventListener('scroll', () => {
         const winScroll = document.documentElement.scrollTop;
         const height = document.documentElement.scrollHeight - window.innerHeight;
@@ -455,6 +489,12 @@
         backBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
     });
     document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    
+    fetch('https://api.counterapi.dev/v1/xiaomiworld_elpop/pagevisits/up')
+        .then(r=>r.json()).then(d=>{ document.getElementById('v-count').innerText = d.count; })
+        .catch(()=>{ let c = localStorage.getItem('site_visits')||1320; c++; localStorage.setItem('site_visits',c); document.getElementById('v-count').innerText = c; });
+    
+    updateAllTranslations();
 </script>
 </body>
 </html>
