@@ -4,80 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Xiaomi World | ElPOP</title>
-    <!-- Font Awesome 6 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff4d00">
+    <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <!-- Google Fonts: مزخرف وعصري -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;600;800&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg-dark: #03020c;
-            --bg-light: #eef2ff;
-            --glass-dark: rgba(5, 5, 20, 0.55);
-            --glass-light: rgba(255, 255, 255, 0.65);
+            --glass: rgba(5, 5, 20, 0.6);
+            --glass-border: rgba(255, 77, 0, 0.6);
             --accent: #ff4d00;
-            --accent-glow: rgba(255, 77, 0, 0.7);
-            --neon-blue: #00a6ff;
-            --neon-purple: #b000ff;
-            --text-main: #ffffff;
-            --text-dim: #cdcdff;
-            --shadow-heavy: 0 20px 35px -10px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,77,0,0.3);
+            --text: #ffffff;
+            --bg-dark: #0a0a2a;
         }
         body.light {
-            --bg-dark: #f0f4ff;
-            --glass-dark: rgba(255, 255, 255, 0.75);
-            --text-main: #0a0a2a;
-            --text-dim: #1e1e4a;
-            --shadow-heavy: 0 15px 30px -8px rgba(0,0,0,0.2);
+            --glass: rgba(240, 245, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.2);
+            --accent: #e05a00;
+            --text: #0a0a2a;
+            --bg-dark: #eef2ff;
         }
         body {
             font-family: 'Tajawal', sans-serif;
-            background: radial-gradient(circle at 30% 10%, #0a0a2a, #010005);
-            color: var(--text-main);
+            background: radial-gradient(circle at 30% 10%, var(--bg-dark), #010005);
+            color: var(--text);
             min-height: 100vh;
             padding: 1rem;
             position: relative;
-            overflow-x: hidden;
-            transition: background 0.3s;
         }
-        body.light {
-            background: radial-gradient(circle at 30% 10%, #e0e7ff, #ffffff);
-        }
-        /* خلفية سائلة مرعبة */
-        .liquid-bg {
+        .aurora {
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(45deg, rgba(255,77,0,0.15) 0px, rgba(255,77,0,0.15) 2px, transparent 2px, transparent 8px);
-            animation: liquidMove 18s infinite linear;
-            pointer-events: none;
-            z-index: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 20% 30%, #ff4d0011, #00000022);
+            pointer-events: none; z-index: 0;
         }
-        @keyframes liquidMove {
-            0% { transform: rotate(0deg) translate(0,0);}
-            100% { transform: rotate(360deg) translate(5%,5%);}
-        }
-        /* جسيمات متحركة كثيفة */
         .particle-field {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
+            position: fixed; width: 100%; height: 100%;
+            overflow: hidden; pointer-events: none; z-index: 0;
         }
         .particle {
             position: absolute;
-            background: var(--accent);
+            background: radial-gradient(circle, #ffaa33, #ff4d00);
             border-radius: 50%;
-            opacity: 0.5;
-            filter: blur(2px);
+            opacity: 0.3;
             animation: floatParticle linear infinite;
         }
         @keyframes floatParticle {
@@ -85,183 +55,126 @@
             100% { transform: translateY(100vh) scale(0); opacity: 0; }
         }
         .container {
-            max-width: 800px;
+            max-width: 750px;
             margin: 0 auto;
             position: relative;
             z-index: 5;
         }
-        /* شريط علوي زجاجي مدمج */
         .top-bar {
-            background: var(--glass-dark);
+            background: var(--glass);
             backdrop-filter: blur(15px);
-            border-radius: 70px;
-            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255,77,0,0.6);
-            box-shadow: 0 0 15px rgba(255,77,0,0.3);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--glass-border);
         }
         .ctrl-btn, .theme-preset {
             background: rgba(0,0,0,0.5);
             border: 1px solid var(--accent);
-            border-radius: 40px;
-            padding: 0.4rem 1rem;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: white;
+            border-radius: 30px;
+            padding: 0.3rem 0.8rem;
             cursor: pointer;
+            color: white;
+            font-size: 0.8rem;
             transition: 0.2s;
-        }
-        .ctrl-btn:hover, .theme-preset:hover {
-            background: var(--accent);
-            transform: scale(0.95);
-            box-shadow: 0 0 12px var(--accent);
         }
         .fps-counter {
             background: black;
             border-radius: 30px;
-            padding: 0.2rem 1rem;
+            padding: 0.2rem 0.8rem;
             font-family: monospace;
-            font-weight: bold;
             color: #0f0;
-            border: 1px solid #0f0;
         }
-        /* الكارت الرئيسي الزجاجي المرعب */
         .glass-card {
-            background: var(--glass-dark);
+            background: var(--glass);
             backdrop-filter: blur(20px);
-            border-radius: 2.5rem;
-            border: 1px solid rgba(255,77,0,0.7);
-            padding: 1.8rem;
-            box-shadow: 0 25px 40px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,77,0,0.2);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--glass-border);
         }
         .hero {
             text-align: center;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
         }
         .xiaomi-logo {
-            width: 85px;
+            width: 75px;
             filter: drop-shadow(0 0 12px var(--accent));
             cursor: pointer;
-            transition: 0.2s;
         }
         h1 {
-            font-size: 2.2rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #fff, var(--accent), #ffb347);
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff, var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
-        .sub {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            letter-spacing: 1px;
-        }
-        /* روابط مذهلة */
         .link-block {
             display: block;
             background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,77,0,0.5);
+            border: 1px solid rgba(255,77,0,0.4);
             border-radius: 2rem;
-            margin-bottom: 1rem;
-            padding: 0.8rem 1.2rem;
+            margin-bottom: 0.8rem;
+            padding: 0.7rem 1rem;
             text-decoration: none;
-            transition: all 0.25s;
-            position: relative;
-            overflow: hidden;
-        }
-        .link-block::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,77,0,0.4), transparent);
-            transition: 0.5s;
-        }
-        .link-block:hover::before {
-            left: 100%;
-        }
-        .link-block:hover {
-            transform: scale(1.02) translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(255,77,0,0.6);
-            background: rgba(255,77,0,0.1);
+            transition: 0.2s;
         }
         .link-title {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            font-size: 1.2rem;
-            font-weight: 800;
+            gap: 0.8rem;
+            font-weight: bold;
+            color: var(--text);
         }
-        .link-title i {
-            font-size: 1.6rem;
-            color: var(--accent);
-            text-shadow: 0 0 8px var(--accent);
-        }
-        /* أقسام الأكواد البرمجية (بريفينت) */
+        .link-title i { color: var(--accent); font-size: 1.3rem; }
         .codes-section {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
         .codes-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             text-align: center;
-            margin-bottom: 1rem;
-            background: linear-gradient(120deg, var(--accent), var(--neon-blue));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 900;
-        }
-        .code-category {
-            background: rgba(0,0,0,0.45);
-            border-radius: 1.8rem;
-            margin-bottom: 1.5rem;
-            padding: 0.8rem;
-            border-left: 5px solid var(--accent);
-        }
-        .category-header {
-            font-size: 1.2rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
             margin-bottom: 0.8rem;
             color: var(--accent);
         }
-        .code-item {
+        .code-category {
             background: rgba(0,0,0,0.5);
-            border-radius: 1rem;
+            border-radius: 1.5rem;
             padding: 0.6rem;
+            margin-bottom: 1rem;
+        }
+        .category-header {
+            font-weight: bold;
             margin-bottom: 0.5rem;
-            font-family: monospace;
-            font-size: 0.8rem;
+            color: var(--accent);
+        }
+        .code-item {
+            background: rgba(0,0,0,0.4);
+            border-radius: 1rem;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(255,255,255,0.1);
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
         .code-text {
+            font-family: monospace;
+            font-size: 0.85rem;
+            word-break: break-all;
             direction: ltr;
             text-align: left;
-            word-break: break-all;
-            color: #ffdd99;
+            flex: 1;
         }
         .copy-code {
             background: var(--accent);
             border: none;
             border-radius: 1rem;
-            padding: 0.2rem 0.6rem;
-            color: white;
+            padding: 0.2rem 0.8rem;
             cursor: pointer;
+            font-weight: bold;
         }
         .visitor-counter {
             background: rgba(0,0,0,0.5);
@@ -273,35 +186,45 @@
         }
         footer {
             text-align: center;
-            margin-top: 2rem;
-            font-size: 0.8rem;
+            margin-top: 1.5rem;
             font-family: 'Dancing Script', cursive;
-            letter-spacing: 1px;
+            font-size: 1rem;
             text-shadow: 0 0 5px var(--accent);
         }
-        /* لوحة المشرف المطورة */
+        /* ========== لوحة التحكم الجديدة (Dashboard) ========== */
         .admin-panel {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 550px;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(25px);
+            width: 95%;
+            max-width: 900px;
+            height: 90%;
+            background: #0a0a1aee;
+            backdrop-filter: blur(30px);
             border-radius: 2rem;
             border: 2px solid var(--accent);
-            padding: 1.2rem;
             z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
             color: white;
-            max-height: 85vh;
-            overflow-y: auto;
+        }
+        .admin-header {
+            padding: 1rem;
+            background: rgba(0,0,0,0.5);
+            border-bottom: 1px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .admin-tabs {
             display: flex;
             gap: 0.5rem;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid #555;
+            padding: 0.5rem;
+            background: rgba(0,0,0,0.3);
+            flex-wrap: wrap;
         }
         .admin-tab {
             background: none;
@@ -309,364 +232,195 @@
             padding: 0.4rem 1rem;
             color: white;
             cursor: pointer;
+            border-radius: 2rem;
+            transition: 0.2s;
         }
         .admin-tab.active {
-            border-bottom: 2px solid var(--accent);
-            color: var(--accent);
+            background: var(--accent);
+            color: white;
         }
-        .admin-tab-content {
+        .admin-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        .admin-section {
             display: none;
         }
-        .admin-tab-content.active {
+        .admin-section.active {
             display: block;
         }
-        .admin-panel input, .admin-panel select, .admin-panel textarea {
-            width: 100%;
-            margin-bottom: 0.6rem;
+        .admin-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .admin-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        .admin-input-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .admin-input-group input, .admin-input-group select, .admin-input-group textarea {
+            flex: 1;
             padding: 0.5rem;
             border-radius: 1rem;
             background: rgba(255,255,255,0.15);
             border: none;
             color: white;
         }
-        .admin-panel button {
+        button {
             background: var(--accent);
             border: none;
             padding: 0.4rem 1rem;
-            border-radius: 1.5rem;
+            border-radius: 2rem;
             cursor: pointer;
-            margin-left: 0.5rem;
+            color: white;
+        }
+        .item-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .list-item {
+            background: rgba(0,0,0,0.4);
+            border-radius: 1rem;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
+            gap: 1rem;
+        }
+        .stat-card {
+            background: rgba(0,0,0,0.5);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            text-align: center;
         }
         .overlay {
             position: fixed;
-            top:0; left:0;
-            width:100%; height:100%;
-            background: rgba(0,0,0,0.75);
+            top:0;left:0;width:100%;height:100%;
+            background: rgba(0,0,0,0.8);
             z-index: 999;
         }
         @media (max-width: 600px) {
-            .glass-card { padding: 1rem; }
-            h1 { font-size: 1.5rem; }
-            .code-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .admin-panel { width: 98%; height: 95%; }
+            .admin-input-group { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-<div class="liquid-bg"></div>
+<div class="aurora"></div>
 <div class="particle-field" id="particleField"></div>
 
 <div class="container">
     <div class="top-bar">
-        <div class="controls-group">
-            <button class="ctrl-btn" id="themeToggle"><i class="fas fa-moon"></i> <span id="themeText">داكن</span></button>
-            <button class="ctrl-btn" id="langToggle"><i class="fas fa-globe"></i> <span id="langText">English</span></button>
-            <button class="ctrl-btn" id="subscribeNotificationBtn"><i class="fas fa-bell"></i> اشترك</button>
+        <div>
+            <button class="ctrl-btn" id="themeToggle">🌓</button>
+            <button class="ctrl-btn" id="langToggle">🌐</button>
+            <button class="ctrl-btn" id="subscribeBtn">🔔 تثبيت</button>
         </div>
-        <div class="controls-group">
-            <span class="theme-preset" data-color="#ff4d00">🔥 برتقالي</span>
-            <span class="theme-preset" data-color="#00a6ff">💙 أزرق</span>
-            <span class="theme-preset" data-color="#b000ff">💜 بنفسجي</span>
-        </div>
-        <div class="fps-counter" id="fpsCounter">⚡ 0 FPS</div>
+        <div class="fps-counter" id="fpsCounter">0 FPS</div>
     </div>
-    <div class="glass-card">
+
+    <div class="glass-card" id="mainCard">
         <div class="hero">
             <img class="xiaomi-logo" id="xiaomiLogo" src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg" alt="Xiaomi">
             <h1 id="mainTitle">Xiaomi World</h1>
             <div class="sub" id="subTitle">ثيمات - أكواد بريفينت - أداء خارق</div>
         </div>
         <div id="linksContainer"></div>
-        
-        <!-- قسم الأكواد البرمجية (بريفينت) -->
         <div class="codes-section" id="codesSection">
-            <div class="codes-title">⚡ أكواد بريفينت السحرية ⚡</div>
-            <div id="codeCategoriesContainer"></div>
+            <div class="codes-title">⚡ أكواد بريفينت ⚡</div>
+            <div id="codeCategories"></div>
         </div>
-        
         <div style="text-align: center;">
             <div class="visitor-counter" id="visitorCounter">👥 زوار: --</div>
         </div>
-        <footer>💀 جميع الحقوق محفوظة لـ <span style="font-family: 'Dancing Script'; font-size: 1.4rem; text-shadow:0 0 5px red;">ElPOP</span> 💀</footer>
+        <footer>💀 جميع الحقوق محفوظة لـ <span style="font-family:'Dancing Script'; font-size:1.3rem;">ElPOP</span> 💀</footer>
     </div>
 </div>
 
 <script>
-    // --------------------------------------------------------------
-    // 1. تأثيرات بصرية ثقيلة (جسيمات عشوائية)
-    // --------------------------------------------------------------
-    const particleField = document.getElementById('particleField');
-    function createParticles(count=60) {
-        for(let i=0;i<count;i++) {
-            let p = document.createElement('div');
-            p.classList.add('particle');
-            let size = Math.random()*6+2;
-            p.style.width = size+'px';
-            p.style.height = size+'px';
-            p.style.left = Math.random()*100+'%';
-            p.style.animationDuration = Math.random()*6+4+'s';
-            p.style.animationDelay = Math.random()*5+'s';
-            p.style.background = `radial-gradient(circle, ${['#ff4d00','#00a6ff','#b000ff'][Math.floor(Math.random()*3)]}, transparent)`;
-            particleField.appendChild(p);
-        }
+    // ------------------------- 1. Sound Effects -------------------------
+    let audioCtx = null;
+    function initSounds() {
+        if(audioCtx) return;
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        window.playSound = (type) => {
+            if(!audioCtx) return;
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = 'sine';
+            if(type === 'click') { osc.frequency.value = 800; gain.gain.setValueAtTime(0.06, now); gain.gain.exponentialRampToValueAtTime(0.00001, now+0.1); osc.start(); osc.stop(now+0.1); }
+            else if(type === 'switch') { osc.frequency.value = 600; gain.gain.setValueAtTime(0.05, now); gain.gain.exponentialRampToValueAtTime(0.00001, now+0.08); osc.start(); osc.stop(now+0.08); }
+            else if(type === 'toggle') { osc.frequency.value = 1000; gain.gain.setValueAtTime(0.04, now); gain.gain.exponentialRampToValueAtTime(0.00001, now+0.05); osc.start(); osc.stop(now+0.05); }
+        };
+        if(audioCtx.state === 'suspended') audioCtx.resume();
     }
-    createParticles(45);
-    
-    // --------------------------------------------------------------
-    // 2. FPS عالي
-    // --------------------------------------------------------------
-    let fps = 0, lastTime = performance.now(), frames = 0;
+    document.body.addEventListener('click', initSounds, {once:true});
+
+    // ------------------------- 2. FPS & Particles -------------------------
+    let fps=0, lastPerf=performance.now(), frames=0;
     function updateFPS() {
-        const now = performance.now();
         frames++;
-        if (now - lastTime >= 1000) {
-            fps = frames;
-            document.getElementById('fpsCounter').innerHTML = `⚡ ${fps} FPS`;
-            frames = 0;
-            lastTime = now;
-        }
+        const now = performance.now();
+        if(now-lastPerf>=1000) { fps=frames; document.getElementById('fpsCounter').innerHTML=fps+' FPS'; frames=0; lastPerf=now; }
         requestAnimationFrame(updateFPS);
     }
-    requestAnimationFrame(updateFPS);
-    
-    // --------------------------------------------------------------
-    // 3. الروابط الديناميكية
-    // --------------------------------------------------------------
-    const defaultLinks = [
-        { icon: "fab fa-telegram-plane", title_ar: "جروب الدردشة تليجرام", title_en: "Telegram Chat", url: "https://t.me/themes345" },
-        { icon: "fab fa-telegram-plane", title_ar: "القناة الرئيسية", title_en: "Main Channel", url: "https://t.me/redmi3321" },
-        { icon: "fas fa-images", title_ar: "قناة الخلفيات", title_en: "Wallpapers", url: "https://t.me/themesXiaomia" },
-        { icon: "fab fa-whatsapp", title_ar: "قناة الواتس", title_en: "WhatsApp", url: "https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" }
+    updateFPS();
+    const particleField = document.getElementById('particleField');
+    for(let i=0;i<35;i++) {
+        let p = document.createElement('div');
+        p.className = 'particle';
+        let s = Math.random()*5+2;
+        p.style.width = s+'px'; p.style.height = s+'px';
+        p.style.left = Math.random()*100+'%';
+        p.style.animationDuration = Math.random()*8+4+'s';
+        p.style.animationDelay = Math.random()*5+'s';
+        particleField.appendChild(p);
+    }
+
+    // ------------------------- 3. Data Models -------------------------
+    let defaultLinks = [
+        { icon:"fab fa-telegram-plane", title_ar:"جروب الدردشة", title_en:"Chat Group", url:"https://t.me/themes345", style:"icon_text" },
+        { icon:"fab fa-telegram-plane", title_ar:"القناة الرئيسية", title_en:"Main Channel", url:"https://t.me/redmi3321", style:"icon_text" },
+        { icon:"fas fa-images", title_ar:"خلفيات 4K", title_en:"Wallpapers", url:"https://t.me/themesXiaomia", style:"icon_text" },
+        { icon:"fab fa-whatsapp", title_ar:"قناة الواتس", title_en:"WhatsApp", url:"https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H", style:"icon_text" }
     ];
-    let linksData = [];
+    let defaultCodes = {
+        speed: [{ code:"*#*#76937#*#*", desc_ar:"وضع الأداء الخارق", desc_en:"Extreme Performance" }],
+        gaming: [{ code:"*#*#3646633#*#*", desc_ar:"قائمة المهندس", desc_en:"Engineer Mode" }],
+        flagship: [{ code:"*#*#64663#*#*", desc_ar:"اختبار الأجهزة", desc_en:"Hardware Test" }]
+    };
+    let linksData = [], codesData = {};
+    function loadData() {
+        linksData = JSON.parse(localStorage.getItem('links') || JSON.stringify(defaultLinks));
+        codesData = JSON.parse(localStorage.getItem('codes') || JSON.stringify(defaultCodes));
+    }
+    function saveData() {
+        localStorage.setItem('links', JSON.stringify(linksData));
+        localStorage.setItem('codes', JSON.stringify(codesData));
+    }
+    loadData();
+
+    // ------------------------- 4. Render Functions -------------------------
     let currentLang = localStorage.getItem('lang') || 'ar';
     let currentTheme = localStorage.getItem('theme') || 'dark';
-    
-    // --------------------------------------------------------------
-    // 4. أكواد بريفينت (ثلاث فئات)
-    // --------------------------------------------------------------
-    let codesData = {
-        speed: [],      // كود زيادة السرعة
-        gaming: [],     // كود تحسين الألعاب
-        flagship: []    // ميزات فلاغ شيب
-    };
-    const defaultCodes = {
-        speed: [
-            { code: "*#*#76937#*#*", desc_ar: "تفعيل وضع الأداء الخارق", desc_en: "Enable Extreme Performance" },
-            { code: "*#*#2846579#*#*", desc_ar: "قائمة إعدادات المشروع", desc_en: "Project Menu" }
-        ],
-        gaming: [
-            { code: "*#*#3646633#*#*", desc_ar: "قائمة اختبار الأجهزة (مهندس)", desc_en: "Engineer Mode" },
-            { code: "*#*#2664#*#*", desc_ar: "اختبار اللمس المتعدد", desc_en: "Multi-touch test" }
-        ],
-        flagship: [
-            { code: "*#*#64663#*#*", desc_ar: "اختبار شامل للأجهزة", desc_en: "Hardware test" },
-            { code: "*#*#6484#*#*", desc_ar: "اختبار الاستشعارات", desc_en: "Sensor test" }
-        ]
-    };
-    
-    function loadCodes() {
-        let stored = localStorage.getItem('xiaomi_codes');
-        if(stored) {
-            codesData = JSON.parse(stored);
-        } else {
-            codesData = defaultCodes;
-            localStorage.setItem('xiaomi_codes', JSON.stringify(defaultCodes));
-        }
-    }
-    function saveCodes() {
-        localStorage.setItem('xiaomi_codes', JSON.stringify(codesData));
-    }
-    
-    function renderCodes() {
-        const container = document.getElementById('codeCategoriesContainer');
-        if(!container) return;
-        const categories = [
-            { key: 'speed', title_ar: '🚀 كود زيادة السرعة', title_en: 'Speed Boost', icon: 'fas fa-tachometer-alt' },
-            { key: 'gaming', title_ar: '🎮 كود تحسين الألعاب', title_en: 'Gaming Optimizer', icon: 'fas fa-gamepad' },
-            { key: 'flagship', title_ar: '💎 ميزات هواتف فلاغ شيب', title_en: 'Flagship Features', icon: 'fas fa-microchip' }
-        ];
-        container.innerHTML = '';
-        for(let cat of categories) {
-            let items = codesData[cat.key] || [];
-            let title = currentLang === 'ar' ? cat.title_ar : cat.title_en;
-            let catDiv = document.createElement('div');
-            catDiv.className = 'code-category';
-            catDiv.innerHTML = `<div class="category-header"><i class="${cat.icon}"></i> ${title}</div>`;
-            if(items.length === 0) {
-                catDiv.innerHTML += '<div style="opacity:0.6; padding:0.5rem;">لا توجد أكواد حالياً</div>';
-            } else {
-                items.forEach((item, idx) => {
-                    let desc = currentLang === 'ar' ? (item.desc_ar || '') : (item.desc_en || '');
-                    let codeDiv = document.createElement('div');
-                    codeDiv.className = 'code-item';
-                    codeDiv.innerHTML = `
-                        <div class="code-text"><strong>${item.code}</strong><br><span style="font-size:0.7rem;">${desc}</span></div>
-                        <button class="copy-code" data-code="${item.code}">نسخ</button>
-                    `;
-                    catDiv.appendChild(codeDiv);
-                });
-            }
-            container.appendChild(catDiv);
-        }
-        // إضافة وظيفة النسخ
-        document.querySelectorAll('.copy-code').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                let code = btn.getAttribute('data-code');
-                navigator.clipboard.writeText(code);
-                alert('تم نسخ الكود: '+code);
-            });
-        });
-    }
-    
-    // --------------------------------------------------------------
-    // 5. لوحة المشرف الموسعة (علامات تبويب)
-    // --------------------------------------------------------------
-    let adminPanelOpen = false;
-    const SECRET_CODE = "13/7/2010";
-    let clickCountLogo = 0, logoTimeout;
-    
-    function showAdminPanel() {
-        if(adminPanelOpen) return;
-        adminPanelOpen = true;
-        const overlay = document.createElement('div');
-        overlay.className = 'overlay';
-        overlay.id = 'adminOverlay';
-        document.body.appendChild(overlay);
-        const panel = document.createElement('div');
-        panel.className = 'admin-panel';
-        panel.innerHTML = `
-            <div class="admin-tabs">
-                <button class="admin-tab active" data-tab="links">🔗 الروابط</button>
-                <button class="admin-tab" data-tab="codes">⚡ أكواد بريفينت</button>
-            </div>
-            <div id="tabLinks" class="admin-tab-content active">
-                <h4>إدارة الروابط</h4>
-                <div id="adminLinksList"></div>
-                <hr>
-                <input type="text" id="newTitleAr" placeholder="الاسم بالعربية">
-                <input type="text" id="newTitleEn" placeholder="الاسم بالإنجليزية">
-                <input type="text" id="newUrl" placeholder="الرابط URL">
-                <select id="newIcon"><option value="fab fa-telegram-plane">تيليجرام</option><option value="fab fa-whatsapp">واتساب</option><option value="fas fa-images">صور</option><option value="fab fa-youtube">يوتيوب</option><option value="fas fa-globe">رابط عام</option></select>
-                <button id="addLinkBtn">➕ إضافة رابط</button>
-            </div>
-            <div id="tabCodes" class="admin-tab-content">
-                <h4>إضافة كود بريفينت</h4>
-                <select id="codeCategory">
-                    <option value="speed">كود زيادة السرعة</option>
-                    <option value="gaming">كود تحسين الألعاب</option>
-                    <option value="flagship">ميزات فلاغ شيب</option>
-                </select>
-                <input type="text" id="newCode" placeholder="مثال: *#*#4636#*#*">
-                <input type="text" id="newCodeDescAr" placeholder="وصف بالعربية">
-                <input type="text" id="newCodeDescEn" placeholder="Description in English">
-                <button id="addCodeBtn">➕ إضافة الكود</button>
-                <hr>
-                <div id="adminCodesList"></div>
-            </div>
-            <button id="closeAdminBtn" class="close-btn" style="margin-top:1rem;">إغلاق</button>
-        `;
-        document.body.appendChild(panel);
-        
-        // تبويب التبديل
-        document.querySelectorAll('.admin-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
-                tab.classList.add('active');
-                let target = tab.getAttribute('data-tab');
-                document.getElementById('tabLinks').classList.toggle('active', target==='links');
-                document.getElementById('tabCodes').classList.toggle('active', target==='codes');
-                if(target==='codes') refreshAdminCodesList();
-            });
-        });
-        
-        function refreshAdminLinks() {
-            const listDiv = document.getElementById('adminLinksList');
-            listDiv.innerHTML = '<strong>الروابط الحالية:</strong>';
-            linksData.forEach((link, idx) => {
-                let div = document.createElement('div');
-                div.style.cssText = 'background:rgba(255,255,255,0.1); margin:0.3rem 0; padding:0.3rem; border-radius:1rem;';
-                div.innerHTML = `${link.title_ar} <button class="del-link-btn" data-idx="${idx}" style="background:#dc2626; border:none; border-radius:1rem; padding:0 0.5rem; float:left;">حذف</button>`;
-                listDiv.appendChild(div);
-            });
-            document.querySelectorAll('.del-link-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    let idx = parseInt(btn.getAttribute('data-idx'));
-                    if(confirm('احذف الرابط؟')) { linksData.splice(idx,1); saveLinks(); renderLinks(); refreshAdminLinks(); }
-                });
-            });
-        }
-        function refreshAdminCodesList() {
-            const listDiv = document.getElementById('adminCodesList');
-            listDiv.innerHTML = '<strong>جميع الأكواد حالياً:</strong>';
-            for(let cat of ['speed','gaming','flagship']) {
-                let title = cat==='speed'? '🚀 سرعة': (cat==='gaming'? '🎮 ألعاب':'💎 فلاغ شيب');
-                let items = codesData[cat] || [];
-                items.forEach((item, idx) => {
-                    let div = document.createElement('div');
-                    div.style.cssText = 'background:rgba(255,255,255,0.08); margin:0.5rem 0; padding:0.3rem; border-radius:1rem;';
-                    div.innerHTML = `<strong>${title}:</strong> ${item.code} - ${item.desc_ar} <button class="del-code-btn" data-cat="${cat}" data-idx="${idx}" style="background:#dc2626; border:none; border-radius:1rem; float:left;">🗑️</button>`;
-                    listDiv.appendChild(div);
-                });
-            }
-            document.querySelectorAll('.del-code-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    let cat = btn.getAttribute('data-cat');
-                    let idx = parseInt(btn.getAttribute('data-idx'));
-                    if(confirm('احذف هذا الكود؟')) {
-                        codesData[cat].splice(idx,1);
-                        saveCodes();
-                        renderCodes();
-                        refreshAdminCodesList();
-                    }
-                });
-            });
-        }
-        document.getElementById('addLinkBtn').addEventListener('click', () => {
-            let newLink = {
-                icon: document.getElementById('newIcon').value,
-                title_ar: document.getElementById('newTitleAr').value,
-                title_en: document.getElementById('newTitleEn').value || document.getElementById('newTitleAr').value,
-                url: document.getElementById('newUrl').value
-            };
-            if(!newLink.title_ar || !newLink.url) { alert('املأ البيانات'); return; }
-            linksData.push(newLink);
-            saveLinks(); renderLinks(); refreshAdminLinks();
-            // إشعار للمشتركين
-            if(subscribedUsers.length && Notification.permission === "granted") {
-                new Notification("✨ رابط جديد", { body: `تم إضافة: ${newLink.title_ar}` });
-            }
-            document.getElementById('newTitleAr').value = '';
-            document.getElementById('newUrl').value = '';
-        });
-        document.getElementById('addCodeBtn').addEventListener('click', () => {
-            let cat = document.getElementById('codeCategory').value;
-            let code = document.getElementById('newCode').value.trim();
-            let desc_ar = document.getElementById('newCodeDescAr').value.trim();
-            let desc_en = document.getElementById('newCodeDescEn').value.trim();
-            if(!code) { alert('أدخل الكود'); return; }
-            codesData[cat].push({ code, desc_ar, desc_en });
-            saveCodes();
-            renderCodes();
-            refreshAdminCodesList();
-            document.getElementById('newCode').value = '';
-            document.getElementById('newCodeDescAr').value = '';
-            document.getElementById('newCodeDescEn').value = '';
-        });
-        document.getElementById('closeAdminBtn').addEventListener('click', () => {
-            panel.remove(); overlay.remove(); adminPanelOpen=false;
-        });
-        refreshAdminLinks();
-        refreshAdminCodesList();
-    }
-    // ------------------------------------------------------------------
-    // 6. باقي الوظائف (الروابط، اللغة، الثيم، الإشعارات، عداد الزوار)
-    // ------------------------------------------------------------------
-    function loadLinks() {
-        let stored = localStorage.getItem('xiaomi_links_simple');
-        linksData = stored ? JSON.parse(stored) : defaultLinks;
-        if(!stored) localStorage.setItem('xiaomi_links_simple', JSON.stringify(defaultLinks));
-    }
-    function saveLinks() { localStorage.setItem('xiaomi_links_simple', JSON.stringify(linksData)); }
+
     function renderLinks() {
         const container = document.getElementById('linksContainer');
         if(!container) return;
@@ -675,65 +429,330 @@
             let title = currentLang === 'ar' ? link.title_ar : link.title_en;
             let a = document.createElement('a');
             a.href = link.url; a.target = '_blank'; a.className = 'link-block';
-            a.innerHTML = `<div class="link-title"><i class="${link.icon}"></i> <span>${title}</span></div>`;
+            if(link.style === 'icon_only') a.innerHTML = `<div class="link-title"><i class="${link.icon}"></i></div>`;
+            else if(link.style === 'button') a.innerHTML = `<div class="link-title" style="justify-content:center;">${title}</div>`;
+            else if(link.style === 'card') a.innerHTML = `<div class="link-title" style="background:rgba(0,0,0,0.3); padding:0.5rem; border-radius:1rem;"><i class="${link.icon}"></i> ${title}</div>`;
+            else a.innerHTML = `<div class="link-title"><i class="${link.icon}"></i> <span>${title}</span></div>`;
+            a.addEventListener('click', () => { if(window.playSound) window.playSound('click'); });
             container.appendChild(a);
         });
     }
-    let visits = parseInt(localStorage.getItem('visitorCount')||'0');
-    if(!sessionStorage.getItem('hasVisited')) { visits++; localStorage.setItem('visitorCount', visits); sessionStorage.setItem('hasVisited','true'); }
+    function renderCodes() {
+        const container = document.getElementById('codeCategories');
+        if(!container) return;
+        container.innerHTML = '';
+        const cats = [
+            { key:'speed', title_ar:'🚀 كود زيادة السرعة', title_en:'Speed Boost' },
+            { key:'gaming', title_ar:'🎮 كود تحسين الألعاب', title_en:'Gaming Optimizer' },
+            { key:'flagship', title_ar:'💎 ميزات فلاغ شيب', title_en:'Flagship Features' }
+        ];
+        cats.forEach(cat => {
+            let items = codesData[cat.key] || [];
+            let title = currentLang === 'ar' ? cat.title_ar : cat.title_en;
+            let div = document.createElement('div');
+            div.className = 'code-category';
+            div.innerHTML = `<div class="category-header">${title}</div>`;
+            items.forEach(item => {
+                let desc = currentLang === 'ar' ? item.desc_ar : item.desc_en;
+                let codeDiv = document.createElement('div');
+                codeDiv.className = 'code-item';
+                codeDiv.innerHTML = `<div class="code-text"><strong>${item.code}</strong><br><small>${desc}</small></div><button class="copy-code">نسخ</button>`;
+                div.appendChild(codeDiv);
+            });
+            container.appendChild(div);
+        });
+        document.querySelectorAll('.copy-code').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const codeItem = btn.closest('.code-item');
+                const codeStrong = codeItem.querySelector('.code-text strong');
+                const fullCode = codeStrong ? codeStrong.innerText : '';
+                if(fullCode) { navigator.clipboard.writeText(fullCode); alert('تم نسخ: '+fullCode); if(window.playSound) window.playSound('click'); }
+            });
+        });
+    }
+
+    // ------------------------- 5. Counter & Stats -------------------------
+    let visits = parseInt(localStorage.getItem('totalVisits')||'0');
+    if(!sessionStorage.getItem('hasVisited')) { visits++; localStorage.setItem('totalVisits', visits); sessionStorage.setItem('hasVisited','true'); }
     document.getElementById('visitorCounter').innerHTML = `👥 زوار: ${visits}`;
-    
-    let subscribedUsers = JSON.parse(localStorage.getItem('subscribedUsers') || '[]');
-    document.getElementById('subscribeNotificationBtn').addEventListener('click', async () => {
-        if(!("Notification" in window)) { alert("المتصفح لا يدعم"); return; }
-        if(Notification.permission === "granted") {
-            if(!subscribedUsers.includes('local')) { subscribedUsers.push('local'); localStorage.setItem('subscribedUsers',JSON.stringify(subscribedUsers)); alert("تم الاشتراك!"); }
-            else alert("أنت مشترك بالفعل");
-        } else if(Notification.permission !== "denied") {
-            let perm = await Notification.requestPermission();
-            if(perm === "granted") { subscribedUsers.push('local'); localStorage.setItem('subscribedUsers',JSON.stringify(subscribedUsers)); alert("تم الاشتراك!"); }
-        } else alert("تم رفض الإشعارات مسبقاً");
+
+    // ------------------------- 6. Admin Panel (Organized) -------------------------
+    let adminOpen = false;
+    function showAdminPanel() {
+        if(adminOpen) return;
+        adminOpen = true;
+        let overlay = document.createElement('div'); overlay.className = 'overlay';
+        let panel = document.createElement('div'); panel.className = 'admin-panel';
+        panel.innerHTML = `
+            <div class="admin-header">
+                <h3>🔧 لوحة تحكم المشرف</h3>
+                <button id="closeAdminBtn">✖ إغلاق</button>
+            </div>
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="stats">📊 إحصائيات</button>
+                <button class="admin-tab" data-tab="links">🔗 إدارة الروابط</button>
+                <button class="admin-tab" data-tab="codes">⚡ إدارة أكواد بريفينت</button>
+                <button class="admin-tab" data-tab="settings">⚙️ إعدادات المظهر</button>
+            </div>
+            <div class="admin-content">
+                <!-- تبويب الإحصائيات -->
+                <div class="admin-section active" id="tab-stats">
+                    <div class="stats-grid">
+                        <div class="stat-card">👥 إجمالي الزوار: ${visits}</div>
+                        <div class="stat-card">🔗 عدد الروابط: ${linksData.length}</div>
+                        <div class="stat-card">⚡ عدد الأكواد: ${Object.values(codesData).flat().length}</div>
+                            <div class="stat-card">🎨 الثيم الحالي: ${currentTheme === 'dark' ? 'داكن' : 'فاتح'}</div>
+                    </div>
+                </div>
+                <!-- تبويب الروابط -->
+                <div class="admin-section" id="tab-links">
+                    <div class="admin-card">
+                        <h4>➕ إضافة رابط جديد</h4>
+                        <div class="admin-input-group">
+                            <input id="newTitleAr" placeholder="العنوان بالعربية">
+                            <input id="newTitleEn" placeholder="العنوان بالإنجليزية">
+                            <input id="newUrl" placeholder="الرابط URL">
+                            <select id="newIcon">
+                                <option value="fab fa-telegram-plane">تيليجرام</option>
+                                <option value="fab fa-whatsapp">واتساب</option>
+                                <option value="fas fa-images">صور</option>
+                                <option value="fab fa-youtube">يوتيوب</option>
+                                <option value="fas fa-globe">رابط عام</option>
+                            </select>
+                            <select id="newStyle">
+                                <option value="icon_text">أيقونة + نص</option>
+                                <option value="icon_only">أيقونة فقط</option>
+                                <option value="button">زر نصي</option>
+                                <option value="card">كارد ممتد</option>
+                            </select>
+                            <button id="addLinkBtn">➕ إضافة</button>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <h4>📋 الروابط الحالية</h4>
+                        <div id="adminLinksList" class="item-list"></div>
+                    </div>
+                </div>
+                <!-- تبويب الأكواد -->
+                <div class="admin-section" id="tab-codes">
+                    <div class="admin-card">
+                        <h4>➕ إضافة كود بريفينت جديد</h4>
+                        <div class="admin-input-group">
+                            <select id="codeCat">
+                                <option value="speed">زيادة السرعة</option>
+                                <option value="gaming">تحسين الألعاب</option>
+                                <option value="flagship">ميزات فلاغ شيب</option>
+                            </select>
+                            <input id="newCode" placeholder="الكود (مثال: *#*#4636#*#*)">
+                            <input id="newDescAr" placeholder="وصف بالعربية">
+                            <input id="newDescEn" placeholder="وصف بالإنجليزية">
+                            <button id="addCodeBtn">➕ إضافة</button>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <h4>📋 جميع الأكواد الحالية</h4>
+                        <div id="adminCodesList" class="item-list"></div>
+                    </div>
+                </div>
+                <!-- تبويب الإعدادات -->
+                <div class="admin-section" id="tab-settings">
+                    <div class="admin-card">
+                        <h4>🎨 ألوان سريعة</h4>
+                        <div style="display:flex; gap:0.5rem;">
+                            <button class="preset-color" data-color="#ff4d00">برتقالي</button>
+                            <button class="preset-color" data-color="#3b82f6">أزرق</button>
+                            <button class="preset-color" data-color="#8b5cf6">بنفسجي</button>
+                            <button class="preset-color" data-color="#10b981">أخضر</button>
+                        </div>
+                        <hr style="margin:1rem 0;">
+                        <h4>🔘 وضع الثيم</h4>
+                        <button id="darkLightToggle">🌓 تبديل الوضع (حالي: ${currentTheme === 'dark' ? 'داكن' : 'فاتح'})</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay); document.body.appendChild(panel);
+
+        // تبديل التبويبات
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                let target = tab.getAttribute('data-tab');
+                document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
+                document.getElementById(`tab-${target}`).classList.add('active');
+            });
+        });
+
+        // تحديث قوائم الروابط والأكواد داخل اللوحة
+        function refreshAdminLinks() {
+            const listDiv = document.getElementById('adminLinksList');
+            if(!listDiv) return;
+            listDiv.innerHTML = '';
+            linksData.forEach((link, idx) => {
+                let div = document.createElement('div');
+                div.className = 'list-item';
+                div.innerHTML = `<span><i class="${link.icon}"></i> ${link.title_ar} (${link.style})</span>
+                                 <button class="del-link" data-idx="${idx}">🗑️ حذف</button>
+                                 <button class="edit-link" data-idx="${idx}">✏️ تعديل</button>`;
+                listDiv.appendChild(div);
+            });
+            document.querySelectorAll('.del-link').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let idx = parseInt(btn.dataset.idx);
+                    linksData.splice(idx,1);
+                    saveData(); renderLinks(); refreshAdminLinks();
+                    if(window.playSound) window.playSound('click');
+                });
+            });
+            document.querySelectorAll('.edit-link').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let idx = parseInt(btn.dataset.idx);
+                    let link = linksData[idx];
+                    let newTitleAr = prompt('العنوان الجديد بالعربية', link.title_ar);
+                    let newUrl = prompt('الرابط الجديد', link.url);
+                    let newStyle = prompt('النمط (icon_text, icon_only, button, card)', link.style);
+                    if(newTitleAr && newUrl) {
+                        link.title_ar = newTitleAr;
+                        link.url = newUrl;
+                        if(newStyle) link.style = newStyle;
+                        saveData(); renderLinks(); refreshAdminLinks();
+                        if(window.playSound) window.playSound('click');
+                    }
+                });
+            });
+        }
+        function refreshAdminCodes() {
+            const listDiv = document.getElementById('adminCodesList');
+            if(!listDiv) return;
+            listDiv.innerHTML = '';
+            for(let cat of ['speed','gaming','flagship']) {
+                let title = cat==='speed'? '🚀 سرعة' : (cat==='gaming'? '🎮 ألعاب':'💎 فلاغ شيب');
+                codesData[cat].forEach((code, idx) => {
+                    let div = document.createElement('div');
+                    div.className = 'list-item';
+                    div.innerHTML = `<span><strong>${code.code}</strong> - ${code.desc_ar}</span>
+                                     <button class="del-code" data-cat="${cat}" data-idx="${idx}">🗑️ حذف</button>
+                                     <button class="edit-code" data-cat="${cat}" data-idx="${idx}">✏️ تعديل</button>`;
+                    listDiv.appendChild(div);
+                });
+            }
+            document.querySelectorAll('.del-code').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let cat = btn.dataset.cat;
+                    let idx = parseInt(btn.dataset.idx);
+                    codesData[cat].splice(idx,1);
+                    saveData(); renderCodes(); refreshAdminCodes();
+                    if(window.playSound) window.playSound('click');
+                });
+            });
+            document.querySelectorAll('.edit-code').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let cat = btn.dataset.cat;
+                    let idx = parseInt(btn.dataset.idx);
+                    let code = codesData[cat][idx];
+                    let newCode = prompt('الكود الجديد', code.code);
+                    let newDescAr = prompt('الوصف الجديد بالعربية', code.desc_ar);
+                    if(newCode) { code.code = newCode; code.desc_ar = newDescAr; saveData(); renderCodes(); refreshAdminCodes(); if(window.playSound) window.playSound('click'); }
+                });
+            });
+        }
+        refreshAdminLinks();
+        refreshAdminCodes();
+
+        document.getElementById('addLinkBtn').addEventListener('click', () => {
+            let newLink = {
+                icon: document.getElementById('newIcon').value,
+                title_ar: document.getElementById('newTitleAr').value,
+                title_en: document.getElementById('newTitleEn').value || document.getElementById('newTitleAr').value,
+                url: document.getElementById('newUrl').value,
+                style: document.getElementById('newStyle').value
+            };
+            if(newLink.title_ar && newLink.url) { linksData.push(newLink); saveData(); renderLinks(); refreshAdminLinks(); if(window.playSound) window.playSound('click'); }
+        });
+        document.getElementById('addCodeBtn').addEventListener('click', () => {
+            let cat = document.getElementById('codeCat').value;
+            let newCode = {
+                code: document.getElementById('newCode').value,
+                desc_ar: document.getElementById('newDescAr').value,
+                desc_en: document.getElementById('newDescEn').value
+            };
+            if(newCode.code) { codesData[cat].push(newCode); saveData(); renderCodes(); refreshAdminCodes(); if(window.playSound) window.playSound('click'); }
+        });
+        document.querySelectorAll('.preset-color').forEach(btn => {
+            btn.addEventListener('click', () => {
+                let color = btn.dataset.color;
+                document.documentElement.style.setProperty('--accent', color);
+                if(window.playSound) window.playSound('click');
+            });
+        });
+        document.getElementById('darkLightToggle').addEventListener('click', () => {
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+            if(window.playSound) window.playSound('toggle');
+        });
+        document.getElementById('closeAdminBtn').addEventListener('click', () => { overlay.remove(); panel.remove(); adminOpen=false; });
+    }
+
+    // ------------------------- 7. Double-click Logo -------------------------
+    let clickCountLogo=0, logoTimeout;
+    document.getElementById('xiaomiLogo').addEventListener('click',()=>{
+        clickCountLogo++;
+        if(logoTimeout) clearTimeout(logoTimeout);
+        logoTimeout = setTimeout(()=>{ clickCountLogo=0; }, 800);
+        if(clickCountLogo===2) {
+            let code = prompt("🔐 رمز المشرف:");
+            if(code === "13/7/2010") showAdminPanel();
+            else if(code) alert("رمز خاطئ");
+            clickCountLogo=0;
+        }
     });
-    
+
+    // ------------------------- 8. Theme & Language -------------------------
     function applyTheme(theme) {
-        if(theme === 'light') document.body.classList.add('light');
+        if(theme==='light') document.body.classList.add('light');
         else document.body.classList.remove('light');
-        localStorage.setItem('theme', theme);
-        currentTheme = theme;
-        document.getElementById('themeText').innerText = (theme==='dark'? (currentLang==='ar'?'داكن':'Dark'): (currentLang==='ar'?'فاتح':'Light'));
+        localStorage.setItem('theme',theme); currentTheme=theme;
+        if(window.playSound) window.playSound('toggle');
     }
     function applyLanguage(lang) {
         currentLang = lang;
         document.documentElement.lang = lang==='ar'?'ar':'en';
         document.documentElement.dir = lang==='ar'?'rtl':'ltr';
-        let titles = lang==='ar'? {main:"Xiaomi World", sub:"ثيمات - أكواد بريفينت - أداء خارق", footer:"جميع الحقوق محفوظة لـ ElPOP"} : {main:"Xiaomi World", sub:"Themes - Codes - Extreme Performance", footer:"All rights reserved to ElPOP"};
+        localStorage.setItem('lang',lang);
+        let titles = lang==='ar'? {main:"Xiaomi World", sub:"ثيمات - أكواد بريفينت"} : {main:"Xiaomi World", sub:"Themes - Codes"};
         document.getElementById('mainTitle').innerText = titles.main;
         document.getElementById('subTitle').innerText = titles.sub;
-        document.querySelector('footer').innerHTML = `💀 ${titles.footer} 💀`;
-        document.getElementById('langText').innerText = lang==='ar'?'English':'العربية';
-        document.getElementById('themeText').innerText = (currentTheme==='dark'? (lang==='ar'?'داكن':'Dark'):(lang==='ar'?'فاتح':'Light'));
-        localStorage.setItem('lang', lang);
         renderLinks(); renderCodes();
+        if(window.playSound) window.playSound('switch');
     }
-    document.getElementById('themeToggle').addEventListener('click', () => { applyTheme(currentTheme==='dark'?'light':'dark'); });
-    document.getElementById('langToggle').addEventListener('click', () => { applyLanguage(currentLang==='ar'?'en':'ar'); });
-    document.querySelectorAll('.theme-preset').forEach(btn => {
-        btn.addEventListener('click', () => { document.documentElement.style.setProperty('--accent', btn.getAttribute('data-color')); });
-    });
-    document.getElementById('xiaomiLogo').addEventListener('click', () => {
-        clickCountLogo++;
-        if(logoTimeout) clearTimeout(logoTimeout);
-        logoTimeout = setTimeout(()=>{ clickCountLogo=0; },800);
-        if(clickCountLogo===2) {
-            let code = prompt("🔐 رمز المشرف:");
-            if(code === SECRET_CODE) showAdminPanel();
-            else if(code) alert("رمز خاطئ");
-            clickCountLogo=0;
-        }
-    });
-    loadLinks(); loadCodes();
-    applyTheme(currentTheme); applyLanguage(currentLang);
-    renderLinks(); renderCodes();
+    document.getElementById('themeToggle').addEventListener('click',()=> applyTheme(currentTheme==='dark'?'light':'dark'));
+    document.getElementById('langToggle').addEventListener('click',()=> applyLanguage(currentLang==='ar'?'en':'ar'));
+
+    // ------------------------- 9. PWA Installation -------------------------
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('subscribeBtn').style.background = '#ff4d00'; });
+    document.getElementById('subscribeBtn').addEventListener('click', () => { if(deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; }); } else alert("يمكنك التثبيت من قائمة المتصفح"); });
+    if('serviceWorker' in navigator) {
+        let swCode = `self.addEventListener('install', e=>e.waitUntil(caches.open('x-cache').then(c=>c.addAll(['/','index.html']))));
+                       self.addEventListener('fetch', e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
+        let blob = new Blob([swCode], {type:'application/javascript'});
+        navigator.serviceWorker.register(URL.createObjectURL(blob));
+    }
+    let manifest = {
+        name:"Xiaomi World", short_name:"Xiaomi", start_url:".", display:"standalone",
+        theme_color:"#ff4d00", background_color:"#010005",
+        icons:[{ src:"https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg", sizes:"192x192", type:"image/svg+xml" }]
+    };
+    let manifestBlob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+    let linkManifest = document.createElement('link'); linkManifest.rel='manifest'; linkManifest.href=URL.createObjectURL(manifestBlob);
+    document.head.appendChild(linkManifest);
+
+    // ------------------------- 10. Start -------------------------
+    applyTheme(currentTheme);
+    applyLanguage(currentLang);
+    renderLinks();
+    renderCodes();
 </script>
 </body>
 </html>
