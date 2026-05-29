@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -7,22 +8,23 @@
 
 <meta
 name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-/>
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <title>Xiaomi World Ultra</title>
 
 <link
-href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap"
-rel="stylesheet"
-/>
+href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap"
+rel="stylesheet">
 
 <link
 rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-/>
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
+
+/* =========================
+RESET
+========================= */
 
 *{
 margin:0;
@@ -31,58 +33,55 @@ box-sizing:border-box;
 -webkit-tap-highlight-color:transparent;
 }
 
+html{
+scroll-behavior:smooth;
+}
+
 body{
+
 font-family:'Tajawal',sans-serif;
+
 background:#050510;
 color:white;
+
 overflow-x:hidden;
 min-height:100vh;
+
 }
 
-body.light{
-background:#eef2ff;
-color:#111;
-}
-
-body.light .glass{
-background:rgba(255,255,255,.6);
-color:#111;
-}
-
-body.light .subtitle,
-body.light .link-text p{
-color:#333;
-}
-
-body.light .search,
-body.light .admin-input{
-color:#111;
-}
+/* =========================
+BACKGROUND
+========================= */
 
 .bg{
+
 position:fixed;
 inset:0;
-z-index:-3;
 
 background:
 
-radial-gradient(
-circle at top left,
-rgba(255,105,0,.22),
-transparent 30%
-),
+radial-gradient(circle at top left,
+rgba(255,105,0,.25),
+transparent 30%),
+
+radial-gradient(circle at bottom right,
+rgba(255,105,0,.12),
+transparent 30%),
 
 linear-gradient(
 180deg,
 #090914,
 #020204
 );
+
+z-index:-3;
+
 }
 
 .grid{
+
 position:fixed;
 inset:0;
-z-index:-2;
 
 background-image:
 
@@ -98,47 +97,40 @@ transparent 1px
 );
 
 background-size:40px 40px;
-}
 
-.glass{
+mask-image:
+radial-gradient(circle,black,transparent);
 
-background:
-linear-gradient(
-135deg,
-rgba(255,255,255,.13),
-rgba(255,255,255,.04)
-);
-
-backdrop-filter:
-blur(22px)
-saturate(180%);
-
--webkit-backdrop-filter:
-blur(22px)
-saturate(180%);
-
-border:
-1px solid rgba(255,255,255,.12);
-
-box-shadow:
-0 8px 32px rgba(0,0,0,.35);
+z-index:-2;
 
 }
+
+/* =========================
+PARTICLES
+========================= */
 
 #particles{
+
 position:fixed;
 inset:0;
 overflow:hidden;
-pointer-events:none;
+
 z-index:-1;
+
 }
 
 .particle{
+
 position:absolute;
+
 background:#ff6900;
+
 border-radius:50%;
-opacity:.15;
+
+opacity:.18;
+
 animation:float linear infinite;
+
 }
 
 @keyframes float{
@@ -153,31 +145,77 @@ transform:translateY(-10vh);
 
 }
 
-.container{
-width:min(1200px,94%);
-margin:auto;
-padding:1rem;
+/* =========================
+GLASS EFFECT
+========================= */
+
+.glass{
+
+background:
+linear-gradient(
+135deg,
+rgba(255,255,255,.14),
+rgba(255,255,255,.05)
+);
+
+backdrop-filter:
+blur(18px)
+saturate(180%);
+
+-webkit-backdrop-filter:
+blur(18px)
+saturate(180%);
+
+border:
+1px solid rgba(255,255,255,.1);
+
+box-shadow:
+0 8px 32px rgba(0,0,0,.35);
+
 }
 
-.topbar{
-margin-top:1rem;
+/* =========================
+CONTAINER
+========================= */
+
+.container{
+
+width:min(1200px,94%);
+margin:auto;
+
 padding:1rem;
+
+}
+
+/* =========================
+TOPBAR
+========================= */
+
+.topbar{
+
+margin-top:1rem;
+
+padding:1rem 1.2rem;
+
 border-radius:30px;
 
 display:flex;
 justify-content:space-between;
 align-items:center;
+
 }
 
 .controls{
+
 display:flex;
 gap:.7rem;
+
 }
 
 .ctrl-btn{
 
-width:48px;
-height:48px;
+width:50px;
+height:50px;
 
 border:none;
 border-radius:50%;
@@ -189,37 +227,91 @@ color:white;
 font-size:1rem;
 
 cursor:pointer;
+
+transition:.25s;
+
+}
+
+.ctrl-btn:hover{
+
+background:#ff6900;
+transform:translateY(-3px);
+
 }
 
 .fps{
+
 font-family:monospace;
 color:#00ff88;
+
 }
 
+/* =========================
+HERO
+========================= */
+
 .hero{
+
 margin-top:1.5rem;
+
 padding:3rem 2rem;
+
 border-radius:40px;
+
 text-align:center;
+
 position:relative;
 overflow:hidden;
+
+}
+
+.hero::before{
+
+content:'';
+
+position:absolute;
+
+width:450px;
+height:450px;
+
+background:#ff690022;
+
+filter:blur(100px);
+
+top:-200px;
+left:-200px;
+
+border-radius:50%;
+
 }
 
 .logo{
+
 width:110px;
+
+position:relative;
+z-index:2;
+
 animation:pulse 3s infinite ease-in-out;
+
 }
 
 @keyframes pulse{
 
 0%,100%{
+
 transform:scale(1);
+
 filter:drop-shadow(0 0 18px #ff6900);
+
 }
 
 50%{
+
 transform:scale(1.08);
+
 filter:drop-shadow(0 0 35px #ff6900);
+
 }
 
 }
@@ -236,26 +328,46 @@ linear-gradient(to right,#fff,#ff6900);
 
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
+
 }
 
 .subtitle{
+
 margin-top:.7rem;
-opacity:.8;
+
+opacity:.75;
+font-size:1rem;
+
 }
 
+/* =========================
+SECTION
+========================= */
+
 .section{
+
 margin-top:1.5rem;
+
 padding:1.5rem;
+
 border-radius:35px;
+
 }
 
 .section-title{
+
 display:flex;
 align-items:center;
 gap:.6rem;
+
 font-size:1.2rem;
 font-weight:900;
+
 }
+
+/* =========================
+LINKS
+========================= */
 
 .links-grid{
 
@@ -264,9 +376,10 @@ margin-top:1.2rem;
 display:grid;
 
 grid-template-columns:
-repeat(auto-fit,minmax(270px,1fr));
+repeat(auto-fit,minmax(260px,1fr));
 
 gap:1rem;
+
 }
 
 .link-card{
@@ -279,16 +392,29 @@ text-decoration:none;
 color:white;
 
 transition:.3s;
+
+position:relative;
+overflow:hidden;
+
 }
 
 .link-card:hover{
+
 transform:translateY(-6px);
+
+border-color:#ff6900;
+
+box-shadow:
+0 0 25px rgba(255,105,0,.25);
+
 }
 
 .link-content{
+
 display:flex;
 align-items:center;
 gap:1rem;
+
 }
 
 .link-icon{
@@ -305,6 +431,7 @@ align-items:center;
 font-size:1.5rem;
 
 flex-shrink:0;
+
 }
 
 .telegram{
@@ -328,39 +455,62 @@ background:#ff6900;
 }
 
 .link-text h3{
+
+font-size:1rem;
 margin-bottom:.3rem;
+
 }
 
 .link-text p{
+
 opacity:.7;
-font-size:.8rem;
-word-break:break-all;
+font-size:.82rem;
+
+word-break:break-word;
+
 }
 
+/* =========================
+CODES
+========================= */
+
 .codes-header{
+
 display:flex;
 justify-content:space-between;
 align-items:center;
+
 cursor:pointer;
+
 }
 
 .codes-content{
+
 max-height:0;
 overflow:hidden;
-transition:max-height .5s ease;
+
+transition:.5s ease;
+
 }
 
 .codes-content.active{
-max-height:4000px;
+
+max-height:3000px;
+
 margin-top:1rem;
+
 }
 
 #arrowIcon{
+
 transition:.3s;
+
 }
 
 #arrowIcon.rotate{
+
 transform:rotate(180deg);
+
 }
 
 .search{
@@ -379,6 +529,7 @@ background:rgba(255,255,255,.06);
 color:white;
 
 margin-bottom:1rem;
+
 }
 
 .code-item{
@@ -391,19 +542,30 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 
+margin-bottom:1rem;
+
+transition:.25s;
+
 gap:1rem;
 
-margin-bottom:1rem;
 }
 
-.code-left strong{
-word-break:break-all;
+.code-item:hover{
+
+transform:translateY(-4px);
+
+box-shadow:
+0 0 20px rgba(255,105,0,.2);
+
 }
 
 .code-left p{
+
 opacity:.7;
 font-size:.82rem;
+
 margin-top:.3rem;
+
 }
 
 .copy-btn{
@@ -421,20 +583,34 @@ color:white;
 font-weight:bold;
 
 cursor:pointer;
+
+transition:.25s;
+
 }
+
+.copy-btn:hover{
+
+transform:scale(1.05);
+
+}
+
+/* =========================
+ADMIN PANEL
+========================= */
 
 .admin-overlay{
 
 position:fixed;
 inset:0;
 
-background:rgba(0,0,0,.75);
+background:rgba(0,0,0,.7);
 
 backdrop-filter:blur(10px);
 
 z-index:9998;
 
 display:none;
+
 }
 
 .admin-panel{
@@ -455,11 +631,22 @@ padding:1.5rem;
 
 border-radius:35px;
 
-background:#0c0c15;
+background:
+linear-gradient(
+135deg,
+rgba(15,15,25,.96),
+rgba(5,5,12,.96)
+);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 0 50px rgba(0,0,0,.6);
 
 z-index:9999;
 
 display:none;
+
 }
 
 .admin-header{
@@ -469,6 +656,7 @@ justify-content:space-between;
 align-items:center;
 
 margin-bottom:1.5rem;
+
 }
 
 .close-admin{
@@ -483,7 +671,10 @@ background:#ff3b30;
 
 color:white;
 
+font-size:1rem;
+
 cursor:pointer;
+
 }
 
 .admin-grid{
@@ -494,6 +685,7 @@ grid-template-columns:
 repeat(auto-fit,minmax(320px,1fr));
 
 gap:1rem;
+
 }
 
 .admin-card{
@@ -502,11 +694,16 @@ padding:1.2rem;
 
 border-radius:25px;
 
-background:rgba(255,255,255,.05);
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.06);
+
 }
 
 .admin-card h3{
+
 margin-bottom:1rem;
+
 }
 
 .admin-input{
@@ -525,6 +722,7 @@ background:rgba(255,255,255,.06);
 color:white;
 
 margin-bottom:1rem;
+
 }
 
 .admin-btn{
@@ -544,13 +742,17 @@ color:white;
 font-weight:bold;
 
 cursor:pointer;
+
 }
 
 .admin-list{
+
 margin-top:1rem;
+
 display:flex;
 flex-direction:column;
 gap:.7rem;
+
 }
 
 .admin-item{
@@ -564,6 +766,9 @@ background:rgba(255,255,255,.05);
 display:flex;
 justify-content:space-between;
 align-items:center;
+
+gap:1rem;
+
 }
 
 .delete-btn{
@@ -579,7 +784,12 @@ background:#ff3b30;
 color:white;
 
 cursor:pointer;
+
 }
+
+/* =========================
+TOAST
+========================= */
 
 #toastContainer{
 
@@ -589,6 +799,7 @@ bottom:20px;
 right:20px;
 
 z-index:999999;
+
 }
 
 .toast{
@@ -600,12 +811,46 @@ background:#111827;
 border-radius:18px;
 
 margin-top:.7rem;
+
+animation:toast .3s ease;
+
 }
+
+@keyframes toast{
+
+from{
+transform:translateY(30px);
+opacity:0;
+}
+
+to{
+transform:translateY(0);
+opacity:1;
+}
+
+}
+
+/* =========================
+RESPONSIVE
+========================= */
 
 @media(max-width:700px){
 
 .hero h1{
 font-size:2rem;
+}
+
+.hero{
+padding:2rem 1rem;
+}
+
+.link-content{
+gap:.8rem;
+}
+
+.link-icon{
+width:50px;
+height:50px;
 }
 
 .code-item{
@@ -617,14 +862,10 @@ align-items:flex-start;
 width:100%;
 }
 
-.link-icon{
-width:50px;
-height:50px;
-}
-
 }
 
 </style>
+
 </head>
 
 <body>
@@ -634,6 +875,8 @@ height:50px;
 <div id="particles"></div>
 
 <div class="container">
+
+<!-- TOPBAR -->
 
 <div class="topbar glass">
 
@@ -667,12 +910,13 @@ id="fpsCounter">
 
 </div>
 
+<!-- HERO -->
+
 <section class="hero glass">
 
 <img
 class="logo"
-src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg"
-/>
+src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg">
 
 <h1>
 Xiaomi World
@@ -683,6 +927,8 @@ Xiaomi World
 </p>
 
 </section>
+
+<!-- LINKS -->
 
 <section class="section glass">
 
@@ -703,6 +949,8 @@ id="linksGrid">
 </div>
 
 </section>
+
+<!-- CODES -->
 
 <section class="section glass">
 
@@ -734,8 +982,7 @@ id="codesContent">
 type="text"
 class="search"
 id="searchInput"
-placeholder="ابحث عن كود..."
-/>
+placeholder="ابحث عن كود...">
 
 <div id="codesContainer"></div>
 
@@ -745,7 +992,11 @@ placeholder="ابحث عن كود..."
 
 </div>
 
+<!-- TOAST -->
+
 <div id="toastContainer"></div>
+
+<!-- ADMIN -->
 
 <div
 class="admin-overlay"
@@ -775,6 +1026,8 @@ id="closeAdmin">
 
 <div class="admin-grid">
 
+<!-- LINKS -->
+
 <div class="admin-card">
 
 <h3>
@@ -785,15 +1038,13 @@ id="closeAdmin">
 type="text"
 class="admin-input"
 id="linkName"
-placeholder="اسم الرابط"
-/>
+placeholder="اسم الرابط">
 
 <input
 type="text"
 class="admin-input"
 id="linkUrl"
-placeholder="الرابط"
-/>
+placeholder="الرابط">
 
 <select
 class="admin-input"
@@ -837,6 +1088,8 @@ id="adminLinksList">
 
 </div>
 
+<!-- CODES -->
+
 <div class="admin-card">
 
 <h3>
@@ -847,15 +1100,13 @@ id="adminLinksList">
 type="text"
 class="admin-input"
 id="codeValue"
-placeholder="الكود"
-/>
+placeholder="الكود">
 
 <input
 type="text"
 class="admin-input"
 id="codeDesc"
-placeholder="الوصف"
-/>
+placeholder="الوصف">
 
 <button
 class="admin-btn"
@@ -879,45 +1130,41 @@ id="adminCodesList">
 
 <script>
 
-/* تنظيف التخزين القديم */
-
-localStorage.removeItem('links');
-localStorage.removeItem('codes');
-
-/* PARTICLES */
+/* =========================
+PARTICLES
+========================= */
 
 const particles =
 document.getElementById('particles');
 
-const particlesCount =
-window.innerWidth < 768 ? 14 : 30;
-
-for(let i=0;i<particlesCount;i++){
+for(let i=0;i<20;i++){
 
 const p =
 document.createElement('div');
 
-p.className='particle';
+p.className = 'particle';
 
 const size =
 Math.random()*5+2;
 
-p.style.width=size+'px';
-p.style.height=size+'px';
+p.style.width = size+'px';
+p.style.height = size+'px';
 
-p.style.left=
+p.style.left =
 Math.random()*100+'%';
 
-p.style.animationDuration=
+p.style.animationDuration =
 Math.random()*8+5+'s';
 
 particles.appendChild(p);
 
 }
 
-/* FPS */
+/* =========================
+FPS
+========================= */
 
-let fps=0;
+let fps = 0;
 
 function loop(){
 
@@ -933,21 +1180,47 @@ setInterval(()=>{
 
 document
 .getElementById('fpsCounter')
-.innerText=fps+' FPS';
+.innerText =
+fps+' FPS';
 
-fps=0;
+fps = 0;
 
 },1000);
 
-/* THEME */
+/* =========================
+TOAST
+========================= */
+
+function showToast(msg){
+
+const toast =
+document.createElement('div');
+
+toast.className = 'toast';
+
+toast.innerText = msg;
+
+document
+.getElementById('toastContainer')
+.appendChild(toast);
+
+setTimeout(()=>{
+
+toast.remove();
+
+},3000);
+
+}
+
+/* =========================
+THEME
+========================= */
 
 document
 .getElementById('themeBtn')
-.onclick=()=>{
+.onclick = ()=>{
 
-document.body.classList.toggle(
-'light'
-);
+document.body.classList.toggle('light');
 
 showToast(
 'تم تغيير الثيم'
@@ -955,30 +1228,11 @@ showToast(
 
 };
 
-/* TOAST */
+/* =========================
+DEFAULT DATA
+========================= */
 
-function showToast(msg){
-
-const toast=
-document.createElement('div');
-
-toast.className='toast';
-
-toast.innerText=msg;
-
-document
-.getElementById('toastContainer')
-.appendChild(toast);
-
-setTimeout(()=>{
-toast.remove();
-},3000);
-
-}
-
-/* LINKS */
-
-const defaultLinks=[
+const defaultLinks = [
 
 {
 name:"القناة الرئيسية",
@@ -1002,44 +1256,135 @@ icon:"whatsapp"
 name:"خلفيات 4K",
 url:"https://t.me/themesXiaomia",
 icon:"wallpaper"
-},
-
-{
-name:"يوتيوب",
-url:"https://youtube.com",
-icon:"youtube"
 }
 
 ];
 
-let links=defaultLinks;
+const defaultCodes = [
+
+{
+code:"*#*#4636#*#*",
+desc:"معلومات الهاتف"
+},
+
+{
+code:"*#*#64663#*#*",
+desc:"اختبار الهاردوير"
+},
+
+{
+code:"*#*#76937#*#*",
+desc:"وضع الأداء"
+}
+
+];
+
+/* =========================
+LOAD DATA
+========================= */
+
+let links = [];
+let codes = [];
+
+function loadData(){
+
+const savedLinks =
+localStorage.getItem('links');
+
+const savedCodes =
+localStorage.getItem('codes');
+
+if(savedLinks){
+
+links = JSON.parse(savedLinks);
+
+}else{
+
+links = defaultLinks;
+
+localStorage.setItem(
+'links',
+JSON.stringify(defaultLinks)
+);
+
+}
+
+if(savedCodes){
+
+codes = JSON.parse(savedCodes);
+
+}else{
+
+codes = defaultCodes;
+
+localStorage.setItem(
+'codes',
+JSON.stringify(defaultCodes)
+);
+
+}
+
+}
+
+loadData();
+
+/* =========================
+SAVE
+========================= */
+
+function saveLinks(){
+
+localStorage.setItem(
+'links',
+JSON.stringify(links)
+);
+
+}
+
+function saveCodes(){
+
+localStorage.setItem(
+'codes',
+JSON.stringify(codes)
+);
+
+}
+
+/* =========================
+RENDER LINKS
+========================= */
 
 function renderLinks(){
 
-const grid=
+const grid =
 document.getElementById(
 'linksGrid'
 );
 
-grid.innerHTML='';
+grid.innerHTML = '';
 
-links.forEach((link)=>{
+links.forEach((link,index)=>{
 
-let iconClass='fa-solid fa-link';
+let iconClass =
+'fa-solid fa-link';
 
-if(link.icon==='telegram')
-iconClass='fa-brands fa-telegram';
+if(link.icon === 'telegram')
+iconClass =
+'fa-brands fa-telegram';
 
-if(link.icon==='whatsapp')
-iconClass='fa-brands fa-whatsapp';
+if(link.icon === 'whatsapp')
+iconClass =
+'fa-brands fa-whatsapp';
 
-if(link.icon==='wallpaper')
-iconClass='fa-solid fa-image';
+if(link.icon === 'wallpaper')
+iconClass =
+'fa-solid fa-image';
 
-if(link.icon==='youtube')
-iconClass='fa-brands fa-youtube';
+if(link.icon === 'youtube')
+iconClass =
+'fa-brands fa-youtube';
 
-grid.innerHTML+=`
+grid.innerHTML += `
 
 <a
 class="link-card glass"
@@ -1078,51 +1423,22 @@ ${link.url}
 
 renderLinks();
 
-/* CODES */
-
-const defaultCodes=[
-
-{
-code:"*#*#4636#*#*",
-desc:"معلومات الهاتف"
-},
-
-{
-code:"*#*#64663#*#*",
-desc:"اختبار الهاردوير"
-},
-
-{
-code:"*#*#76937#*#*",
-desc:"وضع الأداء"
-},
-
-{
-code:"*#06#",
-desc:"عرض IMEI"
-},
-
-{
-code:"*#*#6484#*#*",
-desc:"اختبار الشاشة"
-}
-
-];
-
-let codes=defaultCodes;
+/* =========================
+RENDER CODES
+========================= */
 
 function renderCodes(){
 
-const container=
+const container =
 document.getElementById(
 'codesContainer'
 );
 
-container.innerHTML='';
+container.innerHTML = '';
 
 codes.forEach((item,index)=>{
 
-container.innerHTML+=`
+container.innerHTML += `
 
 <div class="code-item glass">
 
@@ -1156,6 +1472,10 @@ onclick="copyCode('${item.code}')">
 
 renderCodes();
 
+/* =========================
+COPY
+========================= */
+
 function copyCode(code){
 
 navigator.clipboard.writeText(
@@ -1168,21 +1488,22 @@ showToast(
 
 }
 
-/* SEARCH */
+/* =========================
+SEARCH
+========================= */
 
 document
 .getElementById('searchInput')
 .addEventListener('input',e=>{
 
-const value=
+const value =
 e.target.value.toLowerCase();
 
 document
 .querySelectorAll('.code-item')
 .forEach(item=>{
 
-item.style.display=
-
+item.style.display =
 item.innerText
 .toLowerCase()
 .includes(value)
@@ -1194,24 +1515,26 @@ item.innerText
 
 });
 
-/* ACCORDION */
+/* =========================
+ACCORDION
+========================= */
 
-const toggleCodes=
+const toggleCodes =
 document.getElementById(
 'toggleCodes'
 );
 
-const codesContent=
+const codesContent =
 document.getElementById(
 'codesContent'
 );
 
-const arrowIcon=
+const arrowIcon =
 document.getElementById(
 'arrowIcon'
 );
 
-toggleCodes.onclick=()=>{
+toggleCodes.onclick = ()=>{
 
 codesContent.classList.toggle(
 'active'
@@ -1223,21 +1546,23 @@ arrowIcon.classList.toggle(
 
 };
 
-/* ADMIN */
+/* =========================
+ADMIN
+========================= */
 
-const ADMIN_PASSWORD=
+const ADMIN_PASSWORD =
 "2010";
 
 document
 .getElementById('adminBtn')
-.onclick=()=>{
+.onclick = ()=>{
 
-const pass=
+const pass =
 prompt(
 'ادخل كلمة المرور'
 );
 
-if(pass!==ADMIN_PASSWORD){
+if(pass !== ADMIN_PASSWORD){
 
 showToast(
 'كلمة المرور خاطئة'
@@ -1249,11 +1574,11 @@ return;
 
 document
 .getElementById('adminOverlay')
-.style.display='block';
+.style.display = 'block';
 
 document
 .getElementById('adminPanel')
-.style.display='block';
+.style.display = 'block';
 
 renderAdmin();
 
@@ -1263,39 +1588,41 @@ function closeAdmin(){
 
 document
 .getElementById('adminOverlay')
-.style.display='none';
+.style.display = 'none';
 
 document
 .getElementById('adminPanel')
-.style.display='none';
+.style.display = 'none';
 
 }
 
 document
 .getElementById('closeAdmin')
-.onclick=closeAdmin;
+.onclick = closeAdmin;
 
 document
 .getElementById('adminOverlay')
-.onclick=closeAdmin;
+.onclick = closeAdmin;
 
-/* ADD LINK */
+/* =========================
+ADD LINK
+========================= */
 
 document
 .getElementById('addLinkBtn')
-.onclick=()=>{
+.onclick = ()=>{
 
-const name=
+const name =
 document
 .getElementById('linkName')
 .value;
 
-const url=
+const url =
 document
 .getElementById('linkUrl')
 .value;
 
-const icon=
+const icon =
 document
 .getElementById('linkIcon')
 .value;
@@ -1311,10 +1638,14 @@ return;
 }
 
 links.push({
+
 name,
 url,
 icon
+
 });
+
+saveLinks();
 
 renderLinks();
 renderAdmin();
@@ -1325,18 +1656,20 @@ showToast(
 
 };
 
-/* ADD CODE */
+/* =========================
+ADD CODE
+========================= */
 
 document
 .getElementById('addCodeBtn')
-.onclick=()=>{
+.onclick = ()=>{
 
-const code=
+const code =
 document
 .getElementById('codeValue')
 .value;
 
-const desc=
+const desc =
 document
 .getElementById('codeDesc')
 .value;
@@ -1352,9 +1685,13 @@ return;
 }
 
 codes.push({
+
 code,
 desc
+
 });
+
+saveCodes();
 
 renderCodes();
 renderAdmin();
@@ -1365,20 +1702,22 @@ showToast(
 
 };
 
-/* ADMIN RENDER */
+/* =========================
+ADMIN RENDER
+========================= */
 
 function renderAdmin(){
 
-const linksList=
+const linksList =
 document.getElementById(
 'adminLinksList'
 );
 
-linksList.innerHTML='';
+linksList.innerHTML = '';
 
 links.forEach((link,index)=>{
 
-linksList.innerHTML+=`
+linksList.innerHTML += `
 
 <div class="admin-item">
 
@@ -1400,16 +1739,16 @@ onclick="deleteLink(${index})">
 
 });
 
-const codesList=
+const codesList =
 document.getElementById(
 'adminCodesList'
 );
 
-codesList.innerHTML='';
+codesList.innerHTML = '';
 
 codes.forEach((item,index)=>{
 
-codesList.innerHTML+=`
+codesList.innerHTML += `
 
 <div class="admin-item">
 
@@ -1433,11 +1772,15 @@ onclick="deleteCode(${index})">
 
 }
 
-/* DELETE */
+/* =========================
+DELETE
+========================= */
 
 function deleteLink(index){
 
 links.splice(index,1);
+
+saveLinks();
 
 renderLinks();
 renderAdmin();
@@ -1452,6 +1795,8 @@ function deleteCode(index){
 
 codes.splice(index,1);
 
+saveCodes();
+
 renderCodes();
 renderAdmin();
 
@@ -1465,3 +1810,4 @@ showToast(
 
 </body>
 </html>
+```
