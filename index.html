@@ -1,758 +1,1758 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xiaomi World | ElPOP</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff4d00">
-    <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --glass: rgba(5, 5, 20, 0.6);
-            --glass-border: rgba(255, 77, 0, 0.6);
-            --accent: #ff4d00;
-            --text: #ffffff;
-            --bg-dark: #0a0a2a;
-        }
-        body.light {
-            --glass: rgba(240, 245, 255, 0.7);
-            --glass-border: rgba(0, 0, 0, 0.2);
-            --accent: #e05a00;
-            --text: #0a0a2a;
-            --bg-dark: #eef2ff;
-        }
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background: radial-gradient(circle at 30% 10%, var(--bg-dark), #010005);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 1rem;
-            position: relative;
-        }
-        .aurora {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(ellipse at 20% 30%, #ff4d0011, #00000022);
-            pointer-events: none; z-index: 0;
-        }
-        .particle-field {
-            position: fixed; width: 100%; height: 100%;
-            overflow: hidden; pointer-events: none; z-index: 0;
-        }
-        .particle {
-            position: absolute;
-            background: radial-gradient(circle, #ffaa33, #ff4d00);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: floatParticle linear infinite;
-        }
-        @keyframes floatParticle {
-            0% { transform: translateY(0vh) scale(1); opacity: 0.3; }
-            100% { transform: translateY(100vh) scale(0); opacity: 0; }
-        }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 5;
-        }
-        .top-bar {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border-radius: 50px;
-            padding: 0.5rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--glass-border);
-        }
-        .ctrl-btn, .theme-preset {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--accent);
-            border-radius: 30px;
-            padding: 0.3rem 0.8rem;
-            cursor: pointer;
-            color: white;
-            font-size: 0.8rem;
-            transition: 0.2s;
-        }
-        .fps-counter {
-            background: black;
-            border-radius: 30px;
-            padding: 0.2rem 0.8rem;
-            font-family: monospace;
-            color: #0f0;
-        }
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-radius: 2rem;
-            padding: 1.5rem;
-            border: 1px solid var(--glass-border);
-        }
-        .hero {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        .xiaomi-logo {
-            width: 75px;
-            filter: drop-shadow(0 0 12px var(--accent));
-            cursor: pointer;
-        }
-        h1 {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #fff, var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .link-block {
-            display: block;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,77,0,0.4);
-            border-radius: 2rem;
-            margin-bottom: 0.8rem;
-            padding: 0.7rem 1rem;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-        .link-title {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-weight: bold;
-            color: var(--text);
-        }
-        .link-title i { color: var(--accent); font-size: 1.3rem; }
-        .codes-section {
-            margin-top: 1.5rem;
-        }
-        .codes-title {
-            font-size: 1.3rem;
-            text-align: center;
-            margin-bottom: 0.8rem;
-            color: var(--accent);
-        }
-        .code-category {
-            background: rgba(0,0,0,0.5);
-            border-radius: 1.5rem;
-            padding: 0.6rem;
-            margin-bottom: 1rem;
-        }
-        .category-header {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: var(--accent);
-        }
-        .code-item {
-            background: rgba(0,0,0,0.4);
-            border-radius: 1rem;
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-        .code-text {
-            font-family: monospace;
-            font-size: 0.85rem;
-            word-break: break-all;
-            direction: ltr;
-            text-align: left;
-            flex: 1;
-        }
-        .copy-code {
-            background: var(--accent);
-            border: none;
-            border-radius: 1rem;
-            padding: 0.2rem 0.8rem;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .visitor-counter {
-            background: rgba(0,0,0,0.5);
-            border-radius: 3rem;
-            padding: 0.3rem 1rem;
-            display: inline-block;
-            font-size: 0.7rem;
-            margin-top: 1rem;
-        }
-        footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1rem;
-            text-shadow: 0 0 5px var(--accent);
-        }
-        /* ========== لوحة التحكم الجديدة (Dashboard) ========== */
-        .admin-panel {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 95%;
-            max-width: 900px;
-            height: 90%;
-            background: #0a0a1aee;
-            backdrop-filter: blur(30px);
-            border-radius: 2rem;
-            border: 2px solid var(--accent);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            color: white;
-        }
-        .admin-header {
-            padding: 1rem;
-            background: rgba(0,0,0,0.5);
-            border-bottom: 1px solid var(--accent);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .admin-tabs {
-            display: flex;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            background: rgba(0,0,0,0.3);
-            flex-wrap: wrap;
-        }
-        .admin-tab {
-            background: none;
-            border: none;
-            padding: 0.4rem 1rem;
-            color: white;
-            cursor: pointer;
-            border-radius: 2rem;
-            transition: 0.2s;
-        }
-        .admin-tab.active {
-            background: var(--accent);
-            color: white;
-        }
-        .admin-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-        }
-        .admin-section {
-            display: none;
-        }
-        .admin-section.active {
-            display: block;
-        }
-        .admin-card {
-            background: rgba(255,255,255,0.1);
-            border-radius: 1rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .admin-card h4 {
-            margin-bottom: 0.5rem;
-            color: var(--accent);
-        }
-        .admin-input-group {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-        .admin-input-group input, .admin-input-group select, .admin-input-group textarea {
-            flex: 1;
-            padding: 0.5rem;
-            border-radius: 1rem;
-            background: rgba(255,255,255,0.15);
-            border: none;
-            color: white;
-        }
-        button {
-            background: var(--accent);
-            border: none;
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            cursor: pointer;
-            color: white;
-        }
-        .item-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .list-item {
-            background: rgba(0,0,0,0.4);
-            border-radius: 1rem;
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
-            gap: 1rem;
-        }
-        .stat-card {
-            background: rgba(0,0,0,0.5);
-            border-radius: 1rem;
-            padding: 0.8rem;
-            text-align: center;
-        }
-        .overlay {
-            position: fixed;
-            top:0;left:0;width:100%;height:100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 999;
-        }
-        @media (max-width: 600px) {
-            .admin-panel { width: 98%; height: 95%; }
-            .admin-input-group { flex-direction: column; }
-        }
-    </style>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Xiaomi World Ultra</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+/* =========================
+RESET
+========================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Tajawal',sans-serif;
+
+background:#050510;
+color:white;
+
+overflow-x:hidden;
+min-height:100vh;
+
+}
+
+/* =========================
+IPHONE GLASS EFFECT
+========================= */
+
+.glass{
+
+background:
+linear-gradient(
+135deg,
+rgba(255,255,255,.16),
+rgba(255,255,255,.05)
+);
+
+backdrop-filter:
+blur(25px)
+saturate(180%);
+
+-webkit-backdrop-filter:
+blur(25px)
+saturate(180%);
+
+border:
+1px solid rgba(255,255,255,.12);
+
+box-shadow:
+0 8px 32px rgba(0,0,0,.35),
+inset 0 1px 1px rgba(255,255,255,.08);
+
+}
+
+/* =========================
+BACKGROUND
+========================= */
+
+.bg{
+
+position:fixed;
+inset:0;
+
+background:
+
+radial-gradient(
+circle at top left,
+rgba(255,105,0,.25),
+transparent 30%
+),
+
+radial-gradient(
+circle at bottom right,
+rgba(255,105,0,.12),
+transparent 30%
+),
+
+linear-gradient(
+180deg,
+#090914,
+#020204
+);
+
+z-index:-3;
+
+}
+
+.grid{
+
+position:fixed;
+inset:0;
+
+background-image:
+
+linear-gradient(
+rgba(255,255,255,.03) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(255,255,255,.03) 1px,
+transparent 1px
+);
+
+background-size:40px 40px;
+
+mask-image:
+radial-gradient(circle,black,transparent);
+
+z-index:-2;
+
+}
+
+#particles{
+
+position:fixed;
+inset:0;
+overflow:hidden;
+
+z-index:-1;
+
+}
+
+.particle{
+
+position:absolute;
+
+background:#ff6900;
+
+border-radius:50%;
+
+opacity:.15;
+
+animation:float linear infinite;
+
+}
+
+@keyframes float{
+
+from{
+transform:translateY(100vh);
+}
+
+to{
+transform:translateY(-10vh);
+}
+
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.container{
+
+width:min(1200px,94%);
+margin:auto;
+
+padding:1rem;
+
+}
+
+/* =========================
+TOPBAR
+========================= */
+
+.topbar{
+
+margin-top:1rem;
+
+padding:1rem 1.2rem;
+
+border-radius:30px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+.controls{
+
+display:flex;
+gap:.7rem;
+
+}
+
+.ctrl-btn{
+
+width:48px;
+height:48px;
+
+border:none;
+border-radius:50%;
+
+background:rgba(255,255,255,.08);
+
+color:white;
+
+font-size:1rem;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.ctrl-btn:hover{
+
+transform:translateY(-4px);
+
+background:#ff6900;
+
+}
+
+.fps{
+
+font-family:monospace;
+color:#00ff88;
+
+}
+
+/* =========================
+HERO
+========================= */
+
+.hero{
+
+margin-top:1.5rem;
+
+padding:3rem 2rem;
+
+border-radius:40px;
+
+text-align:center;
+
+position:relative;
+overflow:hidden;
+
+}
+
+.hero::before{
+
+content:'';
+
+position:absolute;
+
+width:400px;
+height:400px;
+
+background:#ff690022;
+
+filter:blur(100px);
+
+top:-150px;
+left:-150px;
+
+border-radius:50%;
+
+}
+
+.logo{
+
+width:110px;
+
+animation:pulse 3s infinite ease-in-out;
+
+position:relative;
+z-index:2;
+
+}
+
+@keyframes pulse{
+
+0%,100%{
+
+transform:scale(1);
+
+filter:drop-shadow(0 0 18px #ff6900);
+
+}
+
+50%{
+
+transform:scale(1.08);
+
+filter:drop-shadow(0 0 35px #ff6900);
+
+}
+
+}
+
+.hero h1{
+
+margin-top:1rem;
+
+font-size:3rem;
+font-weight:900;
+
+background:
+linear-gradient(to right,#fff,#ff6900);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.subtitle{
+
+margin-top:.7rem;
+
+opacity:.75;
+font-size:1rem;
+
+}
+
+/* =========================
+SECTION
+========================= */
+
+.section{
+
+margin-top:1.5rem;
+
+padding:1.5rem;
+
+border-radius:35px;
+
+}
+
+.section-title{
+
+display:flex;
+align-items:center;
+gap:.6rem;
+
+font-size:1.2rem;
+font-weight:900;
+
+}
+
+/* =========================
+LINKS
+========================= */
+
+.links-grid{
+
+margin-top:1.2rem;
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(260px,1fr));
+
+gap:1rem;
+
+}
+
+.link-card{
+
+padding:1.2rem;
+
+border-radius:28px;
+
+text-decoration:none;
+color:white;
+
+transition:.3s;
+
+position:relative;
+overflow:hidden;
+
+}
+
+.link-card:hover{
+
+transform:translateY(-6px);
+
+border-color:#ff6900;
+
+box-shadow:
+0 0 25px rgba(255,105,0,.25);
+
+}
+
+.link-card::before{
+
+content:'';
+
+position:absolute;
+
+top:0;
+left:-100%;
+
+width:100%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.12),
+transparent
+);
+
+transition:.6s;
+
+}
+
+.link-card:hover::before{
+
+left:100%;
+
+}
+
+.link-content{
+
+display:flex;
+align-items:center;
+gap:1rem;
+
+}
+
+.link-icon{
+
+width:60px;
+height:60px;
+
+border-radius:20px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:1.5rem;
+
+flex-shrink:0;
+
+}
+
+.telegram{
+background:#229ED9;
+}
+
+.whatsapp{
+background:#25D366;
+}
+
+.wallpaper{
+background:#9333ea;
+}
+
+.youtube{
+background:#ff0000;
+}
+
+.global{
+background:#ff6900;
+}
+
+.link-text h3{
+
+font-size:1rem;
+margin-bottom:.3rem;
+
+}
+
+.link-text p{
+
+opacity:.7;
+font-size:.82rem;
+
+}
+
+/* =========================
+CODES
+========================= */
+
+.codes-header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+cursor:pointer;
+
+}
+
+.codes-content{
+
+max-height:0;
+
+overflow:hidden;
+
+transition:.5s ease;
+
+}
+
+.codes-content.active{
+
+max-height:3000px;
+
+margin-top:1rem;
+
+}
+
+#arrowIcon{
+
+transition:.3s;
+
+}
+
+#arrowIcon.rotate{
+
+transform:rotate(180deg);
+
+}
+
+.search{
+
+width:100%;
+
+padding:1rem;
+
+border:none;
+outline:none;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.06);
+
+color:white;
+
+margin-bottom:1rem;
+
+}
+
+.code-item{
+
+padding:1rem;
+
+border-radius:25px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:1rem;
+
+transition:.25s;
+
+}
+
+.code-item:hover{
+
+transform:translateY(-4px);
+
+box-shadow:
+0 0 20px rgba(255,105,0,.2);
+
+}
+
+.code-left p{
+
+opacity:.7;
+font-size:.82rem;
+
+margin-top:.3rem;
+
+}
+
+.copy-btn{
+
+padding:.9rem 1rem;
+
+border:none;
+
+border-radius:18px;
+
+background:#ff6900;
+
+color:white;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.copy-btn:hover{
+
+transform:scale(1.06);
+
+}
+
+/* =========================
+ADMIN PANEL
+========================= */
+
+.admin-overlay{
+
+position:fixed;
+inset:0;
+
+background:rgba(0,0,0,.7);
+
+backdrop-filter:blur(10px);
+
+z-index:9998;
+
+display:none;
+
+}
+
+.admin-panel{
+
+position:fixed;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+width:min(1100px,96%);
+height:90vh;
+
+overflow-y:auto;
+
+padding:1.5rem;
+
+border-radius:35px;
+
+background:
+linear-gradient(
+135deg,
+rgba(15,15,25,.96),
+rgba(5,5,12,.96)
+);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 0 50px rgba(0,0,0,.6);
+
+z-index:9999;
+
+display:none;
+
+}
+
+.admin-header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:1.5rem;
+
+}
+
+.close-admin{
+
+width:50px;
+height:50px;
+
+border:none;
+border-radius:50%;
+
+background:#ff3b30;
+
+color:white;
+
+font-size:1rem;
+
+cursor:pointer;
+
+}
+
+.admin-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(320px,1fr));
+
+gap:1rem;
+
+}
+
+.admin-card{
+
+padding:1.2rem;
+
+border-radius:25px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.06);
+
+}
+
+.admin-card h3{
+
+margin-bottom:1rem;
+
+}
+
+.admin-input{
+
+width:100%;
+
+padding:1rem;
+
+border:none;
+outline:none;
+
+border-radius:18px;
+
+background:rgba(255,255,255,.06);
+
+color:white;
+
+margin-bottom:1rem;
+
+}
+
+.admin-btn{
+
+width:100%;
+
+padding:1rem;
+
+border:none;
+
+border-radius:18px;
+
+background:#ff6900;
+
+color:white;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+.admin-list{
+
+margin-top:1rem;
+
+display:flex;
+flex-direction:column;
+gap:.7rem;
+
+}
+
+.admin-item{
+
+padding:1rem;
+
+border-radius:18px;
+
+background:rgba(255,255,255,.05);
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+gap:1rem;
+
+}
+
+.delete-btn{
+
+padding:.6rem 1rem;
+
+border:none;
+
+border-radius:14px;
+
+background:#ff3b30;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+/* =========================
+TOAST
+========================= */
+
+#toastContainer{
+
+position:fixed;
+
+bottom:20px;
+right:20px;
+
+z-index:999999;
+
+}
+
+.toast{
+
+padding:1rem 1.2rem;
+
+background:#111827;
+
+border-radius:18px;
+
+margin-top:.7rem;
+
+animation:toast .3s ease;
+
+}
+
+@keyframes toast{
+
+from{
+transform:translateY(30px);
+opacity:0;
+}
+
+to{
+transform:translateY(0);
+opacity:1;
+}
+
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:700px){
+
+.hero h1{
+
+font-size:2rem;
+
+}
+
+.link-content{
+
+gap:.8rem;
+
+}
+
+.link-icon{
+
+width:50px;
+height:50px;
+
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
-<div class="aurora"></div>
-<div class="particle-field" id="particleField"></div>
+
+<div class="bg"></div>
+<div class="grid"></div>
+<div id="particles"></div>
 
 <div class="container">
-    <div class="top-bar">
-        <div>
-            <button class="ctrl-btn" id="themeToggle">🌓</button>
-            <button class="ctrl-btn" id="langToggle">🌐</button>
-            <button class="ctrl-btn" id="subscribeBtn">🔔 تثبيت</button>
-        </div>
-        <div class="fps-counter" id="fpsCounter">0 FPS</div>
-    </div>
 
-    <div class="glass-card" id="mainCard">
-        <div class="hero">
-            <img class="xiaomi-logo" id="xiaomiLogo" src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg" alt="Xiaomi">
-            <h1 id="mainTitle">Xiaomi World</h1>
-            <div class="sub" id="subTitle">ثيمات - أكواد بريفينت - أداء خارق</div>
-        </div>
-        <div id="linksContainer"></div>
-        <div class="codes-section" id="codesSection">
-            <div class="codes-title">⚡ أكواد بريفينت ⚡</div>
-            <div id="codeCategories"></div>
-        </div>
-        <div style="text-align: center;">
-            <div class="visitor-counter" id="visitorCounter">👥 زوار: --</div>
-        </div>
-        <footer>💀 جميع الحقوق محفوظة لـ <span style="font-family:'Dancing Script'; font-size:1.3rem;">ElPOP</span> 💀</footer>
-    </div>
+<!-- TOPBAR -->
+
+<div class="topbar glass">
+
+<div class="controls">
+
+<button
+class="ctrl-btn"
+id="themeBtn">
+
+<i class="fa-solid fa-moon"></i>
+
+</button>
+
+<button
+class="ctrl-btn"
+id="adminBtn">
+
+<i class="fa-solid fa-user-shield"></i>
+
+</button>
+
+</div>
+
+<div
+class="fps"
+id="fpsCounter">
+
+0 FPS
+
+</div>
+
+</div>
+
+<!-- HERO -->
+
+<section class="hero glass">
+
+<img
+class="logo"
+src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg">
+
+<h1>
+Xiaomi World
+</h1>
+
+<p class="subtitle">
+ثيمات - أكواد بريفينت - تحسين الأداء
+</p>
+
+</section>
+
+<!-- LINKS -->
+
+<section class="section glass">
+
+<div class="section-title">
+
+<i class="fa-solid fa-link"></i>
+
+<span>
+الروابط
+</span>
+
+</div>
+
+<div
+class="links-grid"
+id="linksGrid">
+
+</div>
+
+</section>
+
+<!-- CODES -->
+
+<section class="section glass">
+
+<div
+class="codes-header"
+id="toggleCodes">
+
+<div class="section-title">
+
+<i class="fa-solid fa-bolt"></i>
+
+<span>
+أكواد بريفينت
+</span>
+
+</div>
+
+<i
+class="fa-solid fa-chevron-down"
+id="arrowIcon"></i>
+
+</div>
+
+<div
+class="codes-content"
+id="codesContent">
+
+<input
+type="text"
+class="search"
+id="searchInput"
+placeholder="ابحث عن كود...">
+
+<div id="codesContainer"></div>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- TOAST -->
+
+<div id="toastContainer"></div>
+
+<!-- ADMIN -->
+
+<div
+class="admin-overlay"
+id="adminOverlay">
+
+</div>
+
+<div
+class="admin-panel"
+id="adminPanel">
+
+<div class="admin-header">
+
+<h2>
+لوحة تحكم المشرف
+</h2>
+
+<button
+class="close-admin"
+id="closeAdmin">
+
+✕
+
+</button>
+
+</div>
+
+<div class="admin-grid">
+
+<!-- ADD LINK -->
+
+<div class="admin-card">
+
+<h3>
+إضافة رابط
+</h3>
+
+<input
+type="text"
+class="admin-input"
+id="linkName"
+placeholder="اسم الرابط">
+
+<input
+type="text"
+class="admin-input"
+id="linkUrl"
+placeholder="الرابط">
+
+<select
+class="admin-input"
+id="linkIcon">
+
+<option value="telegram">
+Telegram
+</option>
+
+<option value="whatsapp">
+WhatsApp
+</option>
+
+<option value="wallpaper">
+Wallpaper
+</option>
+
+<option value="youtube">
+YouTube
+</option>
+
+<option value="global">
+Global
+</option>
+
+</select>
+
+<button
+class="admin-btn"
+id="addLinkBtn">
+
+إضافة الرابط
+
+</button>
+
+<div
+class="admin-list"
+id="adminLinksList">
+
+</div>
+
+</div>
+
+<!-- ADD CODE -->
+
+<div class="admin-card">
+
+<h3>
+إضافة كود
+</h3>
+
+<input
+type="text"
+class="admin-input"
+id="codeValue"
+placeholder="الكود">
+
+<input
+type="text"
+class="admin-input"
+id="codeDesc"
+placeholder="الوصف">
+
+<button
+class="admin-btn"
+id="addCodeBtn">
+
+إضافة الكود
+
+</button>
+
+<div
+class="admin-list"
+id="adminCodesList">
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 <script>
-    // ------------------------- 1. Sound Effects -------------------------
-    let audioCtx = null;
-    function initSounds() {
-        if(audioCtx) return;
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        window.playSound = (type) => {
-            if(!audioCtx) return;
-            const now = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.type = 'sine';
-            if(type === 'click') { osc.frequency.value = 800; gain.gain.setValueAtTime(0.06, now); gain.gain.exponentialRampToValueAtTime(0.00001, now+0.1); osc.start(); osc.stop(now+0.1); }
-            else if(type === 'switch') { osc.frequency.value = 600; gain.gain.setValueAtTime(0.05, now); gain.gain.exponentialRampToValueAtTime(0.00001, now+0.08); osc.start(); osc.stop(now+0.08); }
-            else if(type === 'toggle') { osc.frequency.value = 1000; gain.gain.setValueAtTime(0.04, now); gain.gain.exponentialRampToValueAtTime(0.00001, now+0.05); osc.start(); osc.stop(now+0.05); }
-        };
-        if(audioCtx.state === 'suspended') audioCtx.resume();
-    }
-    document.body.addEventListener('click', initSounds, {once:true});
 
-    // ------------------------- 2. FPS & Particles -------------------------
-    let fps=0, lastPerf=performance.now(), frames=0;
-    function updateFPS() {
-        frames++;
-        const now = performance.now();
-        if(now-lastPerf>=1000) { fps=frames; document.getElementById('fpsCounter').innerHTML=fps+' FPS'; frames=0; lastPerf=now; }
-        requestAnimationFrame(updateFPS);
-    }
-    updateFPS();
-    const particleField = document.getElementById('particleField');
-    for(let i=0;i<35;i++) {
-        let p = document.createElement('div');
-        p.className = 'particle';
-        let s = Math.random()*5+2;
-        p.style.width = s+'px'; p.style.height = s+'px';
-        p.style.left = Math.random()*100+'%';
-        p.style.animationDuration = Math.random()*8+4+'s';
-        p.style.animationDelay = Math.random()*5+'s';
-        particleField.appendChild(p);
-    }
+/* =========================
+PARTICLES
+========================= */
 
-    // ------------------------- 3. Data Models -------------------------
-    let defaultLinks = [
-        { icon:"fab fa-telegram-plane", title_ar:"جروب الدردشة", title_en:"Chat Group", url:"https://t.me/themes345", style:"icon_text" },
-        { icon:"fab fa-telegram-plane", title_ar:"القناة الرئيسية", title_en:"Main Channel", url:"https://t.me/redmi3321", style:"icon_text" },
-        { icon:"fas fa-images", title_ar:"خلفيات 4K", title_en:"Wallpapers", url:"https://t.me/themesXiaomia", style:"icon_text" },
-        { icon:"fab fa-whatsapp", title_ar:"قناة الواتس", title_en:"WhatsApp", url:"https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H", style:"icon_text" }
-    ];
-    let defaultCodes = {
-        speed: [{ code:"*#*#76937#*#*", desc_ar:"وضع الأداء الخارق", desc_en:"Extreme Performance" }],
-        gaming: [{ code:"*#*#3646633#*#*", desc_ar:"قائمة المهندس", desc_en:"Engineer Mode" }],
-        flagship: [{ code:"*#*#64663#*#*", desc_ar:"اختبار الأجهزة", desc_en:"Hardware Test" }]
-    };
-    let linksData = [], codesData = {};
-    function loadData() {
-        linksData = JSON.parse(localStorage.getItem('links') || JSON.stringify(defaultLinks));
-        codesData = JSON.parse(localStorage.getItem('codes') || JSON.stringify(defaultCodes));
-    }
-    function saveData() {
-        localStorage.setItem('links', JSON.stringify(linksData));
-        localStorage.setItem('codes', JSON.stringify(codesData));
-    }
-    loadData();
+const particles =
+document.getElementById('particles');
 
-    // ------------------------- 4. Render Functions -------------------------
-    let currentLang = localStorage.getItem('lang') || 'ar';
-    let currentTheme = localStorage.getItem('theme') || 'dark';
+for(let i=0;i<30;i++){
 
-    function renderLinks() {
-        const container = document.getElementById('linksContainer');
-        if(!container) return;
-        container.innerHTML = '';
-        linksData.forEach(link => {
-            let title = currentLang === 'ar' ? link.title_ar : link.title_en;
-            let a = document.createElement('a');
-            a.href = link.url; a.target = '_blank'; a.className = 'link-block';
-            if(link.style === 'icon_only') a.innerHTML = `<div class="link-title"><i class="${link.icon}"></i></div>`;
-            else if(link.style === 'button') a.innerHTML = `<div class="link-title" style="justify-content:center;">${title}</div>`;
-            else if(link.style === 'card') a.innerHTML = `<div class="link-title" style="background:rgba(0,0,0,0.3); padding:0.5rem; border-radius:1rem;"><i class="${link.icon}"></i> ${title}</div>`;
-            else a.innerHTML = `<div class="link-title"><i class="${link.icon}"></i> <span>${title}</span></div>`;
-            a.addEventListener('click', () => { if(window.playSound) window.playSound('click'); });
-            container.appendChild(a);
-        });
-    }
-    function renderCodes() {
-        const container = document.getElementById('codeCategories');
-        if(!container) return;
-        container.innerHTML = '';
-        const cats = [
-            { key:'speed', title_ar:'🚀 كود زيادة السرعة', title_en:'Speed Boost' },
-            { key:'gaming', title_ar:'🎮 كود تحسين الألعاب', title_en:'Gaming Optimizer' },
-            { key:'flagship', title_ar:'💎 ميزات فلاغ شيب', title_en:'Flagship Features' }
-        ];
-        cats.forEach(cat => {
-            let items = codesData[cat.key] || [];
-            let title = currentLang === 'ar' ? cat.title_ar : cat.title_en;
-            let div = document.createElement('div');
-            div.className = 'code-category';
-            div.innerHTML = `<div class="category-header">${title}</div>`;
-            items.forEach(item => {
-                let desc = currentLang === 'ar' ? item.desc_ar : item.desc_en;
-                let codeDiv = document.createElement('div');
-                codeDiv.className = 'code-item';
-                codeDiv.innerHTML = `<div class="code-text"><strong>${item.code}</strong><br><small>${desc}</small></div><button class="copy-code">نسخ</button>`;
-                div.appendChild(codeDiv);
-            });
-            container.appendChild(div);
-        });
-        document.querySelectorAll('.copy-code').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const codeItem = btn.closest('.code-item');
-                const codeStrong = codeItem.querySelector('.code-text strong');
-                const fullCode = codeStrong ? codeStrong.innerText : '';
-                if(fullCode) { navigator.clipboard.writeText(fullCode); alert('تم نسخ: '+fullCode); if(window.playSound) window.playSound('click'); }
-            });
-        });
-    }
+const p =
+document.createElement('div');
 
-    // ------------------------- 5. Counter & Stats -------------------------
-    let visits = parseInt(localStorage.getItem('totalVisits')||'0');
-    if(!sessionStorage.getItem('hasVisited')) { visits++; localStorage.setItem('totalVisits', visits); sessionStorage.setItem('hasVisited','true'); }
-    document.getElementById('visitorCounter').innerHTML = `👥 زوار: ${visits}`;
+p.className = 'particle';
 
-    // ------------------------- 6. Admin Panel (Organized) -------------------------
-    let adminOpen = false;
-    function showAdminPanel() {
-        if(adminOpen) return;
-        adminOpen = true;
-        let overlay = document.createElement('div'); overlay.className = 'overlay';
-        let panel = document.createElement('div'); panel.className = 'admin-panel';
-        panel.innerHTML = `
-            <div class="admin-header">
-                <h3>🔧 لوحة تحكم المشرف</h3>
-                <button id="closeAdminBtn">✖ إغلاق</button>
-            </div>
-            <div class="admin-tabs">
-                <button class="admin-tab active" data-tab="stats">📊 إحصائيات</button>
-                <button class="admin-tab" data-tab="links">🔗 إدارة الروابط</button>
-                <button class="admin-tab" data-tab="codes">⚡ إدارة أكواد بريفينت</button>
-                <button class="admin-tab" data-tab="settings">⚙️ إعدادات المظهر</button>
-            </div>
-            <div class="admin-content">
-                <!-- تبويب الإحصائيات -->
-                <div class="admin-section active" id="tab-stats">
-                    <div class="stats-grid">
-                        <div class="stat-card">👥 إجمالي الزوار: ${visits}</div>
-                        <div class="stat-card">🔗 عدد الروابط: ${linksData.length}</div>
-                        <div class="stat-card">⚡ عدد الأكواد: ${Object.values(codesData).flat().length}</div>
-                            <div class="stat-card">🎨 الثيم الحالي: ${currentTheme === 'dark' ? 'داكن' : 'فاتح'}</div>
-                    </div>
-                </div>
-                <!-- تبويب الروابط -->
-                <div class="admin-section" id="tab-links">
-                    <div class="admin-card">
-                        <h4>➕ إضافة رابط جديد</h4>
-                        <div class="admin-input-group">
-                            <input id="newTitleAr" placeholder="العنوان بالعربية">
-                            <input id="newTitleEn" placeholder="العنوان بالإنجليزية">
-                            <input id="newUrl" placeholder="الرابط URL">
-                            <select id="newIcon">
-                                <option value="fab fa-telegram-plane">تيليجرام</option>
-                                <option value="fab fa-whatsapp">واتساب</option>
-                                <option value="fas fa-images">صور</option>
-                                <option value="fab fa-youtube">يوتيوب</option>
-                                <option value="fas fa-globe">رابط عام</option>
-                            </select>
-                            <select id="newStyle">
-                                <option value="icon_text">أيقونة + نص</option>
-                                <option value="icon_only">أيقونة فقط</option>
-                                <option value="button">زر نصي</option>
-                                <option value="card">كارد ممتد</option>
-                            </select>
-                            <button id="addLinkBtn">➕ إضافة</button>
-                        </div>
-                    </div>
-                    <div class="admin-card">
-                        <h4>📋 الروابط الحالية</h4>
-                        <div id="adminLinksList" class="item-list"></div>
-                    </div>
-                </div>
-                <!-- تبويب الأكواد -->
-                <div class="admin-section" id="tab-codes">
-                    <div class="admin-card">
-                        <h4>➕ إضافة كود بريفينت جديد</h4>
-                        <div class="admin-input-group">
-                            <select id="codeCat">
-                                <option value="speed">زيادة السرعة</option>
-                                <option value="gaming">تحسين الألعاب</option>
-                                <option value="flagship">ميزات فلاغ شيب</option>
-                            </select>
-                            <input id="newCode" placeholder="الكود (مثال: *#*#4636#*#*)">
-                            <input id="newDescAr" placeholder="وصف بالعربية">
-                            <input id="newDescEn" placeholder="وصف بالإنجليزية">
-                            <button id="addCodeBtn">➕ إضافة</button>
-                        </div>
-                    </div>
-                    <div class="admin-card">
-                        <h4>📋 جميع الأكواد الحالية</h4>
-                        <div id="adminCodesList" class="item-list"></div>
-                    </div>
-                </div>
-                <!-- تبويب الإعدادات -->
-                <div class="admin-section" id="tab-settings">
-                    <div class="admin-card">
-                        <h4>🎨 ألوان سريعة</h4>
-                        <div style="display:flex; gap:0.5rem;">
-                            <button class="preset-color" data-color="#ff4d00">برتقالي</button>
-                            <button class="preset-color" data-color="#3b82f6">أزرق</button>
-                            <button class="preset-color" data-color="#8b5cf6">بنفسجي</button>
-                            <button class="preset-color" data-color="#10b981">أخضر</button>
-                        </div>
-                        <hr style="margin:1rem 0;">
-                        <h4>🔘 وضع الثيم</h4>
-                        <button id="darkLightToggle">🌓 تبديل الوضع (حالي: ${currentTheme === 'dark' ? 'داكن' : 'فاتح'})</button>
-                    </div>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(overlay); document.body.appendChild(panel);
+const size =
+Math.random()*6+2;
 
-        // تبديل التبويبات
-        document.querySelectorAll('.admin-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                let target = tab.getAttribute('data-tab');
-                document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
-                document.getElementById(`tab-${target}`).classList.add('active');
-            });
-        });
+p.style.width = size+'px';
+p.style.height = size+'px';
 
-        // تحديث قوائم الروابط والأكواد داخل اللوحة
-        function refreshAdminLinks() {
-            const listDiv = document.getElementById('adminLinksList');
-            if(!listDiv) return;
-            listDiv.innerHTML = '';
-            linksData.forEach((link, idx) => {
-                let div = document.createElement('div');
-                div.className = 'list-item';
-                div.innerHTML = `<span><i class="${link.icon}"></i> ${link.title_ar} (${link.style})</span>
-                                 <button class="del-link" data-idx="${idx}">🗑️ حذف</button>
-                                 <button class="edit-link" data-idx="${idx}">✏️ تعديل</button>`;
-                listDiv.appendChild(div);
-            });
-            document.querySelectorAll('.del-link').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    let idx = parseInt(btn.dataset.idx);
-                    linksData.splice(idx,1);
-                    saveData(); renderLinks(); refreshAdminLinks();
-                    if(window.playSound) window.playSound('click');
-                });
-            });
-            document.querySelectorAll('.edit-link').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    let idx = parseInt(btn.dataset.idx);
-                    let link = linksData[idx];
-                    let newTitleAr = prompt('العنوان الجديد بالعربية', link.title_ar);
-                    let newUrl = prompt('الرابط الجديد', link.url);
-                    let newStyle = prompt('النمط (icon_text, icon_only, button, card)', link.style);
-                    if(newTitleAr && newUrl) {
-                        link.title_ar = newTitleAr;
-                        link.url = newUrl;
-                        if(newStyle) link.style = newStyle;
-                        saveData(); renderLinks(); refreshAdminLinks();
-                        if(window.playSound) window.playSound('click');
-                    }
-                });
-            });
-        }
-        function refreshAdminCodes() {
-            const listDiv = document.getElementById('adminCodesList');
-            if(!listDiv) return;
-            listDiv.innerHTML = '';
-            for(let cat of ['speed','gaming','flagship']) {
-                let title = cat==='speed'? '🚀 سرعة' : (cat==='gaming'? '🎮 ألعاب':'💎 فلاغ شيب');
-                codesData[cat].forEach((code, idx) => {
-                    let div = document.createElement('div');
-                    div.className = 'list-item';
-                    div.innerHTML = `<span><strong>${code.code}</strong> - ${code.desc_ar}</span>
-                                     <button class="del-code" data-cat="${cat}" data-idx="${idx}">🗑️ حذف</button>
-                                     <button class="edit-code" data-cat="${cat}" data-idx="${idx}">✏️ تعديل</button>`;
-                    listDiv.appendChild(div);
-                });
-            }
-            document.querySelectorAll('.del-code').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    let cat = btn.dataset.cat;
-                    let idx = parseInt(btn.dataset.idx);
-                    codesData[cat].splice(idx,1);
-                    saveData(); renderCodes(); refreshAdminCodes();
-                    if(window.playSound) window.playSound('click');
-                });
-            });
-            document.querySelectorAll('.edit-code').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    let cat = btn.dataset.cat;
-                    let idx = parseInt(btn.dataset.idx);
-                    let code = codesData[cat][idx];
-                    let newCode = prompt('الكود الجديد', code.code);
-                    let newDescAr = prompt('الوصف الجديد بالعربية', code.desc_ar);
-                    if(newCode) { code.code = newCode; code.desc_ar = newDescAr; saveData(); renderCodes(); refreshAdminCodes(); if(window.playSound) window.playSound('click'); }
-                });
-            });
-        }
-        refreshAdminLinks();
-        refreshAdminCodes();
+p.style.left =
+Math.random()*100+'%';
 
-        document.getElementById('addLinkBtn').addEventListener('click', () => {
-            let newLink = {
-                icon: document.getElementById('newIcon').value,
-                title_ar: document.getElementById('newTitleAr').value,
-                title_en: document.getElementById('newTitleEn').value || document.getElementById('newTitleAr').value,
-                url: document.getElementById('newUrl').value,
-                style: document.getElementById('newStyle').value
-            };
-            if(newLink.title_ar && newLink.url) { linksData.push(newLink); saveData(); renderLinks(); refreshAdminLinks(); if(window.playSound) window.playSound('click'); }
-        });
-        document.getElementById('addCodeBtn').addEventListener('click', () => {
-            let cat = document.getElementById('codeCat').value;
-            let newCode = {
-                code: document.getElementById('newCode').value,
-                desc_ar: document.getElementById('newDescAr').value,
-                desc_en: document.getElementById('newDescEn').value
-            };
-            if(newCode.code) { codesData[cat].push(newCode); saveData(); renderCodes(); refreshAdminCodes(); if(window.playSound) window.playSound('click'); }
-        });
-        document.querySelectorAll('.preset-color').forEach(btn => {
-            btn.addEventListener('click', () => {
-                let color = btn.dataset.color;
-                document.documentElement.style.setProperty('--accent', color);
-                if(window.playSound) window.playSound('click');
-            });
-        });
-        document.getElementById('darkLightToggle').addEventListener('click', () => {
-            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(newTheme);
-            if(window.playSound) window.playSound('toggle');
-        });
-        document.getElementById('closeAdminBtn').addEventListener('click', () => { overlay.remove(); panel.remove(); adminOpen=false; });
-    }
+p.style.animationDuration =
+Math.random()*8+4+'s';
 
-    // ------------------------- 7. Double-click Logo -------------------------
-    let clickCountLogo=0, logoTimeout;
-    document.getElementById('xiaomiLogo').addEventListener('click',()=>{
-        clickCountLogo++;
-        if(logoTimeout) clearTimeout(logoTimeout);
-        logoTimeout = setTimeout(()=>{ clickCountLogo=0; }, 800);
-        if(clickCountLogo===2) {
-            let code = prompt("🔐 رمز المشرف:");
-            if(code === "13/7/2010") showAdminPanel();
-            else if(code) alert("رمز خاطئ");
-            clickCountLogo=0;
-        }
-    });
+particles.appendChild(p);
 
-    // ------------------------- 8. Theme & Language -------------------------
-    function applyTheme(theme) {
-        if(theme==='light') document.body.classList.add('light');
-        else document.body.classList.remove('light');
-        localStorage.setItem('theme',theme); currentTheme=theme;
-        if(window.playSound) window.playSound('toggle');
-    }
-    function applyLanguage(lang) {
-        currentLang = lang;
-        document.documentElement.lang = lang==='ar'?'ar':'en';
-        document.documentElement.dir = lang==='ar'?'rtl':'ltr';
-        localStorage.setItem('lang',lang);
-        let titles = lang==='ar'? {main:"Xiaomi World", sub:"ثيمات - أكواد بريفينت"} : {main:"Xiaomi World", sub:"Themes - Codes"};
-        document.getElementById('mainTitle').innerText = titles.main;
-        document.getElementById('subTitle').innerText = titles.sub;
-        renderLinks(); renderCodes();
-        if(window.playSound) window.playSound('switch');
-    }
-    document.getElementById('themeToggle').addEventListener('click',()=> applyTheme(currentTheme==='dark'?'light':'dark'));
-    document.getElementById('langToggle').addEventListener('click',()=> applyLanguage(currentLang==='ar'?'en':'ar'));
+}
 
-    // ------------------------- 9. PWA Installation -------------------------
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('subscribeBtn').style.background = '#ff4d00'; });
-    document.getElementById('subscribeBtn').addEventListener('click', () => { if(deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; }); } else alert("يمكنك التثبيت من قائمة المتصفح"); });
-    if('serviceWorker' in navigator) {
-        let swCode = `self.addEventListener('install', e=>e.waitUntil(caches.open('x-cache').then(c=>c.addAll(['/','index.html']))));
-                       self.addEventListener('fetch', e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
-        let blob = new Blob([swCode], {type:'application/javascript'});
-        navigator.serviceWorker.register(URL.createObjectURL(blob));
-    }
-    let manifest = {
-        name:"Xiaomi World", short_name:"Xiaomi", start_url:".", display:"standalone",
-        theme_color:"#ff4d00", background_color:"#010005",
-        icons:[{ src:"https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg", sizes:"192x192", type:"image/svg+xml" }]
-    };
-    let manifestBlob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
-    let linkManifest = document.createElement('link'); linkManifest.rel='manifest'; linkManifest.href=URL.createObjectURL(manifestBlob);
-    document.head.appendChild(linkManifest);
+/* =========================
+FPS
+========================= */
 
-    // ------------------------- 10. Start -------------------------
-    applyTheme(currentTheme);
-    applyLanguage(currentLang);
-    renderLinks();
-    renderCodes();
+let fps = 0;
+
+function loop(){
+
+fps++;
+
+requestAnimationFrame(loop);
+
+}
+
+loop();
+
+setInterval(()=>{
+
+document
+.getElementById('fpsCounter')
+.innerText =
+fps+' FPS';
+
+fps = 0;
+
+},1000);
+
+/* =========================
+THEME
+========================= */
+
+document
+.getElementById('themeBtn')
+.onclick = ()=>{
+
+document.body.classList.toggle(
+'light'
+);
+
+showToast(
+'تم تغيير الثيم'
+);
+
+};
+
+/* =========================
+TOAST
+========================= */
+
+function showToast(msg){
+
+const toast =
+document.createElement('div');
+
+toast.className = 'toast';
+
+toast.innerText = msg;
+
+document
+.getElementById('toastContainer')
+.appendChild(toast);
+
+setTimeout(()=>{
+
+toast.remove();
+
+},3000);
+
+}
+
+/* =========================
+LINKS
+========================= */
+
+let links = JSON.parse(
+localStorage.getItem('links')
+) || [
+
+{
+name:"القناة الرئيسية",
+url:"https://t.me/redmi3321",
+icon:"telegram"
+},
+
+{
+name:"جروب الدردشة",
+url:"https://t.me/themes345",
+icon:"telegram"
+},
+
+{
+name:"قناة الواتس",
+url:"https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H",
+icon:"whatsapp"
+},
+
+{
+name:"خلفيات 4K",
+url:"https://t.me/themesXiaomia",
+icon:"wallpaper"
+}
+
+];
+
+function renderLinks(){
+
+const grid =
+document.getElementById(
+'linksGrid'
+);
+
+grid.innerHTML = '';
+
+links.forEach((link,index)=>{
+
+let iconClass =
+'fa-solid fa-link';
+
+if(link.icon === 'telegram')
+iconClass =
+'fa-brands fa-telegram';
+
+if(link.icon === 'whatsapp')
+iconClass =
+'fa-brands fa-whatsapp';
+
+if(link.icon === 'wallpaper')
+iconClass =
+'fa-solid fa-image';
+
+if(link.icon === 'youtube')
+iconClass =
+'fa-brands fa-youtube';
+
+grid.innerHTML += `
+
+<a
+class="link-card glass"
+href="${link.url}"
+target="_blank">
+
+<div class="link-content">
+
+<div class="link-icon ${link.icon}">
+
+<i class="${iconClass}"></i>
+
+</div>
+
+<div class="link-text">
+
+<h3>
+${link.name}
+</h3>
+
+<p>
+${link.url}
+</p>
+
+</div>
+
+</div>
+
+</a>
+
+`;
+
+});
+
+}
+
+renderLinks();
+
+/* =========================
+CODES
+========================= */
+
+let codes = JSON.parse(
+localStorage.getItem('codes')
+) || [
+
+{
+code:"*#*#4636#*#*",
+desc:"معلومات الهاتف"
+},
+
+{
+code:"*#*#64663#*#*",
+desc:"اختبار الهاردوير"
+},
+
+{
+code:"*#*#76937#*#*",
+desc:"وضع الأداء"
+}
+
+];
+
+function renderCodes(){
+
+const container =
+document.getElementById(
+'codesContainer'
+);
+
+container.innerHTML = '';
+
+codes.forEach((item,index)=>{
+
+container.innerHTML += `
+
+<div class="code-item glass">
+
+<div class="code-left">
+
+<strong>
+${item.code}
+</strong>
+
+<p>
+${item.desc}
+</p>
+
+</div>
+
+<button
+class="copy-btn"
+onclick="copyCode('${item.code}')">
+
+نسخ
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+renderCodes();
+
+function copyCode(code){
+
+navigator.clipboard.writeText(
+code
+);
+
+showToast(
+'تم نسخ الكود'
+);
+
+}
+
+/* SEARCH */
+
+document
+.getElementById('searchInput')
+.addEventListener('input',e=>{
+
+const value =
+e.target.value.toLowerCase();
+
+document
+.querySelectorAll('.code-item')
+.forEach(item=>{
+
+item.style.display =
+item.innerText
+.toLowerCase()
+.includes(value)
+
+? 'flex'
+: 'none';
+
+});
+
+});
+
+/* ACCORDION */
+
+const toggleCodes =
+document.getElementById(
+'toggleCodes'
+);
+
+const codesContent =
+document.getElementById(
+'codesContent'
+);
+
+const arrowIcon =
+document.getElementById(
+'arrowIcon'
+);
+
+toggleCodes.onclick = ()=>{
+
+codesContent.classList.toggle(
+'active'
+);
+
+arrowIcon.classList.toggle(
+'rotate'
+);
+
+};
+
+/* =========================
+ADMIN PANEL
+========================= */
+
+const ADMIN_PASSWORD =
+"2010";
+
+document
+.getElementById('adminBtn')
+.onclick = ()=>{
+
+const pass =
+prompt(
+'ادخل كلمة المرور'
+);
+
+if(pass !== ADMIN_PASSWORD){
+
+showToast(
+'كلمة المرور خاطئة'
+);
+
+return;
+
+}
+
+document
+.getElementById('adminOverlay')
+.style.display = 'block';
+
+document
+.getElementById('adminPanel')
+.style.display = 'block';
+
+renderAdmin();
+
+};
+
+function closeAdmin(){
+
+document
+.getElementById('adminOverlay')
+.style.display = 'none';
+
+document
+.getElementById('adminPanel')
+.style.display = 'none';
+
+}
+
+document
+.getElementById('closeAdmin')
+.onclick = closeAdmin;
+
+document
+.getElementById('adminOverlay')
+.onclick = closeAdmin;
+
+/* ADD LINK */
+
+document
+.getElementById('addLinkBtn')
+.onclick = ()=>{
+
+const name =
+document
+.getElementById('linkName')
+.value;
+
+const url =
+document
+.getElementById('linkUrl')
+.value;
+
+const icon =
+document
+.getElementById('linkIcon')
+.value;
+
+if(!name || !url){
+
+showToast(
+'املأ البيانات'
+);
+
+return;
+
+}
+
+links.push({
+
+name,
+url,
+icon
+
+});
+
+localStorage.setItem(
+'links',
+JSON.stringify(links)
+);
+
+renderLinks();
+renderAdmin();
+
+showToast(
+'تم إضافة الرابط'
+);
+
+};
+
+/* ADD CODE */
+
+document
+.getElementById('addCodeBtn')
+.onclick = ()=>{
+
+const code =
+document
+.getElementById('codeValue')
+.value;
+
+const desc =
+document
+.getElementById('codeDesc')
+.value;
+
+if(!code || !desc){
+
+showToast(
+'املأ البيانات'
+);
+
+return;
+
+}
+
+codes.push({
+
+code,
+desc
+
+});
+
+localStorage.setItem(
+'codes',
+JSON.stringify(codes)
+);
+
+renderCodes();
+renderAdmin();
+
+showToast(
+'تم إضافة الكود'
+);
+
+};
+
+/* ADMIN RENDER */
+
+function renderAdmin(){
+
+const linksList =
+document.getElementById(
+'adminLinksList'
+);
+
+linksList.innerHTML = '';
+
+links.forEach((link,index)=>{
+
+linksList.innerHTML += `
+
+<div class="admin-item">
+
+<div>
+${link.name}
+</div>
+
+<button
+class="delete-btn"
+onclick="deleteLink(${index})">
+
+حذف
+
+</button>
+
+</div>
+
+`;
+
+});
+
+const codesList =
+document.getElementById(
+'adminCodesList'
+);
+
+codesList.innerHTML = '';
+
+codes.forEach((item,index)=>{
+
+codesList.innerHTML += `
+
+<div class="admin-item">
+
+<div>
+${item.code}
+</div>
+
+<button
+class="delete-btn"
+onclick="deleteCode(${index})">
+
+حذف
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* DELETE */
+
+function deleteLink(index){
+
+links.splice(index,1);
+
+localStorage.setItem(
+'links',
+JSON.stringify(links)
+);
+
+renderLinks();
+renderAdmin();
+
+showToast(
+'تم حذف الرابط'
+);
+
+}
+
+function deleteCode(index){
+
+codes.splice(index,1);
+
+localStorage.setItem(
+'codes',
+JSON.stringify(codes)
+);
+
+renderCodes();
+renderAdmin();
+
+showToast(
+'تم حذف الكود'
+);
+
+}
+
 </script>
+
 </body>
 </html>
