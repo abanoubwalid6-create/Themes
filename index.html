@@ -1121,7 +1121,8 @@ id="adminCodesList">
 </div>
 
 <script>
-
+localStorage.removeItem('links');
+localStorage.removeItem('codes');
 /* =========================
 PARTICLES
 ========================= */
@@ -1230,10 +1231,53 @@ toast.remove();
 LINKS
 ========================= */
 
-let links = JSON.parse(
-localStorage.getItem('links')
-) || [
+const defaultLinks = [
 
+{
+name:"القناة الرئيسية",
+url:"https://t.me/redmi3321",
+icon:"telegram"
+},
+
+{
+name:"جروب الدردشة",
+url:"https://t.me/themes345",
+icon:"telegram"
+},
+
+{
+name:"قناة الواتس",
+url:"https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H",
+icon:"whatsapp"
+},
+
+{
+name:"خلفيات 4K",
+url:"https://t.me/themesXiaomia",
+icon:"wallpaper"
+},
+
+{
+name:"يوتيوب",
+url:"https://youtube.com",
+icon:"youtube"
+}
+
+];
+
+let links =
+JSON.parse(localStorage.getItem('links'));
+
+if(!links || !Array.isArray(links)){
+
+links = defaultLinks;
+
+localStorage.setItem(
+'links',
+JSON.stringify(defaultLinks)
+);
+
+}
 {
 name:"القناة الرئيسية",
 url:"https://t.me/redmi3321",
@@ -1339,10 +1383,48 @@ renderLinks();
 CODES
 ========================= */
 
-let codes = JSON.parse(
-localStorage.getItem('codes')
-) || [
+const defaultCodes = [
 
+{
+code:"*#*#4636#*#*",
+desc:"معلومات الهاتف"
+},
+
+{
+code:"*#*#64663#*#*",
+desc:"اختبار الهاردوير"
+},
+
+{
+code:"*#*#76937#*#*",
+desc:"وضع الأداء"
+},
+
+{
+code:"*#06#",
+desc:"عرض IMEI"
+},
+
+{
+code:"*#*#6484#*#*",
+desc:"اختبار الشاشة"
+}
+
+];
+
+let codes =
+JSON.parse(localStorage.getItem('codes'));
+
+if(!codes || !Array.isArray(codes)){
+
+codes = defaultCodes;
+
+localStorage.setItem(
+'codes',
+JSON.stringify(defaultCodes)
+);
+
+}
 {
 code:"*#*#4636#*#*",
 desc:"معلومات الهاتف"
