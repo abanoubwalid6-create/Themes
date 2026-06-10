@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Xiaomi World — HyperOS Community Hub</title>
+  <title>Xiaomi World — HyperOS Community Hub | عالم شاومي</title>
   <meta name="description" content="The ultimate Xiaomi community platform: HyperOS updates, exclusive wallpapers, tutorials, and active discussions. Join the future of tech.">
-  <!-- Preconnect & Fonts -->
+  <!-- Preconnect & Fonts (English + Arabic support) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Font Awesome 6 (official CDN) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -42,7 +42,12 @@
       scroll-behavior: smooth;
     }
 
-    /* Canvas Particle Background */
+    /* Arabic (RTL) font override */
+    body[dir="rtl"] {
+      font-family: 'Cairo', 'Inter', system-ui, sans-serif;
+    }
+
+    /* Particle Canvas */
     #particle-canvas {
       position: fixed;
       top: 0;
@@ -54,7 +59,6 @@
       will-change: transform;
     }
 
-    /* Main container */
     .container {
       max-width: 1280px;
       margin: 0 auto;
@@ -63,7 +67,7 @@
       z-index: 2;
     }
 
-    /* Glassmorphism Utility */
+    /* Glassmorphism */
     .glass-card {
       background: var(--glass-bg);
       backdrop-filter: blur(14px);
@@ -73,7 +77,7 @@
       transition: var(--transition-smooth);
     }
 
-    /* Reveal animation (Intersection Observer) */
+    /* Reveal animation */
     .reveal {
       opacity: 0;
       transform: translateY(32px);
@@ -123,14 +127,32 @@
       background: rgba(255, 105, 0, 0.1);
       transform: scale(1.02);
     }
+    /* Language Toggle */
+    .lang-switch {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 105, 0, 0.4);
+      color: white;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lang-switch:hover {
+      background: rgba(255, 105, 0, 0.2);
+      border-color: var(--primary);
+    }
 
-    /* Magnetic button base transition */
     .magnetic-btn {
       transition: transform 0.2s ease-out;
       will-change: transform;
     }
 
-    /* Ripple effect container */
     .ripple {
       position: absolute;
       border-radius: 50%;
@@ -146,7 +168,6 @@
       }
     }
 
-    /* Typography */
     h1 {
       font-size: clamp(2.8rem, 8vw, 5rem);
       font-weight: 800;
@@ -175,7 +196,6 @@
       color: var(--secondary);
     }
 
-    /* Community Cards Grid */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -208,15 +228,12 @@
       -webkit-background-clip: text;
       color: transparent;
     }
-
-    /* FAQ Accordion */
     .faq-item {
       background: rgba(20, 20, 40, 0.5);
       backdrop-filter: blur(8px);
       border-radius: 24px;
       margin-bottom: 16px;
       border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: all 0.2s;
     }
     .faq-question {
       display: flex;
@@ -232,6 +249,9 @@
       text-align: left;
       color: white;
     }
+    body[dir="rtl"] .faq-question {
+      text-align: right;
+    }
     .faq-question i {
       transition: transform 0.3s;
       color: var(--primary);
@@ -242,7 +262,6 @@
       padding: 0 24px;
       transition: max-height 0.4s ease, padding 0.2s;
       color: var(--text-muted);
-      border-top: 0px solid transparent;
     }
     .faq-item.active .faq-answer {
       max-height: 240px;
@@ -252,14 +271,12 @@
       transform: rotate(180deg);
     }
 
-    /* Footer */
     footer {
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       margin-top: 80px;
       padding: 48px 0 32px;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .container {
         padding: 0 20px;
@@ -287,19 +304,12 @@
       padding: 28px 20px;
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: all 0.25s;
     }
     .benefit-card i, .stat-card i {
       font-size: 2.2rem;
       color: var(--secondary);
       margin-bottom: 18px;
     }
-    .testimonial-card i {
-      font-size: 2rem;
-      color: var(--accent);
-      opacity: 0.7;
-    }
-
     button:focus-visible, a:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 4px;
@@ -313,111 +323,89 @@
       margin: -1px;
       overflow: hidden;
     }
+    /* RTL icon adjustments */
+    body[dir="rtl"] .btn i:first-child {
+      margin-left: 6px;
+      margin-right: 0;
+    }
+    body[dir="rtl"] .hero-cta .btn {
+      flex-direction: row-reverse;
+    }
   </style>
 </head>
 <body>
   <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
   <main class="container">
-    <!-- Hero Section -->
+    <!-- Hero Section with Language Switcher -->
     <section class="reveal" style="min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; flex-direction: column; padding: 40px 0;">
       <div class="glass-card" style="padding: 48px 32px; max-width: 880px; width: 100%; margin: 0 auto; background: rgba(5, 5, 16, 0.7); backdrop-filter: blur(16px);">
-        <span class="badge"><i class="fas fa-microchip"></i> HyperOS Ecosystem · 2026</span>
-        <h1 style="margin-top: 24px;">Xiaomi World</h1>
-        <p style="font-size: 1.4rem; font-weight: 400; margin: 20px 0 12px; color: var(--text-muted);">The Ultimate Xiaomi Community Hub</p>
-        <p style="font-size: 1.1rem; max-width: 620px; margin: 8px auto 32px;">HyperOS updates, wallpapers, tutorials, hidden tips, exclusive content and an active Xiaomi community.</p>
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+          <button class="lang-switch" id="languageToggle" aria-label="Switch Language / تبديل اللغة"><i class="fas fa-globe"></i> <span data-i18n="toggleLang">English / العربية</span></button>
+        </div>
+        <span class="badge" data-i18n="heroBadge"><i class="fas fa-microchip"></i> HyperOS Ecosystem · 2026</span>
+        <h1 style="margin-top: 24px;" data-i18n="heroTitle">Xiaomi World</h1>
+        <p style="font-size: 1.4rem; font-weight: 400; margin: 20px 0 12px; color: var(--text-muted);" data-i18n="heroSub">The Ultimate Xiaomi Community Hub</p>
+        <p style="font-size: 1.1rem; max-width: 620px; margin: 8px auto 32px;" data-i18n="heroDesc">HyperOS updates, wallpapers, tutorials, hidden tips, exclusive content and an active Xiaomi community.</p>
         <div class="hero-cta" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-          <a href="#community" class="btn btn-primary magnetic-btn" data-magnetic><i class="fab fa-telegram"></i> Join Community</a>
-          <a href="#benefits" class="btn btn-outline magnetic-btn" data-magnetic><i class="fas fa-gem"></i> Explore Benefits</a>
+          <a href="#community" class="btn btn-primary magnetic-btn" data-magnetic><i class="fab fa-telegram"></i> <span data-i18n="heroCta1">Join Community</span></a>
+          <a href="#benefits" class="btn btn-outline magnetic-btn" data-magnetic><i class="fas fa-gem"></i> <span data-i18n="heroCta2">Explore Benefits</span></a>
         </div>
       </div>
     </section>
 
-    <!-- Community Section (Cards) -->
+    <!-- Community Section -->
     <section id="community" class="reveal" style="margin: 60px 0 40px;">
       <div style="text-align: center; margin-bottom: 32px;">
-        <h2>Active Hubs</h2>
-        <p style="color: var(--text-muted);">Join thousands of Xiaomi enthusiasts worldwide</p>
+        <h2 data-i18n="communityTitle">Active Hubs</h2>
+        <p style="color: var(--text-muted);" data-i18n="communitySub">Join thousands of Xiaomi enthusiasts worldwide</p>
       </div>
       <div class="cards-grid">
-        <!-- Card 1: Telegram Group -->
-        <div class="community-card">
-          <div class="card-icon"><i class="fab fa-telegram-plane"></i></div>
-          <h3>💬 Telegram Group</h3>
-          <p style="margin: 12px 0 20px; color: var(--text-muted);">Community discussions, support and Xiaomi help.</p>
-          <a href="https://t.me/themes345" target="_blank" rel="noopener noreferrer" class="btn btn-primary magnetic-btn" style="padding: 8px 22px;" data-magnetic><i class="fas fa-paper-plane"></i> Join Group</a>
-        </div>
-        <!-- Card 2: Main Channel -->
-        <div class="community-card">
-          <div class="card-icon"><i class="fab fa-telegram"></i></div>
-          <h3>🧠 Main Channel</h3>
-          <p style="margin: 12px 0 20px; color: var(--text-muted);">Official updates, tutorials and important releases.</p>
-          <a href="https://t.me/redmi3321" target="_blank" rel="noopener noreferrer" class="btn btn-primary magnetic-btn" style="padding: 8px 22px;" data-magnetic><i class="fas fa-bullhorn"></i> Open Channel</a>
-        </div>
-        <!-- Card 3: Wallpapers -->
-        <div class="community-card">
-          <div class="card-icon"><i class="fas fa-images"></i></div>
-          <h3>🖼️ Wallpapers Channel</h3>
-          <p style="margin: 12px 0 20px; color: var(--text-muted);">Ultra HD wallpapers and premium designs.</p>
-          <a href="https://t.me/themesXiaomia" target="_blank" rel="noopener noreferrer" class="btn btn-primary magnetic-btn" style="padding: 8px 22px;" data-magnetic><i class="fas fa-download"></i> View Wallpapers</a>
-        </div>
-        <!-- Card 4: WhatsApp Channel -->
-        <div class="community-card">
-          <div class="card-icon"><i class="fab fa-whatsapp"></i></div>
-          <h3>🟢 WhatsApp Channel</h3>
-          <p style="margin: 12px 0 20px; color: var(--text-muted);">Fast notifications and instant updates.</p>
-          <a href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" rel="noopener noreferrer" class="btn btn-primary magnetic-btn" style="padding: 8px 22px;" data-magnetic><i class="fab fa-whatsapp"></i> Follow Channel</a>
-        </div>
+        <div class="community-card"><div class="card-icon"><i class="fab fa-telegram-plane"></i></div><h3 data-i18n="card1Title">💬 Telegram Group</h3><p style="margin: 12px 0 20px; color: var(--text-muted);" data-i18n="card1Desc">Community discussions, support and Xiaomi help.</p><a href="https://t.me/themes345" target="_blank" rel="noopener noreferrer" class="btn btn-primary magnetic-btn" style="padding: 8px 22px;" data-magnetic><i class="fas fa-paper-plane"></i> <span data-i18n="card1Btn">Join Group</span></a></div>
+        <div class="community-card"><div class="card-icon"><i class="fab fa-telegram"></i></div><h3 data-i18n="card2Title">🧠 Main Channel</h3><p style="margin: 12px 0 20px; color: var(--text-muted);" data-i18n="card2Desc">Official updates, tutorials and important releases.</p><a href="https://t.me/redmi3321" target="_blank" rel="noopener noreferrer" class="btn btn-primary magnetic-btn" style="padding: 8px 22px;" data-magnetic><i class="fas fa-bullhorn"></i> <span data-i18n="card2Btn">Open Channel</span></a></div>
+        <div class="community-card"><div class="card-icon"><i class="fas fa-images"></i></div><h3 data-i18n="card3Title">🖼️ Wallpapers Channel</h3><p style="margin: 12px 0 20px; color: var(--text-muted);" data-i18n="card3Desc">Ultra HD wallpapers and premium designs.</p><a href="https://t.me/themesXiaomia" target="_blank" rel="noopener noreferrer" class="btn btn-primary magnetic-btn" style="padding: 8px 22px;" data-magnetic><i class="fas fa-download"></i> <span data-i18n="card3Btn">View Wallpapers</span></a></div>
+        <div class="community-card"><div class="card-icon"><i class="fab fa-whatsapp"></i></div><h3 data-i18n="card4Title">🟢 WhatsApp Channel</h3><p style="margin: 12px 0 20px; color: var(--text-muted);" data-i18n="card4Desc">Fast notifications and instant updates.</p><a href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" rel="noopener noreferrer" class="btn btn-primary magnetic-btn" style="padding: 8px 22px;" data-magnetic><i class="fab fa-whatsapp"></i> <span data-i18n="card4Btn">Follow Channel</span></a></div>
       </div>
     </section>
 
     <!-- Benefits Section -->
     <section id="benefits" class="reveal" style="margin: 80px 0 40px;">
-      <div style="text-align: center;"><h2>Premium Advantages</h2><p style="color: var(--text-muted);">Why join the Xiaomi World ecosystem</p></div>
+      <div style="text-align: center;"><h2 data-i18n="benefitsTitle">Premium Advantages</h2><p style="color: var(--text-muted);" data-i18n="benefitsSub">Why join the Xiaomi World ecosystem</p></div>
       <div class="benefits-grid" style="margin-top: 48px;">
-        <div class="benefit-card"><i class="fas fa-cloud-upload-alt"></i><h3>HyperOS First Look</h3><p>Early access to beta builds & changelogs</p></div>
-        <div class="benefit-card"><i class="fas fa-mobile-alt"></i><h3>Hidden Tips & Tweaks</h3><p>Unlock HyperOS secret features</p></div>
-        <div class="benefit-card"><i class="fas fa-user-friends"></i><h3>Global Community</h3><p>Chat with developers & power users</p></div>
-        <div class="benefit-card"><i class="fas fa-crown"></i><h3>Exclusive Wallpapers</h3><p>4K+ curated collections weekly</p></div>
+        <div class="benefit-card"><i class="fas fa-cloud-upload-alt"></i><h3 data-i18n="benefit1Title">HyperOS First Look</h3><p data-i18n="benefit1Desc">Early access to beta builds & changelogs</p></div>
+        <div class="benefit-card"><i class="fas fa-mobile-alt"></i><h3 data-i18n="benefit2Title">Hidden Tips & Tweaks</h3><p data-i18n="benefit2Desc">Unlock HyperOS secret features</p></div>
+        <div class="benefit-card"><i class="fas fa-user-friends"></i><h3 data-i18n="benefit3Title">Global Community</h3><p data-i18n="benefit3Desc">Chat with developers & power users</p></div>
+        <div class="benefit-card"><i class="fas fa-crown"></i><h3 data-i18n="benefit4Title">Exclusive Wallpapers</h3><p data-i18n="benefit4Desc">4K+ curated collections weekly</p></div>
       </div>
     </section>
 
     <!-- Statistics Section -->
     <section id="stats" class="reveal" style="margin: 80px 0 40px;">
-      <div style="text-align: center;"><h2>Community Impact</h2><p style="color: var(--text-muted);">Growing stronger every day</p></div>
+      <div style="text-align: center;"><h2 data-i18n="statsTitle">Community Impact</h2><p style="color: var(--text-muted);" data-i18n="statsSub">Growing stronger every day</p></div>
       <div class="stats-grid" style="margin-top: 48px;">
-        <div class="stat-card"><i class="fas fa-users"></i><div class="stat-number" data-target="87456">0</div><p>Active Members</p></div>
-        <div class="stat-card"><i class="fas fa-globe"></i><div class="stat-number" data-target="142">0</div><p>Countries</p></div>
-        <div class="stat-card"><i class="fas fa-image"></i><div class="stat-number" data-target="2480">0</div><p>Wallpapers</p></div>
-        <div class="stat-card"><i class="fas fa-code-branch"></i><div class="stat-number" data-target="126">0</div><p>HyperOS Updates</p></div>
+        <div class="stat-card"><i class="fas fa-users"></i><div class="stat-number" data-target="87456">0</div><p data-i18n="stat1Label">Active Members</p></div>
+        <div class="stat-card"><i class="fas fa-globe"></i><div class="stat-number" data-target="142">0</div><p data-i18n="stat2Label">Countries</p></div>
+        <div class="stat-card"><i class="fas fa-image"></i><div class="stat-number" data-target="2480">0</div><p data-i18n="stat3Label">Wallpapers</p></div>
+        <div class="stat-card"><i class="fas fa-code-branch"></i><div class="stat-number" data-target="126">0</div><p data-i18n="stat4Label">HyperOS Updates</p></div>
       </div>
     </section>
 
     <!-- Testimonials -->
     <section class="reveal" style="margin: 80px 0 40px;">
-      <div style="text-align: center;"><h2>Voices from the community</h2><p>Trusted by Xiaomi enthusiasts worldwide</p></div>
+      <div style="text-align: center;"><h2 data-i18n="testimonialsTitle">Voices from the community</h2><p data-i18n="testimonialsSub">Trusted by Xiaomi enthusiasts worldwide</p></div>
       <div class="testimonials-grid" style="margin-top: 48px;">
-        <div class="testimonial-card"><i class="fas fa-quote-left"></i><p style="margin: 20px 0;">"Best Xiaomi hub ever! Daily HyperOS tips and active Telegram group saved my device performance."</p><h4>— Aarav S.</h4><span>Mi 14 Ultra</span></div>
-        <div class="testimonial-card"><i class="fas fa-quote-left"></i><p style="margin: 20px 0;">"Premium wallpapers and exclusive leaks — Xiaomi World is my go-to source for everything HyperOS."</p><h4>— Lin Wei</h4><span>Pad 6 Pro</span></div>
+        <div class="testimonial-card"><i class="fas fa-quote-left"></i><p style="margin: 20px 0;" data-i18n="testimonial1Text">"Best Xiaomi hub ever! Daily HyperOS tips and active Telegram group saved my device performance."</p><h4>— Aarav S.</h4><span>Mi 14 Ultra</span></div>
+        <div class="testimonial-card"><i class="fas fa-quote-left"></i><p style="margin: 20px 0;" data-i18n="testimonial2Text">"Premium wallpapers and exclusive leaks — Xiaomi World is my go-to source for everything HyperOS."</p><h4>— Lin Wei</h4><span>Pad 6 Pro</span></div>
       </div>
     </section>
 
-    <!-- FAQ Section (Accordion) -->
+    <!-- FAQ Section -->
     <section class="reveal" style="margin: 80px 0 40px;">
-      <div style="text-align: center;"><h2>Frequently Asked Questions</h2><p>Everything you need to know</p></div>
+      <div style="text-align: center;"><h2 data-i18n="faqTitle">Frequently Asked Questions</h2><p data-i18n="faqSub">Everything you need to know</p></div>
       <div style="margin-top: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false"><span>How do I join the Telegram groups?</span><i class="fas fa-chevron-down"></i></button>
-          <div class="faq-answer">Simply click "Join Group" on any community card. You’ll be redirected to the official Telegram or WhatsApp channel. No login required.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false"><span>Is the content free?</span><i class="fas fa-chevron-down"></i></button>
-          <div class="faq-answer">Yes, 100% free. Premium wallpapers, tutorials, and HyperOS updates are accessible to every member.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false"><span>Are there official Xiaomi developers?</span><i class="fas fa-chevron-down"></i></button>
-          <div class="faq-answer">Our community includes experienced developers and HyperOS beta testers sharing insights daily.</div>
-        </div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false"><span data-i18n="faqQ1">How do I join the Telegram groups?</span><i class="fas fa-chevron-down"></i></button><div class="faq-answer" data-i18n="faqA1">Simply click "Join Group" on any community card. You’ll be redirected to the official Telegram or WhatsApp channel. No login required.</div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false"><span data-i18n="faqQ2">Is the content free?</span><i class="fas fa-chevron-down"></i></button><div class="faq-answer" data-i18n="faqA2">Yes, 100% free. Premium wallpapers, tutorials, and HyperOS updates are accessible to every member.</div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false"><span data-i18n="faqQ3">Are there official Xiaomi developers?</span><i class="fas fa-chevron-down"></i></button><div class="faq-answer" data-i18n="faqA3">Our community includes experienced developers and HyperOS beta testers sharing insights daily.</div></div>
       </div>
     </section>
   </main>
@@ -425,14 +413,14 @@
   <footer>
     <div class="container">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px;">
-        <div><i class="fas fa-microchip"></i> Xiaomi World · HyperOS Ecosystem</div>
+        <div><i class="fas fa-microchip"></i> <span data-i18n="footerBrand">Xiaomi World · HyperOS Ecosystem</span></div>
         <div style="display: flex; gap: 24px;">
           <a href="#" aria-label="Twitter" style="color: var(--text-muted);"><i class="fab fa-twitter"></i></a>
           <a href="#" aria-label="GitHub" style="color: var(--text-muted);"><i class="fab fa-github"></i></a>
           <a href="#" aria-label="Instagram" style="color: var(--text-muted);"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
-      <div style="margin-top: 40px; text-align: center; color: var(--text-muted); font-size: 0.85rem;">© 2026 Xiaomi World — Independent Community. All trademarks belong to respective owners.</div>
+      <div style="margin-top: 40px; text-align: center; color: var(--text-muted); font-size: 0.85rem;" data-i18n="footerCopyright">© 2026 Xiaomi World — Independent Community. All trademarks belong to respective owners.</div>
     </div>
   </footer>
 
@@ -440,7 +428,163 @@
     (function() {
       "use strict";
 
-      // -------- 1. Particle System (Performance Optimized) --------
+      // ---------- TRANSLATIONS (EN / AR) ----------
+      const translations = {
+        en: {
+          toggleLang: "EN / العربية",
+          heroBadge: "<i class='fas fa-microchip'></i> HyperOS Ecosystem · 2026",
+          heroTitle: "Xiaomi World",
+          heroSub: "The Ultimate Xiaomi Community Hub",
+          heroDesc: "HyperOS updates, wallpapers, tutorials, hidden tips, exclusive content and an active Xiaomi community.",
+          heroCta1: "Join Community",
+          heroCta2: "Explore Benefits",
+          communityTitle: "Active Hubs",
+          communitySub: "Join thousands of Xiaomi enthusiasts worldwide",
+          card1Title: "💬 Telegram Group",
+          card1Desc: "Community discussions, support and Xiaomi help.",
+          card1Btn: "Join Group",
+          card2Title: "🧠 Main Channel",
+          card2Desc: "Official updates, tutorials and important releases.",
+          card2Btn: "Open Channel",
+          card3Title: "🖼️ Wallpapers Channel",
+          card3Desc: "Ultra HD wallpapers and premium designs.",
+          card3Btn: "View Wallpapers",
+          card4Title: "🟢 WhatsApp Channel",
+          card4Desc: "Fast notifications and instant updates.",
+          card4Btn: "Follow Channel",
+          benefitsTitle: "Premium Advantages",
+          benefitsSub: "Why join the Xiaomi World ecosystem",
+          benefit1Title: "HyperOS First Look",
+          benefit1Desc: "Early access to beta builds & changelogs",
+          benefit2Title: "Hidden Tips & Tweaks",
+          benefit2Desc: "Unlock HyperOS secret features",
+          benefit3Title: "Global Community",
+          benefit3Desc: "Chat with developers & power users",
+          benefit4Title: "Exclusive Wallpapers",
+          benefit4Desc: "4K+ curated collections weekly",
+          statsTitle: "Community Impact",
+          statsSub: "Growing stronger every day",
+          stat1Label: "Active Members",
+          stat2Label: "Countries",
+          stat3Label: "Wallpapers",
+          stat4Label: "HyperOS Updates",
+          testimonialsTitle: "Voices from the community",
+          testimonialsSub: "Trusted by Xiaomi enthusiasts worldwide",
+          testimonial1Text: "\"Best Xiaomi hub ever! Daily HyperOS tips and active Telegram group saved my device performance.\"",
+          testimonial2Text: "\"Premium wallpapers and exclusive leaks — Xiaomi World is my go-to source for everything HyperOS.\"",
+          faqTitle: "Frequently Asked Questions",
+          faqSub: "Everything you need to know",
+          faqQ1: "How do I join the Telegram groups?",
+          faqA1: "Simply click \"Join Group\" on any community card. You’ll be redirected to the official Telegram or WhatsApp channel. No login required.",
+          faqQ2: "Is the content free?",
+          faqA2: "Yes, 100% free. Premium wallpapers, tutorials, and HyperOS updates are accessible to every member.",
+          faqQ3: "Are there official Xiaomi developers?",
+          faqA3: "Our community includes experienced developers and HyperOS beta testers sharing insights daily.",
+          footerBrand: "Xiaomi World · HyperOS Ecosystem",
+          footerCopyright: "© 2026 Xiaomi World — Independent Community. All trademarks belong to respective owners."
+        },
+        ar: {
+          toggleLang: "EN / العربية",
+          heroBadge: "<i class='fas fa-microchip'></i> نظام HyperOS البيئي · 2026",
+          heroTitle: "عالم شاومي",
+          heroSub: "المركز النهائي لمجتمع شاومي",
+          heroDesc: "تحديثات HyperOS، خلفيات، دروس تعليمية، نصائح مخفية، محتوى حصري ومجتمع شاومي نشط.",
+          heroCta1: "انضم للمجتمع",
+          heroCta2: "استكشف المزايا",
+          communityTitle: "مراكز نشطة",
+          communitySub: "انضم إلى آلاف المتحمسين لشاومي حول العالم",
+          card1Title: "💬 مجموعة تيليجرام",
+          card1Desc: "نقاشات المجتمع، الدعم ومساعدة شاومي.",
+          card1Btn: "انضم للمجموعة",
+          card2Title: "🧠 القناة الرئيسية",
+          card2Desc: "تحديثات رسمية، دروس وإصدارات مهمة.",
+          card2Btn: "افتح القناة",
+          card3Title: "🖼️ قناة الخلفيات",
+          card3Desc: "خلفيات فائقة الجودة وتصاميم مميزة.",
+          card3Btn: "عرض الخلفيات",
+          card4Title: "🟢 قناة واتساب",
+          card4Desc: "إشعارات سريعة وتحديثات فورية.",
+          card4Btn: "تابع القناة",
+          benefitsTitle: "مزايا حصرية",
+          benefitsSub: "لماذا تنضم إلى نظام شاومي البيئي",
+          benefit1Title: "لمحة أولى HyperOS",
+          benefit1Desc: "وصول مبكر للإصدارات التجريبية وسجل التغييرات",
+          benefit2Title: "نصائح وتعديلات خفية",
+          benefit2Desc: "اكتشف ميزات HyperOS السرية",
+          benefit3Title: "مجتمع عالمي",
+          benefit3Desc: "تحدث مع المطورين والمستخدمين المحترفين",
+          benefit4Title: "خلفيات حصرية",
+          benefit4Desc: "مجموعات منسقة بدقة 4K+ أسبوعياً",
+          statsTitle: "تأثير المجتمع",
+          statsSub: "ننمو أقوى كل يوم",
+          stat1Label: "الأعضاء النشطون",
+          stat2Label: "الدول",
+          stat3Label: "الخلفيات",
+          stat4Label: "تحديثات HyperOS",
+          testimonialsTitle: "آراء المجتمع",
+          testimonialsSub: "موثوق من قبل عشاق شاومي حول العالم",
+          testimonial1Text: "\"أفضل مركز لشاومي على الإطلاق! نصائح HyperOS اليومية ومجموعة التيليجرام النشطة أنقذت أداء جهازي.\"",
+          testimonial2Text: "\"خلفيات مميزة وتسريبات حصرية — عالم شاومي هو وجهتي الأولى لكل ما يتعلق بـ HyperOS.\"",
+          faqTitle: "الأسئلة الشائعة",
+          faqSub: "كل ما تحتاج معرفته",
+          faqQ1: "كيف أنضم إلى مجموعات التيليجرام؟",
+          faqA1: "فقط اضغط على 'انضم للمجموعة' في أي بطاقة مجتمع. سيتم توجيهك إلى قناة التيليجرام أو واتساب الرسمية. لا حاجة لتسجيل الدخول.",
+          faqQ2: "هل المحتوى مجاني؟",
+          faqA2: "نعم، مجاني 100%. الخلفيات المميزة والدروس وتحديثات HyperOS متاحة لكل عضو.",
+          faqQ3: "هل هناك مطورون رسميون من شاومي؟",
+          faqA3: "يضم مجتمعنا مطورين ذوي خبرة ومختبرين لـ HyperOS يشاركون الرؤى يومياً.",
+          footerBrand: "عالم شاومي · نظام HyperOS البيئي",
+          footerCopyright: "© 2026 عالم شاومي — مجتمع مستقل. جميع العلامات التجارية مملوكة لأصحابها."
+        }
+      };
+
+      let currentLang = 'en';
+
+      function setLanguage(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        // Update all elements with data-i18n attribute
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (t[key] !== undefined) {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+              el.placeholder = t[key];
+            } else {
+              el.innerHTML = t[key];
+            }
+          }
+        });
+        // Update FAQ answers (they have data-i18n but also inner content, we update separately)
+        document.querySelectorAll('.faq-answer[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (t[key]) el.innerHTML = t[key];
+        });
+        // Direction and lang attribute
+        const htmlTag = document.documentElement;
+        if (lang === 'ar') {
+          htmlTag.setAttribute('dir', 'rtl');
+          htmlTag.setAttribute('lang', 'ar');
+          document.body.setAttribute('dir', 'rtl');
+        } else {
+          htmlTag.setAttribute('dir', 'ltr');
+          htmlTag.setAttribute('lang', 'en');
+          document.body.setAttribute('dir', 'ltr');
+        }
+        // Toggle button text stays generic
+        const toggleSpan = document.querySelector('#languageToggle span');
+        if (toggleSpan) toggleSpan.innerHTML = t.toggleLang;
+      }
+
+      // Language toggle button event
+      const toggleBtn = document.getElementById('languageToggle');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          const newLang = currentLang === 'en' ? 'ar' : 'en';
+          setLanguage(newLang);
+        });
+      }
+
+      // -------- Particle Canvas (same as before) --------
       const canvas = document.getElementById('particle-canvas');
       let ctx, width, height, particles = [];
       let animationId = null;
@@ -492,14 +636,11 @@
 
       window.addEventListener('resize', () => {
         resizeCanvas();
-        if (ctx) animateParticles(); // reinit positions optional
       });
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        particleCount = 20;
-      }
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) particleCount = 20;
       initParticles();
 
-      // -------- 2. Intersection Observer (Scroll Reveal & Counters) --------
+      // Intersection Observer for reveal
       const revealElements = document.querySelectorAll('.reveal');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -511,7 +652,7 @@
       }, { threshold: 0.15, rootMargin: "0px 0px -30px 0px" });
       revealElements.forEach(el => observer.observe(el));
 
-      // -------- 3. Counters animation (stats) --------
+      // Counters
       const statNumbers = document.querySelectorAll('.stat-number');
       let countersTriggered = false;
       const statsObserver = new IntersectionObserver((entries) => {
@@ -540,32 +681,27 @@
       const statsSection = document.getElementById('stats');
       if (statsSection) statsObserver.observe(statsSection);
 
-      // -------- 4. Magnetic Buttons Effect (Premium) --------
+      // Magnetic effect
       const magneticBtns = document.querySelectorAll('.magnetic-btn');
-      function attachMagnetic(btn) {
+      magneticBtns.forEach(btn => {
         btn.addEventListener('mousemove', function(e) {
           const rect = btn.getBoundingClientRect();
           const x = e.clientX - rect.left - rect.width / 2;
           const y = e.clientY - rect.top - rect.height / 2;
-          const moveX = x * 0.2;
-          const moveY = y * 0.2;
-          btn.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+          btn.style.transform = `translate3d(${x * 0.2}px, ${y * 0.2}px, 0)`;
         });
-        btn.addEventListener('mouseleave', function() {
-          btn.style.transform = 'translate3d(0,0,0)';
-        });
-      }
-      magneticBtns.forEach(btn => attachMagnetic(btn));
+        btn.addEventListener('mouseleave', function() { btn.style.transform = 'translate3d(0,0,0)'; });
+      });
 
-      // -------- 5. Ripple Effect on all buttons (except magnetic conflict but adds ripple) --------
+      // Ripple on all buttons
       const allBtns = document.querySelectorAll('.btn, .faq-question');
-      function createRipple(event) {
-        const button = event.currentTarget;
+      function createRipple(e) {
+        const button = e.currentTarget;
         const ripple = document.createElement('span');
         const rect = button.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
-        const x = event.clientX - rect.left - size / 2;
-        const y = event.clientY - rect.top - size / 2;
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
         ripple.style.width = ripple.style.height = `${size}px`;
         ripple.style.left = `${x}px`;
         ripple.style.top = `${y}px`;
@@ -573,33 +709,26 @@
         ripple.style.position = 'absolute';
         ripple.style.borderRadius = '50%';
         ripple.style.background = 'rgba(255,255,255,0.4)';
-        ripple.style.pointerEvents = 'none';
         button.style.position = 'relative';
         button.style.overflow = 'hidden';
         button.appendChild(ripple);
-        setTimeout(() => { ripple.remove(); }, 600);
+        setTimeout(() => ripple.remove(), 600);
       }
-      allBtns.forEach(btn => {
-        if (!btn.classList.contains('ripple-initialized')) {
-          btn.addEventListener('click', createRipple);
-          btn.classList.add('ripple-initialized');
-        }
-      });
+      allBtns.forEach(btn => btn.addEventListener('click', createRipple));
 
-      // -------- 6. FAQ Accordion with ARIA --------
+      // FAQ accordion
       const faqItems = document.querySelectorAll('.faq-item');
       faqItems.forEach(item => {
-        const questionBtn = item.querySelector('.faq-question');
-        questionBtn.addEventListener('click', () => {
-          const expanded = questionBtn.getAttribute('aria-expanded') === 'true' ? false : true;
+        const qBtn = item.querySelector('.faq-question');
+        qBtn.addEventListener('click', () => {
+          const expanded = qBtn.getAttribute('aria-expanded') === 'true' ? false : true;
           item.classList.toggle('active');
-          questionBtn.setAttribute('aria-expanded', expanded);
+          qBtn.setAttribute('aria-expanded', expanded);
         });
-        // set initial state
-        questionBtn.setAttribute('aria-expanded', 'false');
+        qBtn.setAttribute('aria-expanded', 'false');
       });
 
-      // -------- 7. Smooth anchor scroll (prevent default jumps) --------
+      // Smooth anchor scroll
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           const targetId = this.getAttribute('href');
@@ -612,9 +741,8 @@
         });
       });
 
-      // -------- 8. Security: All external links have noopener noreferrer (already applied) --------
-      // strict mode enabled, no eval usage.
-      console.log('Xiaomi World — fully interactive, secure, glassmorphic experience');
+      // Set default English
+      setLanguage('en');
     })();
   </script>
 </body>
