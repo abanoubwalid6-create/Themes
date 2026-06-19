@@ -1,508 +1,1315 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <title>Xiaomi World — Light | Fast | Global</title>
-  <meta name="description" content="Ultra-fast, premium Xiaomi community: bilingual, glass, low-end optimized.">
-  
-  <!-- Status Bar & PWA -->
-  <meta name="theme-color" content="#050508" media="(prefers-color-scheme: dark)">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
-  <!-- Fonts with font-display: swap -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#06070d">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Xiaomi World is a fast bilingual hub for Telegram, WhatsApp, updates, wallpapers, and community links.">
+  <title>Xiaomi World | Community Hub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    /* ---------- RESET & BASE (Optimized) ---------- */
+    :root {
+      --bg: #06070d;
+      --bg-soft: #0b0d16;
+      --surface: rgba(18, 20, 34, 0.74);
+      --surface-strong: rgba(24, 27, 44, 0.88);
+      --surface-light: rgba(255, 255, 255, 0.07);
+      --border: rgba(255, 255, 255, 0.11);
+      --border-strong: rgba(255, 255, 255, 0.18);
+      --text: #f8fafc;
+      --muted: #a8b0c2;
+      --muted-strong: #c9d0df;
+      --orange: #ff6900;
+      --blue: #5ca7ff;
+      --green: #28d17c;
+      --danger: #ff5a78;
+      --shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --dock-height: 72px;
+      --font-latin: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-arabic: "Cairo", "Inter", system-ui, sans-serif;
+    }
+
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
 
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
     body {
-      background: #050508;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      color: #FFFFFF;
+      min-height: 100vh;
+      min-height: 100svh;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(92, 167, 255, 0.18), transparent 28rem),
+        radial-gradient(circle at 86% 6%, rgba(255, 105, 0, 0.16), transparent 24rem),
+        linear-gradient(180deg, #080a12 0%, #05060b 55%, #080a10 100%);
+      color: var(--text);
+      font-family: var(--font-latin);
       line-height: 1.5;
       overflow-x: hidden;
-      overscroll-behavior: none;
-      -webkit-overflow-scrolling: touch;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
+
     body[dir="rtl"] {
-      font-family: 'Cairo', 'Inter', sans-serif;
+      font-family: var(--font-arabic);
     }
 
-    /* ---------- LIGHTWEIGHT BACKGROUND (NO particles, just gradient) ---------- */
-    .bg-gradient {
+    button,
+    a {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(92, 167, 255, 0.95);
+      outline-offset: 4px;
+    }
+
+    .page-shell {
+      width: min(100%, 720px);
+      margin: 0 auto;
+      padding: 18px 16px calc(var(--dock-height) + env(safe-area-inset-bottom, 0px) + 26px);
+      position: relative;
+      z-index: 1;
+    }
+
+    .skip-link {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 30% 40%, #0f0f1a, #020208);
-      z-index: 0;
-      pointer-events: none;
+      top: 10px;
+      left: 10px;
+      z-index: 100;
+      transform: translateY(-160%);
+      background: var(--text);
+      color: #06070d;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 800;
+      transition: transform 160ms ease;
     }
 
-    /* ---------- OPTIMIZED GLASS (light blur + fallback) ---------- */
-    .glass-card {
-      background: rgba(12, 12, 22, 0.7);
-      backdrop-filter: blur(10px);
-      border-radius: 28px;
-      padding: 22px 18px;
-      transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      will-change: transform;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    /* Fallback for old devices or reduced motion */
-    @media (prefers-reduced-motion: reduce) or (max-width: 400px) {
-      .glass-card {
-        backdrop-filter: none !important;
-        background: rgba(8, 8, 14, 0.9) !important;
-      }
-    }
-    .glass-card:active {
-      transform: scale(0.98);
+    .skip-link:focus {
+      transform: translateY(0);
     }
 
-    /* Buttons (GPU accelerated) */
-    .btn {
-      min-width: 48px;
-      min-height: 48px;
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--orange), #ff9f42);
+      color: #fff;
+      box-shadow: 0 10px 28px rgba(255, 105, 0, 0.24);
+    }
+
+    .brand-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lang-toggle {
+      min-height: 42px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 0 22px;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border: none;
-      background: rgba(255,105,0,0.9);
-      color: white;
-      transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      will-change: transform;
+      border-radius: 999px;
+      padding: 0 14px;
+      background: rgba(12, 15, 27, 0.72);
+      color: var(--text);
+      border: 1px solid rgba(92, 167, 255, 0.34);
       cursor: pointer;
-    }
-    .btn:active {
-      transform: scale(0.96);
-    }
-    .btn-outline {
-      background: rgba(20, 20, 32, 0.7);
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    /* Grids (simple) */
-    .cards-grid, .benefits-grid, .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      margin-top: 24px;
-    }
-    @media (min-width: 480px) {
-      .cards-grid, .benefits-grid { grid-template-columns: repeat(2, 1fr); }
-      .stats-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #FFF, #B0B0C0);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-    .card-icon {
-      font-size: 2rem;
-      margin-bottom: 12px;
-      color: #60A5FA;
-    }
-
-    /* FAQ (light) */
-    .faq-item {
-      background: rgba(12,12,24,0.6);
-      border-radius: 28px;
-      margin-bottom: 12px;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .faq-question {
-      width: 100%;
-      padding: 16px 20px;
-      background: transparent;
-      border: none;
-      font-weight: 600;
-      text-align: left;
-      display: flex;
-      justify-content: space-between;
-      color: white;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      padding: 0 20px;
-      transition: max-height 0.2s ease;
-      color: #B0B0C0;
-      font-size: 0.85rem;
-    }
-    .faq-item.active .faq-answer {
-      max-height: 150px;
-      padding: 0 20px 16px 20px;
-    }
-
-    /* Bottom Dock (glass light) */
-    .bottom-dock {
-      position: fixed;
-      bottom: max(12px, env(safe-area-inset-bottom, 12px));
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 24px);
-      max-width: 460px;
-      background: rgba(10, 10, 18, 0.85);
-      backdrop-filter: blur(12px);
-      border-radius: 50px;
-      padding: 6px 14px;
-      display: flex;
-      justify-content: space-between;
-      z-index: 1000;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .bottom-dock .nav-item {
-      background: transparent;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      color: #B0B0C0;
-      font-size: 0.6rem;
-      font-weight: 500;
-      padding: 6px 8px;
-      border-radius: 40px;
-      min-width: 50px;
-      cursor: pointer;
-      transition: 0.1s;
-    }
-    .bottom-dock .nav-item:active {
-      transform: scale(0.94);
-    }
-
-    /* Scroll progress (thin) */
-    .scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: linear-gradient(90deg, #FF6900, #60A5FA);
-      z-index: 1001;
-      transition: width 0.05s linear;
-    }
-
-    /* Language toggle floating */
-    .lang-float {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      background: rgba(10,10,18,0.7);
-      backdrop-filter: blur(8px);
-      border-radius: 40px;
-      padding: 6px 14px;
-      z-index: 1002;
-      border: 1px solid rgba(96,165,250,0.4);
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.75rem;
-    }
-    body[dir="rtl"] .lang-float {
-      right: auto;
-      left: 16px;
-    }
-
-    /* Main container */
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 12px 16px calc(80px + env(safe-area-inset-bottom, 0px)) 16px;
-      position: relative;
-      z-index: 2;
-    }
-    .hero-title {
-      font-size: clamp(2rem, 8vw, 3.5rem);
       font-weight: 800;
-      background: linear-gradient(135deg, #FFFFFF, #B0B0D0);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
+      white-space: nowrap;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      min-height: min(720px, calc(100vh - 118px));
+      min-height: min(720px, calc(100svh - 118px));
+      display: grid;
+      align-content: center;
+      gap: 22px;
+      padding: 16px 0 30px;
+    }
+
+    .hero-copy {
+      display: grid;
+      gap: 14px;
       text-align: center;
     }
-    .hero-badge {
-      background: rgba(96,165,250,0.2);
-      padding: 4px 12px;
-      border-radius: 40px;
-      font-size: 0.7rem;
-      display: inline-block;
+
+    .eyebrow {
+      width: fit-content;
+      margin: 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(92, 167, 255, 0.24);
+      border-radius: 999px;
+      padding: 7px 12px;
+      color: var(--muted-strong);
+      background: rgba(92, 167, 255, 0.09);
+      font-size: 0.8rem;
+      font-weight: 700;
     }
-    .reveal-item {
+
+    .hero h1 {
+      max-width: 12ch;
+      margin: 0 auto;
+      font-size: clamp(3.05rem, 14vw, 5.8rem);
+      line-height: 0.92;
+      font-weight: 800;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ffffff 10%, #c6d8ff 54%, #ffb47a 96%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 38rem;
+      margin: 0 auto;
+      color: var(--muted-strong);
+      font-size: clamp(1rem, 3.8vw, 1.18rem);
+    }
+
+    .hero-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      width: min(100%, 430px);
+      margin: 4px auto 0;
+    }
+
+    .button {
+      min-height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 0 20px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .button:active {
+      transform: scale(0.98);
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--orange), #ff8d35);
+      color: #fff;
+      box-shadow: 0 14px 36px rgba(255, 105, 0, 0.28);
+    }
+
+    .button-secondary {
+      background: rgba(18, 21, 35, 0.72);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      width: min(100%, 460px);
+      margin: 0 auto;
+    }
+
+    .trust-item {
+      min-height: 68px;
+      display: grid;
+      place-items: center;
+      gap: 2px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: rgba(16, 18, 30, 0.58);
+      color: var(--muted);
+      text-align: center;
+      padding: 10px 8px;
+    }
+
+    .trust-value {
+      color: var(--text);
+      font-size: 1.12rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .trust-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .section {
+      scroll-margin-top: 18px;
+      margin: 18px 0 34px;
+    }
+
+    .section-header {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .section-kicker {
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    body[dir="rtl"] .section-kicker {
+      text-transform: none;
+    }
+
+    .section-title {
+      font-size: clamp(1.55rem, 6vw, 2.25rem);
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .section-text {
+      color: var(--muted);
+      max-width: 42rem;
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .hub-card,
+    .benefit-card,
+    .stat-card,
+    .faq-item {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+
+    .hub-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: center;
+      border-radius: var(--radius-lg);
+      padding: 15px;
+      min-height: 116px;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .hub-card:active {
+      transform: scale(0.99);
+    }
+
+    .hub-card:hover {
+      border-color: rgba(92, 167, 255, 0.36);
+      background: var(--surface-strong);
+    }
+
+    .hub-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: var(--surface-light);
+      font-size: 1.45rem;
+      font-weight: 800;
+    }
+
+    .hub-content {
+      min-width: 0;
+      display: grid;
+      gap: 5px;
+    }
+
+    .hub-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .hub-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+
+    .hub-pill {
+      border-radius: 999px;
+      background: rgba(40, 209, 124, 0.12);
+      color: #91ffc8;
+      padding: 4px 8px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .hub-description {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hub-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #ffd8bd;
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .benefits-grid,
+    .stats-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .benefit-card,
+    .stat-card {
+      border-radius: var(--radius-md);
+      padding: 18px;
+    }
+
+    .benefit-card {
+      display: grid;
+      gap: 8px;
+    }
+
+    .benefit-card h3 {
+      font-size: 1.02rem;
+      font-weight: 800;
+    }
+
+    .benefit-card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .benefit-symbol {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(92, 167, 255, 0.12);
+      color: #b8dbff;
+      font-weight: 800;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stat-card {
+      min-width: 0;
+      text-align: center;
+      padding: 16px 10px;
+    }
+
+    .stat-number {
+      font-size: clamp(1.7rem, 9vw, 2.65rem);
+      line-height: 1;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .stat-label {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .faq-item {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .faq-button {
+      width: 100%;
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 18px;
+      background: transparent;
+      color: var(--text);
+      text-align: start;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .faq-indicator {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      transition: transform 180ms ease;
+    }
+
+    .faq-item.is-open .faq-indicator {
+      transform: rotate(45deg);
+    }
+
+    .faq-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 190ms ease;
+    }
+
+    .faq-item.is-open .faq-panel {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-panel-inner {
+      overflow: hidden;
+    }
+
+    .faq-answer {
+      padding: 0 18px 18px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .final-cta {
+      display: grid;
+      gap: 14px;
+      text-align: center;
+      border: 1px solid rgba(255, 105, 0, 0.26);
+      border-radius: 28px;
+      padding: 24px 18px;
+      background:
+        linear-gradient(135deg, rgba(255, 105, 0, 0.16), rgba(92, 167, 255, 0.1)),
+        rgba(18, 20, 34, 0.78);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+
+    .final-cta h2 {
+      font-size: clamp(1.7rem, 7vw, 2.5rem);
+      line-height: 1.04;
+    }
+
+    .final-cta p {
+      color: var(--muted-strong);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: max(12px, env(safe-area-inset-bottom, 12px));
+      z-index: 50;
+      transform: translateX(-50%);
+      width: min(calc(100% - 24px), 520px);
+      min-height: var(--dock-height);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding: 7px;
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      background: rgba(8, 10, 18, 0.86);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.42);
+    }
+
+    .nav-button {
+      min-width: 0;
+      min-height: 54px;
+      display: grid;
+      place-items: center;
+      gap: 2px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.68rem;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .nav-button:active {
+      transform: scale(0.96);
+    }
+
+    .nav-button.is-active {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+    }
+
+    .nav-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .reveal {
       opacity: 0;
-      transform: translateY(15px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(16px);
+      transition: opacity 420ms ease, transform 420ms ease;
     }
-    .reveal-item.visible {
+
+    .reveal.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
-    footer {
-      text-align: center;
-      font-size: 0.7rem;
-      padding: 24px 0 12px;
-      color: #6c6c7a;
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
-    h2 {
-      font-size: clamp(1.2rem, 5vw, 1.6rem);
+
+    @media (min-width: 520px) {
+      .hero-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .card-grid,
+      .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
-    /* Lazy images */
-    img {
-      display: block;
-      max-width: 100%;
-      height: auto;
+
+    @media (max-width: 390px) {
+      .page-shell {
+        padding-inline: 12px;
+      }
+
+      .hub-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hub-icon {
+        width: 46px;
+        height: 46px;
+      }
+
+      .bottom-nav {
+        width: min(calc(100% - 14px), 520px);
+        padding: 6px;
+      }
+
+      .nav-button {
+        font-size: 0.62rem;
+      }
     }
-    /* Prevent overflow */
-    body, .container {
-      overflow-x: hidden;
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce), (max-width: 420px) {
+      .lang-toggle,
+      .hub-card,
+      .benefit-card,
+      .stat-card,
+      .faq-item,
+      .final-cta,
+      .bottom-nav {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background-color: rgba(14, 17, 29, 0.94);
+      }
     }
   </style>
 </head>
-<body>
-<div class="bg-gradient"></div>
-<div class="scroll-progress" id="scrollProgress"></div>
-<div class="lang-float" id="langToggleFloat">
-  <i class="fas fa-globe"></i> <span id="langToggleText">EN / العربية</span>
-</div>
 
-<div class="container" id="mainContent">
-  <div style="text-align: center; margin-bottom: 20px;">
-    <span class="hero-badge" data-i18n="heroBadge">HyperOS · Cyber Edition</span>
-    <div class="hero-title" data-i18n="heroTitle">Xiaomi World</div>
-    <div style="min-height: 50px; margin: 12px 0; font-size: 1rem; font-weight: 400; color: #C0C0D0;" id="typedElement"></div>
-    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-      <button class="btn" id="heroJoinBtn" data-i18n="heroJoinBtn">Join Community</button>
-      <button class="btn btn-outline" id="heroBenefitsBtn" data-i18n="heroBenefitsBtn">Explore Benefits</button>
-    </div>
+<body>
+  <a class="skip-link" href="#channels" data-i18n="skipLink">Skip to channels</a>
+
+  <div class="page-shell">
+    <header class="top-bar" aria-label="Xiaomi World">
+      <a class="brand-mark" href="#home" aria-label="Xiaomi World home">
+        <span class="brand-icon" aria-hidden="true">XW</span>
+        <span class="brand-text" data-i18n="brandName">Xiaomi World</span>
+      </a>
+
+      <button class="lang-toggle" type="button" data-action="language" aria-label="Switch language">
+        <span aria-hidden="true">🌐</span>
+        <span id="languageLabel">العربية</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <div class="hero-copy reveal">
+          <p class="eyebrow" data-i18n="eyebrow">Made for Xiaomi fans coming from TikTok</p>
+          <h1 id="hero-title" data-i18n="heroTitle">Xiaomi World</h1>
+          <p class="hero-subtitle" data-i18n="heroSubtitle">
+            One clean hub for updates, Telegram channels, WhatsApp alerts, wallpapers, and community support.
+          </p>
+        </div>
+
+        <div class="hero-actions reveal" aria-label="Main actions">
+          <a class="button button-primary" href="https://t.me/redmi3321" target="_blank" rel="noopener noreferrer" data-i18n="joinNow" data-track-link="main-telegram">
+            Join Now
+          </a>
+          <button class="button button-secondary" type="button" data-action="scroll" data-target="channels" data-i18n="exploreChannels">
+            Explore Channels
+          </button>
+        </div>
+
+        <div class="trust-row reveal" id="stats" aria-label="Page facts">
+          <div class="trust-item">
+            <strong class="trust-value" data-stat-value="4">0</strong>
+            <span class="trust-label" data-i18n="statLinks">direct links</span>
+          </div>
+          <div class="trust-item">
+            <strong class="trust-value" data-stat-value="2">0</strong>
+            <span class="trust-label" data-i18n="statLanguages">languages</span>
+          </div>
+          <div class="trust-item">
+            <strong class="trust-value" data-stat-value="0">0</strong>
+            <span class="trust-label" data-i18n="statTracking">tracking scripts</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" id="channels" aria-labelledby="channels-title">
+        <div class="section-header">
+          <p class="section-kicker" data-i18n="channelsKicker">Community links</p>
+          <h2 class="section-title" id="channels-title" data-i18n="channelsTitle">Pick your fastest way in</h2>
+          <p class="section-text" data-i18n="channelsText">
+            Short paths, clear labels, and direct clicks for mobile visitors.
+          </p>
+        </div>
+        <div class="card-grid" id="channelsGrid"></div>
+      </section>
+
+      <section class="section reveal" id="benefits" aria-labelledby="benefits-title">
+        <div class="section-header">
+          <p class="section-kicker" data-i18n="benefitsKicker">Why join</p>
+          <h2 class="section-title" id="benefits-title" data-i18n="benefitsTitle">Useful updates without the noise</h2>
+        </div>
+        <div class="benefits-grid" id="benefitsGrid"></div>
+      </section>
+
+      <section class="section reveal" id="faq" aria-labelledby="faq-title">
+        <div class="section-header">
+          <p class="section-kicker" data-i18n="faqKicker">Questions</p>
+          <h2 class="section-title" id="faq-title" data-i18n="faqTitle">Before you join</h2>
+        </div>
+        <div class="faq-list" id="faqList"></div>
+      </section>
+
+      <section class="section reveal final-cta" aria-labelledby="final-cta-title">
+        <h2 id="final-cta-title" data-i18n="finalTitle">Ready to join Xiaomi World?</h2>
+        <p data-i18n="finalText">Start with the main Telegram channel, then choose the alerts and wallpaper channels you want.</p>
+        <a class="button button-primary" href="https://t.me/redmi3321" target="_blank" rel="noopener noreferrer" data-i18n="finalButton" data-track-link="final-telegram">
+          Open Telegram
+        </a>
+      </section>
+    </main>
   </div>
 
-  <!-- Dynamic sections (filled by JS) -->
-  <section id="community" class="reveal-item" style="margin: 28px 0;"><h2 data-i18n="communityTitle">Active Hubs</h2><div class="cards-grid" id="communityGrid"></div></section>
-  <section id="benefits" class="reveal-item"><h2 data-i18n="benefitsTitle">Premium Advantages</h2><div class="benefits-grid" id="benefitsGrid"></div></section>
-  <section class="reveal-item"><h2 data-i18n="statsTitle">Community Impact</h2><div class="stats-grid" id="statsGrid"></div></section>
-  <section id="faq" class="reveal-item" style="margin: 32px 0;"><h2 data-i18n="faqTitle">FAQ</h2><div id="faqContainer"></div></section>
-  <footer><span data-i18n="footer">© 2026 Xiaomi World — Light Edition</span></footer>
-</div>
+  <nav class="bottom-nav" aria-label="Quick navigation">
+    <button class="nav-button is-active" type="button" data-action="scroll" data-target="home">
+      <span class="nav-icon" aria-hidden="true">⌂</span>
+      <span data-i18n="navHome">Home</span>
+    </button>
+    <button class="nav-button" type="button" data-action="scroll" data-target="channels">
+      <span class="nav-icon" aria-hidden="true">↗</span>
+      <span data-i18n="navChannels">Channels</span>
+    </button>
+    <button class="nav-button" type="button" data-action="scroll" data-target="benefits">
+      <span class="nav-icon" aria-hidden="true">★</span>
+      <span data-i18n="navBenefits">Benefits</span>
+    </button>
+    <button class="nav-button" type="button" data-action="scroll" data-target="faq">
+      <span class="nav-icon" aria-hidden="true">?</span>
+      <span data-i18n="navFaq">FAQ</span>
+    </button>
+  </nav>
 
-<!-- Bottom Navigation -->
-<div class="bottom-dock" id="bottomDock">
-  <button class="nav-item" data-section="community"><i class="fas fa-users"></i><span data-i18n="navCommunity">Community</span></button>
-  <button class="nav-item" data-section="benefits"><i class="fas fa-gem"></i><span data-i18n="navBenefits">Benefits</span></button>
-  <button class="nav-item" data-section="faq"><i class="fas fa-question-circle"></i><span data-i18n="navFaq">FAQ</span></button>
-  <button class="nav-item" id="shareBottomBtn"><i class="fas fa-share-alt"></i><span data-i18n="shareBtn">Share</span></button>
-</div>
+  <script>
+    (() => {
+      'use strict';
 
-<script>
-  (function() {
-    // ---------- BASIC PROTECTION (light, no performance hit) ----------
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
-    document.addEventListener('keydown', (e) => {
-      if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
-        e.preventDefault();
-      }
-    });
-    document.addEventListener('copy', (e) => e.preventDefault());
-    document.addEventListener('cut', (e) => e.preventDefault());
+      const LANGUAGE_KEY = 'xiaomi-world-language';
+      const LANGUAGES = {
+        EN: 'en',
+        AR: 'ar'
+      };
 
-    // ---------- TRANSLATIONS (EN/AR) ----------
-    const translations = {
-      en: {
-        heroBadge: "HyperOS · Cyber Edition", heroTitle: "Xiaomi World", heroJoinBtn: "Join Community", heroBenefitsBtn: "Explore Benefits",
-        communityTitle: "Active Hubs", benefitsTitle: "Premium Advantages", statsTitle: "Community Impact", faqTitle: "FAQ",
-        footer: "© 2026 Xiaomi World — Light Edition", navCommunity: "Community", navBenefits: "Benefits", navFaq: "FAQ", shareBtn: "Share",
-        card1Title: "Telegram Group", card1Desc: "Discussions & support", card1Btn: "Join",
-        card2Title: "Main Channel", card2Desc: "Official updates", card2Btn: "Open",
-        card3Title: "WhatsApp", card3Desc: "Fast notifications", card3Btn: "Follow",
-        card4Title: "Wallpapers", card4Desc: "Ultra HD channel", card4Btn: "Join",
-        benefit1Title: "HyperOS First Look", benefit1Desc: "Early beta access",
-        benefit2Title: "Hidden Tips", benefit2Desc: "Secret features",
-        benefit3Title: "Global Community", benefit3Desc: "Chat with devs",
-        benefit4Title: "Exclusive Wallpapers", benefit4Desc: "4K weekly",
-        faq1_q: "How to join groups?", faq1_a: "Click 'Join' – redirects to official channel.",
-        faq2_q: "Is content free?", faq2_a: "Yes, 100% free.",
-        faq3_q: "Official Xiaomi devs?", faq3_a: "Beta testers share insights."
-      },
-      ar: {
-        heroBadge: "هايبر أو إس · الإصدار السيبراني", heroTitle: "عالم شاومي", heroJoinBtn: "انضم للمجتمع", heroBenefitsBtn: "استكشف المزايا",
-        communityTitle: "مراكز نشطة", benefitsTitle: "مزايا حصرية", statsTitle: "تأثير المجتمع", faqTitle: "الأسئلة الشائعة",
-        footer: "© 2026 عالم شاومي — النسخة الخفيفة", navCommunity: "المجتمع", navBenefits: "المزايا", navFaq: "الأسئلة", shareBtn: "مشاركة",
-        card1Title: "مجموعة تيليجرام", card1Desc: "نقاشات ودعم", card1Btn: "انضم",
-        card2Title: "القناة الرئيسية", card2Desc: "تحديثات رسمية", card2Btn: "افتح",
-        card3Title: "واتساب", card3Desc: "إشعارات سريعة", card3Btn: "تابع",
-        card4Title: "الخلفيات", card4Desc: "جودة فائقة", card4Btn: "انضم",
-        benefit1Title: "لمحة أولى HyperOS", benefit1Desc: "وصول مبكر للتجريبي",
-        benefit2Title: "نصائح خفية", benefit2Desc: "ميزات سرية",
-        benefit3Title: "مجتمع عالمي", benefit3Desc: "تحدث مع المطورين",
-        benefit4Title: "خلفيات حصرية", benefit4Desc: "مجموعات 4K أسبوعياً",
-        faq1_q: "كيف أنضم للمجموعات؟", faq1_a: "اضغط 'انضم' – يتم توجيهك للقناة الرسمية.",
-        faq2_q: "هل المحتوى مجاني؟", faq2_a: "نعم، مجاني 100%.",
-        faq3_q: "مطورو شاومي الرسميون؟", faq3_a: "مختبرون يشاركون يومياً."
-      }
-    };
-
-    let currentLang = localStorage.getItem('prefLang') || 'en';
-    function updateLanguage(lang) {
-      const t = translations[lang];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key]) el.innerText = t[key];
-      });
-      renderDynamicContent(lang);
-      document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-      document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-      localStorage.setItem('prefLang', lang);
-      currentLang = lang;
-      startTyping(lang);
-    }
-
-    function renderDynamicContent(lang) {
-      const t = translations[lang];
-      // Community Cards
-      document.getElementById('communityGrid').innerHTML = `
-        <div class="glass-card"><div class="card-icon"><i class="fab fa-telegram-plane"></i></div><h3>${t.card1Title}</h3><p style="margin:8px 0 16px;">${t.card1Desc}</p><a href="https://t.me/themes345" target="_blank" rel="noopener noreferrer" class="btn" style="padding:6px 16px;">${t.card1Btn}</a></div>
-        <div class="glass-card"><div class="card-icon"><i class="fab fa-telegram"></i></div><h3>${t.card2Title}</h3><p style="margin:8px 0 16px;">${t.card2Desc}</p><a href="https://t.me/redmi3321" target="_blank" rel="noopener noreferrer" class="btn" style="padding:6px 16px;">${t.card2Btn}</a></div>
-        <div class="glass-card"><div class="card-icon"><i class="fab fa-whatsapp"></i></div><h3>${t.card3Title}</h3><p style="margin:8px 0 16px;">${t.card3Desc}</p><a href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" rel="noopener noreferrer" class="btn" style="padding:6px 16px;">${t.card3Btn}</a></div>
-        <div class="glass-card"><div class="card-icon"><i class="fas fa-images"></i></div><h3>${t.card4Title}</h3><p style="margin:8px 0 16px;">${t.card4Desc}</p><a href="https://t.me/themesXiaomia" target="_blank" rel="noopener noreferrer" class="btn" style="padding:6px 16px;">${t.card4Btn}</a></div>
-      `;
-      // Benefits
-      document.getElementById('benefitsGrid').innerHTML = `
-        <div class="glass-card"><i class="fas fa-cloud-upload-alt" style="font-size:1.8rem; color:#60A5FA;"></i><h3>${t.benefit1Title}</h3><p>${t.benefit1Desc}</p></div>
-        <div class="glass-card"><i class="fas fa-mobile-alt" style="font-size:1.8rem; color:#60A5FA;"></i><h3>${t.benefit2Title}</h3><p>${t.benefit2Desc}</p></div>
-        <div class="glass-card"><i class="fas fa-user-friends" style="font-size:1.8rem; color:#60A5FA;"></i><h3>${t.benefit3Title}</h3><p>${t.benefit3Desc}</p></div>
-        <div class="glass-card"><i class="fas fa-crown" style="font-size:1.8rem; color:#60A5FA;"></i><h3>${t.benefit4Title}</h3><p>${t.benefit4Desc}</p></div>
-      `;
-      // Stats (numbers static, labels from data-i18n)
-      document.getElementById('statsGrid').innerHTML = `
-        <div class="glass-card"><i class="fas fa-users"></i><div class="stat-number" data-target="87456">0</div><p data-i18n="stat1">Active Members</p></div>
-        <div class="glass-card"><i class="fas fa-globe"></i><div class="stat-number" data-target="142">0</div><p data-i18n="stat2">Countries</p></div>
-        <div class="glass-card"><i class="fas fa-image"></i><div class="stat-number" data-target="3120">0</div><p data-i18n="stat3">Wallpapers</p></div>
-      `;
-      // Re-apply i18n to stats labels
-      document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (t[key]) el.innerText = t[key]; });
-      // FAQ
-      document.getElementById('faqContainer').innerHTML = `
-        <div class="faq-item"><button class="faq-question">${t.faq1_q} <i class="fas fa-chevron-down"></i></button><div class="faq-answer">${t.faq1_a}</div></div>
-        <div class="faq-item"><button class="faq-question">${t.faq2_q} <i class="fas fa-chevron-down"></i></button><div class="faq-answer">${t.faq2_a}</div></div>
-        <div class="faq-item"><button class="faq-question">${t.faq3_q} <i class="fas fa-chevron-down"></i></button><div class="faq-answer">${t.faq3_a}</div></div>
-      `;
-      document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.addEventListener('click', (e) => { btn.closest('.faq-item').classList.toggle('active'); });
-      });
-      initCounters();
-    }
-
-    function initCounters() {
-      const stats = document.querySelectorAll('.stat-number');
-      if (!stats.length) return;
-      const targets = [87456, 142, 3120];
-      stats.forEach((el, i) => {
-        let current = 0;
-        const target = targets[i];
-        const step = target / 40; // faster counting
-        function update() {
-          current += step;
-          if (current < target) { el.innerText = Math.floor(current); requestAnimationFrame(update); }
-          else el.innerText = target;
+      const translations = {
+        en: {
+          skipLink: 'Skip to channels',
+          brandName: 'Xiaomi World',
+          eyebrow: 'Made for Xiaomi fans coming from TikTok',
+          heroTitle: 'Xiaomi World',
+          heroSubtitle: 'One clean hub for updates, Telegram channels, WhatsApp alerts, wallpapers, and community support.',
+          joinNow: 'Join Now',
+          exploreChannels: 'Explore Channels',
+          statLinks: 'direct links',
+          statLanguages: 'languages',
+          statTracking: 'tracking scripts',
+          channelsKicker: 'Community links',
+          channelsTitle: 'Pick your fastest way in',
+          channelsText: 'Short paths, clear labels, and direct clicks for mobile visitors.',
+          benefitsKicker: 'Why join',
+          benefitsTitle: 'Features made for Xiaomi fans',
+          faqKicker: 'Questions',
+          faqTitle: 'Before you join',
+          finalTitle: 'Ready to join Xiaomi World?',
+          finalText: 'Start with the main Telegram channel, then choose the alerts and wallpaper channels you want.',
+          finalButton: 'Open Telegram',
+          navHome: 'Home',
+          navChannels: 'Channels',
+          navBenefits: 'Benefits',
+          navFaq: 'FAQ',
+          channelTelegramTitle: 'Main Telegram Channel',
+          channelTelegramDesc: 'Updates, posts, and Xiaomi news in one place.',
+          channelTelegramCta: 'Open channel',
+          channelGroupTitle: 'Telegram Community',
+          channelGroupDesc: 'Ask, share, and talk with other Xiaomi fans.',
+          channelGroupCta: 'Join group',
+          channelWhatsappTitle: 'WhatsApp Alerts',
+          channelWhatsappDesc: 'Fast notifications for people who prefer WhatsApp.',
+          channelWhatsappCta: 'Follow alerts',
+          channelWallpapersTitle: 'Wallpapers Channel',
+          channelWallpapersDesc: 'Clean Xiaomi-style wallpapers and visual drops.',
+          channelWallpapersCta: 'Get wallpapers',
+          badgeFast: 'Fast',
+          badgeChat: 'Chat',
+          badgeAlerts: 'Alerts',
+          badgeVisuals: 'Visuals',
+          benefitFastTitle: 'Beautiful themes',
+          benefitFastText: 'Premium Xiaomi-style themes and visual ideas for a cleaner phone look.',
+          benefitMobileTitle: 'Full phone customization',
+          benefitMobileText: 'Icons, wallpapers, layout ideas, and settings that help personalize your device.',
+          benefitTrustTitle: 'Private codes',
+          benefitTrustText: 'Useful private codes and shortcuts shared clearly for Xiaomi users.',
+          benefitArabicTitle: 'Credible content',
+          benefitArabicText: 'Original, trusted content with respect for creators and no stolen material.',
+          faqFreeQuestion: 'Is it free to join?',
+          faqFreeAnswer: 'Yes. The linked Telegram and WhatsApp destinations are free to open.',
+          faqOfficialQuestion: 'Is this an official Xiaomi website?',
+          faqOfficialAnswer: 'No. Xiaomi World is a fan/community hub that points visitors to community channels.',
+          faqBestQuestion: 'Which link should I use first?',
+          faqBestAnswer: 'Use the main Telegram channel for updates, then join WhatsApp alerts if you want quick notifications.',
+          faqPrivacyQuestion: 'Does this page track me?',
+          faqPrivacyAnswer: 'No analytics or tracking scripts are included. The only saved setting is your language preference on this device.'
+        },
+        ar: {
+          skipLink: 'انتقل إلى القنوات',
+          brandName: 'عالم شاومي',
+          eyebrow: 'مصمم لمحبي شاومي القادمين من تيك توك',
+          heroTitle: 'عالم شاومي',
+          heroSubtitle: 'صفحة واحدة سريعة للتحديثات وقنوات تيليجرام وتنبيهات واتساب والخلفيات ودعم المجتمع.',
+          joinNow: 'انضم الآن',
+          exploreChannels: 'استكشف القنوات',
+          statLinks: 'روابط مباشرة',
+          statLanguages: 'لغتان',
+          statTracking: 'سكربتات تتبع',
+          channelsKicker: 'روابط المجتمع',
+          channelsTitle: 'اختر أسرع طريقة للدخول',
+          channelsText: 'مسارات قصيرة، عناوين واضحة، ونقرات مباشرة لزوار الموبايل.',
+          benefitsKicker: 'ماذا تنضم',
+          benefitsTitle: 'مميزات مخصصة لمحبي شاومي',
+          faqKicker: 'أسئلة',
+          faqTitle: 'قبل الانضمام',
+          finalTitle: 'جاهز للانضمام إلى عالم شاومي؟',
+          finalText: 'ابدأ بالقناة الرئيسية على تيليجرام، ثم اختر تنبيهات واتساب أو قناة الخلفيات حسب احتياجك.',
+          finalButton: 'افتح تيليجرام',
+          navHome: 'الرئيسية',
+          navChannels: 'القنوات',
+          navBenefits: 'المزايا',
+          navFaq: 'الأسئلة',
+          channelTelegramTitle: 'قناة تيليجرام الرئيسية',
+          channelTelegramDesc: 'تحديثات ومنشورات وأخبار شاومي في مكان واحد.',
+          channelTelegramCta: 'افتح القناة',
+          channelGroupTitle: 'مجتمع تيليجرام',
+          channelGroupDesc: 'اسأل وشارك وتحدث مع محبي شاومي.',
+          channelGroupCta: 'انضم للمجموعة',
+          channelWhatsappTitle: 'تنبيهات واتساب',
+          channelWhatsappDesc: 'إشعارات سريعة لمن يفضلون واتساب.',
+          channelWhatsappCta: 'تابع التنبيهات',
+          channelWallpapersTitle: 'قناة الخلفيات',
+          channelWallpapersDesc: 'خلفيات نظيفة بأسلوب شاومي ومحتوى بصري متجدد.',
+          channelWallpapersCta: 'احصل على الخلفيات',
+          badgeFast: 'سريع',
+          badgeChat: 'دردشة',
+          badgeAlerts: 'تنبيهات',
+          badgeVisuals: 'خلفيات',
+          benefitFastTitle: 'ثيمات رائعة',
+          benefitFastText: 'ثيمات وأفكار بصرية مميزة بأسلوب شاومي لمظهر أنظف وأجمل للهاتف.',
+          benefitMobileTitle: 'تخصيص كامل للهاتف',
+          benefitMobileText: 'أيقونات وخلفيات وأفكار ترتيب وإعدادات تساعدك تخصص جهازك بطريقتك.',
+          benefitTrustTitle: 'أكواد بريفيت',
+          benefitTrustText: 'أكواد واختصارات مفيدة يتم عرضها بوضوح لمستخدمي شاومي.',
+          benefitArabicTitle: 'مصداقية وعدم سرقة محتوى',
+          benefitArabicText: 'محتوى موثوق وأصلي مع احترام صناع المحتوى وعدم نشر مواد مسروقة.',
+          faqFreeQuestion: 'هل الانضمام مجاني؟',
+          faqFreeAnswer: 'نعم. روابط تيليجرام وواتساب الموجودة مجانية الفتح.',
+          faqOfficialQuestion: 'هل هذا موقع رسمي من شاومي؟',
+          faqOfficialAnswer: 'لا. عالم شاومي هو مركز لمحبي شاومي وروابط المجتمع.',
+          faqBestQuestion: 'أي رابط أستخدم أولا؟',
+          faqBestAnswer: 'ابدأ بقناة تيليجرام الرئيسية للتحديثات، ثم تابع واتساب إذا كنت تريد إشعارات سريعة.',
+          faqPrivacyQuestion: 'هل الصفحة تتبعني؟',
+          faqPrivacyAnswer: 'لا توجد سكربتات تحليلات أو تتبع. الإعداد الوحيد المحفوظ هو اللغة المفضلة على هذا الجهاز.'
         }
-        update();
-      });
-    }
+      };
 
-    // Typing effect (lightweight)
-    let typingInterval;
-    function startTyping(lang) {
-      if (typingInterval) clearInterval(typingInterval);
-      const phrases = lang === 'en' 
-        ? ["HyperOS Updates", "Premium Wallpapers", "Hidden Tips", "Global Community"]
-        : ["تحديثات HyperOS", "خلفيات فاخرة", "نصائح حصرية", "مجتمع عالمي"];
-      let idx = 0, ch = 0, del = false;
-      const typedSpan = document.getElementById('typedElement');
-      function typeLoop() {
-        if (!typedSpan) return;
-        const full = phrases[idx];
-        if (del) {
-          typedSpan.innerText = full.substring(0, ch - 1);
-          ch--;
-          if (ch === 0) { del = false; idx = (idx + 1) % phrases.length; }
-        } else {
-          typedSpan.innerText = full.substring(0, ch + 1);
-          ch++;
-          if (ch === full.length) del = true;
+      const channels = [
+        {
+          icon: 'T',
+          titleKey: 'channelTelegramTitle',
+          descriptionKey: 'channelTelegramDesc',
+          ctaKey: 'channelTelegramCta',
+          badgeKey: 'badgeFast',
+          href: 'https://t.me/redmi3321',
+          track: 'telegram-main'
+        },
+        {
+          icon: 'G',
+          titleKey: 'channelGroupTitle',
+          descriptionKey: 'channelGroupDesc',
+          ctaKey: 'channelGroupCta',
+          badgeKey: 'badgeChat',
+          href: 'https://t.me/themes345',
+          track: 'telegram-group'
+        },
+        {
+          icon: 'W',
+          titleKey: 'channelWhatsappTitle',
+          descriptionKey: 'channelWhatsappDesc',
+          ctaKey: 'channelWhatsappCta',
+          badgeKey: 'badgeAlerts',
+          href: 'https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H',
+          track: 'whatsapp-alerts'
+        },
+        {
+          icon: '4K',
+          titleKey: 'channelWallpapersTitle',
+          descriptionKey: 'channelWallpapersDesc',
+          ctaKey: 'channelWallpapersCta',
+          badgeKey: 'badgeVisuals',
+          href: 'https://t.me/themesXiaomia',
+          track: 'wallpapers'
+        }
+      ];
+
+      const benefits = [
+        {
+          symbol: '01',
+          titleKey: 'benefitFastTitle',
+          textKey: 'benefitFastText'
+        },
+        {
+          symbol: '02',
+          titleKey: 'benefitMobileTitle',
+          textKey: 'benefitMobileText'
+        },
+        {
+          symbol: '03',
+          titleKey: 'benefitTrustTitle',
+          textKey: 'benefitTrustText'
+        },
+        {
+          symbol: '04',
+          titleKey: 'benefitArabicTitle',
+          textKey: 'benefitArabicText'
+        }
+      ];
+
+      const faqs = [
+        {
+          questionKey: 'faqFreeQuestion',
+          answerKey: 'faqFreeAnswer'
+        },
+        {
+          questionKey: 'faqOfficialQuestion',
+          answerKey: 'faqOfficialAnswer'
+        },
+        {
+          questionKey: 'faqBestQuestion',
+          answerKey: 'faqBestAnswer'
+        },
+        {
+          questionKey: 'faqPrivacyQuestion',
+          answerKey: 'faqPrivacyAnswer'
+        }
+      ];
+
+      const state = {
+        language: readLanguage(),
+        reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        statsStarted: false
+      };
+
+      const selectors = {
+        languageLabel: document.getElementById('languageLabel'),
+        channelsGrid: document.getElementById('channelsGrid'),
+        benefitsGrid: document.getElementById('benefitsGrid'),
+        faqList: document.getElementById('faqList'),
+        navButtons: Array.from(document.querySelectorAll('.nav-button')),
+        revealItems: Array.from(document.querySelectorAll('.reveal')),
+        statValues: Array.from(document.querySelectorAll('[data-stat-value]'))
+      };
+
+      function readLanguage() {
+        try {
+          const stored = localStorage.getItem(LANGUAGE_KEY);
+          return stored === LANGUAGES.AR ? LANGUAGES.AR : LANGUAGES.EN;
+        } catch (_) {
+          return LANGUAGES.EN;
         }
       }
-      typingInterval = setInterval(typeLoop, del ? 40 : 100);
-    }
 
-    // Language toggle event
-    document.getElementById('langToggleFloat').addEventListener('click', () => {
-      const newLang = currentLang === 'en' ? 'ar' : 'en';
-      updateLanguage(newLang);
-      document.getElementById('langToggleText').innerText = (newLang === 'en') ? 'EN / العربية' : 'EN / العربية';
-    });
+      function saveLanguage(language) {
+        try {
+          localStorage.setItem(LANGUAGE_KEY, language);
+        } catch (_) {
+          // Private browsing may block storage; the page still works.
+        }
+      }
 
-    // Smooth scroll to section (with passive)
-    function scrollToSection(id) {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    document.querySelectorAll('.nav-item[data-section]').forEach(btn => {
-      btn.addEventListener('click', () => scrollToSection(btn.getAttribute('data-section')));
-    });
-    document.getElementById('heroJoinBtn')?.addEventListener('click', () => scrollToSection('community'));
-    document.getElementById('heroBenefitsBtn')?.addEventListener('click', () => scrollToSection('benefits'));
+      function t(key) {
+        return translations[state.language][key] || translations.en[key] || '';
+      }
 
-    // Share (native)
-    document.getElementById('shareBottomBtn')?.addEventListener('click', () => {
-      if (navigator.share) navigator.share({ title: 'Xiaomi World', url: window.location.href }).catch(()=>{});
-      else alert('Share this page: ' + window.location.href);
-    });
+      function createElement(tag, options = {}, children = []) {
+        const element = document.createElement(tag);
+        const childList = Array.isArray(children) ? children : [children];
 
-    // Scroll progress (passive)
-    const progressBar = document.getElementById('scrollProgress');
-    window.addEventListener('scroll', () => {
-      const winScroll = document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = (winScroll / height) * 100;
-      progressBar.style.width = scrolled + '%';
-    }, { passive: true });
+        if (options.className) {
+          element.className = options.className;
+        }
 
-    // Reveal on scroll (IntersectionObserver)
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal-item').forEach(el => observer.observe(el));
+        if (options.text !== undefined) {
+          element.textContent = options.text;
+        }
 
-    // Preloader simulation (remove after content ready)
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.body.classList.add('loaded');
-      }, 100);
-    });
+        if (options.i18n) {
+          element.dataset.i18n = options.i18n;
+        }
 
-    // Initial render
-    renderDynamicContent(currentLang);
-    startTyping(currentLang);
-    updateLanguage(currentLang); // ensure i18n applied to static elements
-  })();
-</script>
+        if (options.attrs) {
+          Object.entries(options.attrs).forEach(([name, value]) => {
+            if (value !== false && value !== null && value !== undefined) {
+              element.setAttribute(name, value === true ? '' : String(value));
+            }
+          });
+        }
+
+        childList.filter(Boolean).forEach((child) => element.append(child));
+        return element;
+      }
+
+      function renderCollection(container, nodes) {
+        const fragment = document.createDocumentFragment();
+        nodes.forEach((node) => fragment.append(node));
+        container.replaceChildren(fragment);
+      }
+
+      function createChannelCard(channel) {
+        return createElement('a', {
+          className: 'hub-card',
+          attrs: {
+            href: channel.href,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            'data-track-link': channel.track
+          }
+        }, [
+          createElement('span', { className: 'hub-icon', text: channel.icon, attrs: { 'aria-hidden': 'true' } }),
+          createElement('span', { className: 'hub-content' }, [
+            createElement('span', { className: 'hub-topline' }, [
+              createElement('strong', { className: 'hub-title', i18n: channel.titleKey }),
+              createElement('span', { className: 'hub-pill', i18n: channel.badgeKey })
+            ]),
+            createElement('span', { className: 'hub-description', i18n: channel.descriptionKey }),
+            createElement('span', { className: 'hub-action' }, [
+              createElement('span', { i18n: channel.ctaKey }),
+              createElement('span', { text: '→', attrs: { 'aria-hidden': 'true' } })
+            ])
+          ])
+        ]);
+      }
+
+      function createBenefitCard(benefit) {
+        return createElement('article', { className: 'benefit-card' }, [
+          createElement('span', { className: 'benefit-symbol', text: benefit.symbol, attrs: { 'aria-hidden': 'true' } }),
+          createElement('h3', { i18n: benefit.titleKey }),
+          createElement('p', { i18n: benefit.textKey })
+        ]);
+      }
+
+      function createFaqItem(faq, index) {
+        const buttonId = `faq-button-${index}`;
+        const panelId = `faq-panel-${index}`;
+
+        const button = createElement('button', {
+          className: 'faq-button',
+          attrs: {
+            id: buttonId,
+            type: 'button',
+            'aria-expanded': 'false',
+            'aria-controls': panelId,
+            'data-action': 'faq'
+          }
+        }, [
+          createElement('span', { i18n: faq.questionKey }),
+          createElement('span', { className: 'faq-indicator', text: '+', attrs: { 'aria-hidden': 'true' } })
+        ]);
+
+        const panel = createElement('div', {
+          className: 'faq-panel',
+          attrs: {
+            id: panelId,
+            role: 'region',
+            'aria-labelledby': buttonId
+          }
+        }, createElement('div', { className: 'faq-panel-inner' },
+          createElement('p', { className: 'faq-answer', i18n: faq.answerKey })
+        ));
+
+        return createElement('article', { className: 'faq-item' }, [button, panel]);
+      }
+
+      function applyLanguage(language) {
+        state.language = language;
+        const isArabic = language === LANGUAGES.AR;
+
+        document.documentElement.lang = language;
+        document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+        document.body.dir = isArabic ? 'rtl' : 'ltr';
+        selectors.languageLabel.textContent = isArabic ? 'English' : 'العربية';
+
+        document.querySelectorAll('[data-i18n]').forEach((element) => {
+          element.textContent = t(element.dataset.i18n);
+        });
+
+        saveLanguage(language);
+      }
+
+      function scrollToTarget(id) {
+        const target = document.getElementById(id);
+
+        if (!target) {
+          return;
+        }
+
+        target.scrollIntoView({
+          behavior: state.reducedMotion ? 'auto' : 'smooth',
+          block: 'start'
+        });
+      }
+
+      function toggleFaq(button) {
+        const item = button.closest('.faq-item');
+        const isOpen = item.classList.toggle('is-open');
+        button.setAttribute('aria-expanded', String(isOpen));
+      }
+
+      function updateActiveNav(id) {
+        selectors.navButtons.forEach((button) => {
+          button.classList.toggle('is-active', button.dataset.target === id);
+        });
+      }
+
+      function animateStats() {
+        if (state.statsStarted) {
+          return;
+        }
+
+        state.statsStarted = true;
+
+        selectors.statValues.forEach((element) => {
+          const target = Number(element.dataset.statValue || 0);
+
+          if (state.reducedMotion || target === 0) {
+            element.textContent = String(target);
+            return;
+          }
+
+          const start = performance.now();
+          const duration = 620;
+
+          function frame(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            element.textContent = String(Math.round(target * eased));
+
+            if (progress < 1) {
+              requestAnimationFrame(frame);
+            }
+          }
+
+          requestAnimationFrame(frame);
+        });
+      }
+
+      function observeSections() {
+        if (!('IntersectionObserver' in window) || state.reducedMotion) {
+          selectors.revealItems.forEach((item) => item.classList.add('is-visible'));
+          animateStats();
+          return;
+        }
+
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          });
+        }, {
+          rootMargin: '0px 0px -10% 0px',
+          threshold: 0.1
+        });
+
+        selectors.revealItems.forEach((item) => revealObserver.observe(item));
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            if (entry.target.id === 'stats') {
+              animateStats();
+              return;
+            }
+
+            updateActiveNav(entry.target.id);
+          });
+        }, {
+          rootMargin: '-42% 0px -50% 0px',
+          threshold: 0.01
+        });
+
+        ['home', 'channels', 'benefits', 'faq', 'stats'].forEach((id) => {
+          const section = document.getElementById(id);
+          if (section) {
+            sectionObserver.observe(section);
+          }
+        });
+      }
+
+      function handleClick(event) {
+        const target = event.target.closest('[data-action]');
+
+        if (!target) {
+          return;
+        }
+
+        if (target.dataset.action === 'language') {
+          applyLanguage(state.language === LANGUAGES.EN ? LANGUAGES.AR : LANGUAGES.EN);
+          return;
+        }
+
+        if (target.dataset.action === 'scroll') {
+          scrollToTarget(target.dataset.target);
+          return;
+        }
+
+        if (target.dataset.action === 'faq') {
+          toggleFaq(target);
+        }
+      }
+
+      function init() {
+        renderCollection(selectors.channelsGrid, channels.map(createChannelCard));
+        renderCollection(selectors.benefitsGrid, benefits.map(createBenefitCard));
+        renderCollection(selectors.faqList, faqs.map(createFaqItem));
+        applyLanguage(state.language);
+        observeSections();
+        document.addEventListener('click', handleClick);
+
+        window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (event) => {
+          state.reducedMotion = event.matches;
+        });
+      }
+
+      init();
+    })();
+  </script>
 </body>
 </html>
