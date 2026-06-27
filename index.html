@@ -2,1314 +2,1373 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#06070d">
-  <meta name="color-scheme" content="dark">
-  <meta name="description" content="Xiaomi World is a fast bilingual hub for Telegram, WhatsApp, updates, wallpapers, and community links.">
-  <title>Xiaomi World | Community Hub</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg: #06070d;
-      --bg-soft: #0b0d16;
-      --surface: rgba(18, 20, 34, 0.74);
-      --surface-strong: rgba(24, 27, 44, 0.88);
-      --surface-light: rgba(255, 255, 255, 0.07);
-      --border: rgba(255, 255, 255, 0.11);
-      --border-strong: rgba(255, 255, 255, 0.18);
-      --text: #f8fafc;
-      --muted: #a8b0c2;
-      --muted-strong: #c9d0df;
-      --orange: #ff6900;
-      --blue: #5ca7ff;
-      --green: #28d17c;
-      --danger: #ff5a78;
-      --shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
-      --radius-lg: 24px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
-      --dock-height: 72px;
-      --font-latin: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --font-arabic: "Cairo", "Inter", system-ui, sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      background: var(--bg);
-    }
-
-    body {
-      min-height: 100vh;
-      min-height: 100svh;
-      background:
-        radial-gradient(circle at 12% 10%, rgba(92, 167, 255, 0.18), transparent 28rem),
-        radial-gradient(circle at 86% 6%, rgba(255, 105, 0, 0.16), transparent 24rem),
-        linear-gradient(180deg, #080a12 0%, #05060b 55%, #080a10 100%);
-      color: var(--text);
-      font-family: var(--font-latin);
-      line-height: 1.5;
-      overflow-x: hidden;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body[dir="rtl"] {
-      font-family: var(--font-arabic);
-    }
-
-    button,
-    a {
-      font: inherit;
-    }
-
-    button {
-      border: 0;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    :focus-visible {
-      outline: 3px solid rgba(92, 167, 255, 0.95);
-      outline-offset: 4px;
-    }
-
-    .page-shell {
-      width: min(100%, 720px);
-      margin: 0 auto;
-      padding: 18px 16px calc(var(--dock-height) + env(safe-area-inset-bottom, 0px) + 26px);
-      position: relative;
-      z-index: 1;
-    }
-
-    .skip-link {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 100;
-      transform: translateY(-160%);
-      background: var(--text);
-      color: #06070d;
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-weight: 800;
-      transition: transform 160ms ease;
-    }
-
-    .skip-link:focus {
-      transform: translateY(0);
-    }
-
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .brand-mark {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-      font-weight: 800;
-      letter-spacing: 0;
-    }
-
-    .brand-icon {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      flex: 0 0 auto;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--orange), #ff9f42);
-      color: #fff;
-      box-shadow: 0 10px 28px rgba(255, 105, 0, 0.24);
-    }
-
-    .brand-text {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .lang-toggle {
-      min-height: 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 0 14px;
-      background: rgba(12, 15, 27, 0.72);
-      color: var(--text);
-      border: 1px solid rgba(92, 167, 255, 0.34);
-      cursor: pointer;
-      font-weight: 800;
-      white-space: nowrap;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-    }
-
-    .hero {
-      min-height: min(720px, calc(100vh - 118px));
-      min-height: min(720px, calc(100svh - 118px));
-      display: grid;
-      align-content: center;
-      gap: 22px;
-      padding: 16px 0 30px;
-    }
-
-    .hero-copy {
-      display: grid;
-      gap: 14px;
-      text-align: center;
-    }
-
-    .eyebrow {
-      width: fit-content;
-      margin: 0 auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid rgba(92, 167, 255, 0.24);
-      border-radius: 999px;
-      padding: 7px 12px;
-      color: var(--muted-strong);
-      background: rgba(92, 167, 255, 0.09);
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-
-    .hero h1 {
-      max-width: 12ch;
-      margin: 0 auto;
-      font-size: clamp(3.05rem, 14vw, 5.8rem);
-      line-height: 0.92;
-      font-weight: 800;
-      letter-spacing: 0;
-      background: linear-gradient(135deg, #ffffff 10%, #c6d8ff 54%, #ffb47a 96%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero-subtitle {
-      max-width: 38rem;
-      margin: 0 auto;
-      color: var(--muted-strong);
-      font-size: clamp(1rem, 3.8vw, 1.18rem);
-    }
-
-    .hero-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      width: min(100%, 430px);
-      margin: 4px auto 0;
-    }
-
-    .button {
-      min-height: 54px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border-radius: 999px;
-      padding: 0 20px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
-    }
-
-    .button:active {
-      transform: scale(0.98);
-    }
-
-    .button-primary {
-      background: linear-gradient(135deg, var(--orange), #ff8d35);
-      color: #fff;
-      box-shadow: 0 14px 36px rgba(255, 105, 0, 0.28);
-    }
-
-    .button-secondary {
-      background: rgba(18, 21, 35, 0.72);
-      color: var(--text);
-      border: 1px solid var(--border-strong);
-    }
-
-    .trust-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      width: min(100%, 460px);
-      margin: 0 auto;
-    }
-
-    .trust-item {
-      min-height: 68px;
-      display: grid;
-      place-items: center;
-      gap: 2px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: rgba(16, 18, 30, 0.58);
-      color: var(--muted);
-      text-align: center;
-      padding: 10px 8px;
-    }
-
-    .trust-value {
-      color: var(--text);
-      font-size: 1.12rem;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .trust-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-    }
-
-    .section {
-      scroll-margin-top: 18px;
-      margin: 18px 0 34px;
-    }
-
-    .section-header {
-      display: grid;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-
-    .section-kicker {
-      color: var(--blue);
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    body[dir="rtl"] .section-kicker {
-      text-transform: none;
-    }
-
-    .section-title {
-      font-size: clamp(1.55rem, 6vw, 2.25rem);
-      line-height: 1.08;
-      font-weight: 800;
-      letter-spacing: 0;
-    }
-
-    .section-text {
-      color: var(--muted);
-      max-width: 42rem;
-    }
-
-    .card-grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .hub-card,
-    .benefit-card,
-    .stat-card,
-    .faq-item {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      box-shadow: var(--shadow);
-    }
-
-    .hub-card {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 14px;
-      align-items: center;
-      border-radius: var(--radius-lg);
-      padding: 15px;
-      min-height: 116px;
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
-    }
-
-    .hub-card:active {
-      transform: scale(0.99);
-    }
-
-    .hub-card:hover {
-      border-color: rgba(92, 167, 255, 0.36);
-      background: var(--surface-strong);
-    }
-
-    .hub-icon {
-      width: 50px;
-      height: 50px;
-      display: grid;
-      place-items: center;
-      border-radius: 18px;
-      background: var(--surface-light);
-      font-size: 1.45rem;
-      font-weight: 800;
-    }
-
-    .hub-content {
-      min-width: 0;
-      display: grid;
-      gap: 5px;
-    }
-
-    .hub-topline {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .hub-title {
-      font-size: 1.08rem;
-      font-weight: 800;
-    }
-
-    .hub-pill {
-      border-radius: 999px;
-      background: rgba(40, 209, 124, 0.12);
-      color: #91ffc8;
-      padding: 4px 8px;
-      font-size: 0.68rem;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .hub-description {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .hub-action {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      color: #ffd8bd;
-      font-size: 0.86rem;
-      font-weight: 800;
-    }
-
-    .benefits-grid,
-    .stats-grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .benefit-card,
-    .stat-card {
-      border-radius: var(--radius-md);
-      padding: 18px;
-    }
-
-    .benefit-card {
-      display: grid;
-      gap: 8px;
-    }
-
-    .benefit-card h3 {
-      font-size: 1.02rem;
-      font-weight: 800;
-    }
-
-    .benefit-card p {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .benefit-symbol {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: rgba(92, 167, 255, 0.12);
-      color: #b8dbff;
-      font-weight: 800;
-    }
-
-    .stats-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .stat-card {
-      min-width: 0;
-      text-align: center;
-      padding: 16px 10px;
-    }
-
-    .stat-number {
-      font-size: clamp(1.7rem, 9vw, 2.65rem);
-      line-height: 1;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    .stat-label {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 0.74rem;
-      font-weight: 700;
-    }
-
-    .faq-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .faq-item {
-      border-radius: var(--radius-md);
-      overflow: hidden;
-    }
-
-    .faq-button {
-      width: 100%;
-      min-height: 58px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 16px 18px;
-      background: transparent;
-      color: var(--text);
-      text-align: start;
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .faq-indicator {
-      width: 26px;
-      height: 26px;
-      display: grid;
-      place-items: center;
-      flex: 0 0 auto;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      transition: transform 180ms ease;
-    }
-
-    .faq-item.is-open .faq-indicator {
-      transform: rotate(45deg);
-    }
-
-    .faq-panel {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows 190ms ease;
-    }
-
-    .faq-item.is-open .faq-panel {
-      grid-template-rows: 1fr;
-    }
-
-    .faq-panel-inner {
-      overflow: hidden;
-    }
-
-    .faq-answer {
-      padding: 0 18px 18px;
-      color: var(--muted);
-      font-size: 0.93rem;
-    }
-
-    .final-cta {
-      display: grid;
-      gap: 14px;
-      text-align: center;
-      border: 1px solid rgba(255, 105, 0, 0.26);
-      border-radius: 28px;
-      padding: 24px 18px;
-      background:
-        linear-gradient(135deg, rgba(255, 105, 0, 0.16), rgba(92, 167, 255, 0.1)),
-        rgba(18, 20, 34, 0.78);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      box-shadow: var(--shadow);
-    }
-
-    .final-cta h2 {
-      font-size: clamp(1.7rem, 7vw, 2.5rem);
-      line-height: 1.04;
-    }
-
-    .final-cta p {
-      color: var(--muted-strong);
-    }
-
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      bottom: max(12px, env(safe-area-inset-bottom, 12px));
-      z-index: 50;
-      transform: translateX(-50%);
-      width: min(calc(100% - 24px), 520px);
-      min-height: var(--dock-height);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 4px;
-      padding: 7px;
-      border: 1px solid var(--border-strong);
-      border-radius: 999px;
-      background: rgba(8, 10, 18, 0.86);
-      -webkit-backdrop-filter: blur(14px);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.42);
-    }
-
-    .nav-button {
-      min-width: 0;
-      min-height: 54px;
-      display: grid;
-      place-items: center;
-      gap: 2px;
-      border-radius: 999px;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      font-weight: 800;
-      font-size: 0.68rem;
-      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
-    }
-
-    .nav-button:active {
-      transform: scale(0.96);
-    }
-
-    .nav-button.is-active {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text);
-    }
-
-    .nav-icon {
-      font-size: 1rem;
-      line-height: 1;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 420ms ease, transform 420ms ease;
-    }
-
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    @media (min-width: 520px) {
-      .hero-actions {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .card-grid,
-      .benefits-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 390px) {
-      .page-shell {
-        padding-inline: 12px;
-      }
-
-      .hub-card {
-        grid-template-columns: 1fr;
-      }
-
-      .hub-icon {
-        width: 46px;
-        height: 46px;
-      }
-
-      .bottom-nav {
-        width: min(calc(100% - 14px), 520px);
-        padding: 6px;
-      }
-
-      .nav-button {
-        font-size: 0.62rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce), (max-width: 420px) {
-      .lang-toggle,
-      .hub-card,
-      .benefit-card,
-      .stat-card,
-      .faq-item,
-      .final-cta,
-      .bottom-nav {
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
-        background-color: rgba(14, 17, 29, 0.94);
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a14">
+    <meta name="color-scheme" content="dark">
+    <meta name="description" content="Xiaomi World – bilingual hub for Telegram, WhatsApp, updates, wallpapers, and community.">
+    <title>Xiaomi World | Liquid Glass</title>
+
+    <!-- Self-hosted fonts (fallback) -->
+    <style>
+        /* ===== RESET & ROOT ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-primary: #0a0a14;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b8c8;
+            --text-strong: #e8ecf4;
+            --accent-orange: #ff6b35;
+            --accent-blue: #00d2ff;
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.5);
+            --radius-xl: 28px;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            --dock-height: 76px;
+            --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --smooth: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg-primary);
+        }
+
+        body {
+            min-height: 100svh;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        body[dir="rtl"] {
+            font-family: 'Cairo', system-ui, sans-serif;
+        }
+
+        /* ===== GRADIENT MESH BACKGROUND (no blur) ===== */
+        .gradient-mesh {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(255, 107, 53, 0.35) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 210, 255, 0.30) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(123, 47, 190, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 70% 20%, rgba(255, 0, 110, 0.20) 0%, transparent 40%),
+                var(--bg-primary);
+            overflow: hidden;
+        }
+
+        /* Liquid moving orbs – soft, organic, no blur */
+        .liquid-orbs {
+            position: absolute;
+            inset: -20%;
+            width: 140%;
+            height: 140%;
+            background:
+                radial-gradient(circle at 30% 40%, rgba(255, 107, 53, 0.15) 0%, transparent 35%),
+                radial-gradient(circle at 70% 60%, rgba(0, 210, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(123, 47, 190, 0.12) 0%, transparent 30%);
+            animation: liquidFlow 30s ease-in-out infinite alternate;
+            will-change: transform;
+            opacity: 0.7;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes liquidFlow {
+            0% {
+                transform: translate(-6%, -4%) scale(1) rotate(0deg);
+            }
+            33% {
+                transform: translate(8%, 6%) scale(1.08) rotate(4deg);
+            }
+            66% {
+                transform: translate(-4%, 10%) scale(0.95) rotate(-3deg);
+            }
+            100% {
+                transform: translate(6%, -6%) scale(1.04) rotate(5deg);
+            }
+        }
+
+        /* ===== LAYOUT ===== */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .page-shell {
+            width: min(100%, 680px);
+            margin: 0 auto;
+            padding: 20px 18px calc(var(--dock-height) + env(safe-area-inset-bottom, 0px) + 28px);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 32px;
+            padding: 4px 0;
+        }
+
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: opacity 0.2s;
+        }
+        .brand-mark:hover {
+            opacity: 0.8;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: var(--radius-sm);
+            background: linear-gradient(135deg, var(--accent-orange), #ff8d35);
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.25);
+            transition: transform 0.4s var(--spring);
+        }
+        .brand-mark:hover .brand-icon {
+            transform: scale(1.08) rotate(-2deg);
+        }
+
+        .lang-toggle {
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 999px;
+            padding: 0 18px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s var(--spring), background 0.25s, border-color 0.25s;
+        }
+        .lang-toggle:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .lang-toggle:active {
+            transform: scale(0.94);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: min(560px, calc(100svh - 140px));
+            display: grid;
+            align-content: center;
+            gap: 28px;
+            padding: 20px 0;
+        }
+
+        .hero-copy {
+            display: grid;
+            gap: 14px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            width: fit-content;
+            margin: 0 auto;
+            border: 1px solid var(--glass-border);
+            border-radius: 999px;
+            padding: 5px 18px;
+            background: var(--glass-bg);
+            color: var(--text-strong);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 10vw, 5rem);
+            line-height: 0.95;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 25%, #b0d2ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            max-width: 34rem;
+            margin: 0 auto;
+            color: var(--text-secondary);
+            font-size: clamp(1rem, 3.6vw, 1.15rem);
+            font-weight: 400;
+        }
+
+        .hero-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: min(100%, 400px);
+            margin: 6px auto 0;
+        }
+
+        /* ===== BUTTONS ===== */
+        .button {
+            min-height: 52px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 999px;
+            padding: 0 28px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            transition: transform 0.35s var(--spring), box-shadow 0.35s, background 0.25s;
+            will-change: transform;
+        }
+
+        .button:active {
+            transform: scale(0.95);
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, var(--accent-orange), #ff8d35);
+            color: #fff;
+            box-shadow: 0 12px 28px rgba(255, 107, 53, 0.3);
+        }
+        .button-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 18px 40px rgba(255, 107, 53, 0.45);
+        }
+
+        .button-secondary {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+        .button-secondary:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-2px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        /* ===== TRUST ROW ===== */
+        .trust-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: min(100%, 420px);
+            margin: 0 auto;
+        }
+
+        .trust-item {
+            display: grid;
+            place-items: center;
+            gap: 2px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            background: var(--glass-bg);
+            padding: 14px 8px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s var(--spring), background 0.25s;
+        }
+        .trust-item:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .trust-value {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+        .trust-label {
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            scroll-margin-top: 20px;
+            margin: 40px 0 52px;
+        }
+
+        .section-header {
+            display: grid;
+            gap: 4px;
+            margin-bottom: 22px;
+        }
+
+        .section-kicker {
+            color: var(--accent-blue);
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        body[dir="rtl"] .section-kicker {
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .section-title {
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .section-text {
+            color: var(--text-secondary);
+            max-width: 36rem;
+            font-size: 0.95rem;
+        }
+
+        /* ===== GLASS CARDS (no backdrop-filter) ===== */
+        .card-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .hub-card,
+        .benefit-card,
+        .faq-item {
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            box-shadow: var(--glass-shadow);
+            border-radius: var(--radius-lg);
+            transition: transform 0.35s var(--spring), border-color 0.3s, background 0.3s, box-shadow 0.3s;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* subtle shimmer */
+        .hub-card::after,
+        .benefit-card::after,
+        .faq-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, transparent 50%, rgba(255, 255, 255, 0.01) 100%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .hub-card:hover::after,
+        .benefit-card:hover::after,
+        .faq-item:hover::after {
+            opacity: 1;
+        }
+
+        .hub-card {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 18px;
+            align-items: center;
+            padding: 18px 20px;
+            min-height: 90px;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+        .hub-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        .hub-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 1.5rem;
+            transition: transform 0.4s var(--spring);
+        }
+        .hub-card:hover .hub-icon {
+            transform: scale(1.1) rotate(-3deg);
+        }
+
+        .hub-content {
+            display: grid;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .hub-topline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .hub-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .hub-pill {
+            border-radius: 999px;
+            background: rgba(0, 210, 255, 0.1);
+            color: #99edff;
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            padding: 2px 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+        }
+
+        .hub-description {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+        }
+
+        .hub-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #ffe4d1;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        .hub-arrow {
+            display: inline-block;
+            transition: transform 0.3s var(--smooth);
+        }
+        .hub-card:hover .hub-arrow {
+            transform: translateX(5px);
+        }
+        body[dir="rtl"] .hub-card:hover .hub-arrow {
+            transform: translateX(-5px) scaleX(-1);
+        }
+        body[dir="rtl"] .hub-arrow {
+            transform: scaleX(-1);
+        }
+
+        .benefits-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .benefit-card {
+            padding: 20px 22px;
+            display: grid;
+            gap: 6px;
+            transition: transform 0.3s var(--spring), border-color 0.3s;
+        }
+        .benefit-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .benefit-symbol {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 1.3rem;
+        }
+        .benefit-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .benefit-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .faq-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .faq-item {
+            border-radius: var(--radius-md);
+            transition: border-color 0.3s;
+        }
+        .faq-item.is-open {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .faq-button {
+            width: 100%;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 20px;
+            background: transparent;
+            color: var(--text-primary);
+            text-align: start;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            transition: color 0.2s;
+        }
+        .faq-button:hover {
+            color: #fff;
+        }
+
+        .faq-indicator {
+            width: 26px;
+            height: 26px;
+            display: grid;
+            place-items: center;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 1.2rem;
+            font-weight: 300;
+            transition: transform 0.4s var(--spring), background 0.3s;
+            flex-shrink: 0;
+        }
+        .faq-item.is-open .faq-indicator {
+            transform: rotate(45deg);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .faq-panel {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s var(--smooth);
+        }
+        .faq-item.is-open .faq-panel {
+            grid-template-rows: 1fr;
+        }
+
+        .faq-panel-inner {
+            overflow: hidden;
+        }
+
+        .faq-answer {
+            padding: 0 20px 18px 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .final-cta {
+            display: grid;
+            gap: 14px;
+            text-align: center;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: var(--radius-xl);
+            padding: 32px 20px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255, 107, 53, 0.06) 0%, transparent 70%);
+            box-shadow: var(--glass-shadow);
+        }
+        .final-cta h2 {
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            font-weight: 800;
+        }
+        .final-cta p {
+            color: var(--text-secondary);
+            max-width: 30rem;
+            margin: 0 auto;
+        }
+
+        /* ===== BOTTOM DOCK ===== */
+        .bottom-nav-container {
+            position: fixed;
+            left: 50%;
+            bottom: max(16px, env(safe-area-inset-bottom, 16px));
+            z-index: 50;
+            transform: translateX(-50%);
+            width: min(calc(100% - 28px), 480px);
+        }
+
+        .bottom-nav {
+            position: relative;
+            width: 100%;
+            min-height: var(--dock-height);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            padding: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            background: rgba(10, 14, 26, 0.7);
+            box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-fluid-indicator {
+            position: absolute;
+            top: 6px;
+            inset-inline-start: 6px;
+            height: calc(100% - 12px);
+            width: calc(25% - 7px);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            pointer-events: none;
+            transition: transform 0.5s var(--smooth), width 0.5s var(--smooth);
+            will-change: transform, width;
+        }
+
+        .nav-button {
+            position: relative;
+            z-index: 2;
+            min-height: 56px;
+            display: grid;
+            place-items: center;
+            gap: 2px;
+            border-radius: 999px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.6rem;
+            border: none;
+            transition: color 0.3s, transform 0.15s;
+            padding: 0 4px;
+            letter-spacing: 0.2px;
+        }
+        .nav-button:active {
+            transform: scale(0.92);
+        }
+        .nav-button.is-active {
+            color: var(--text-primary);
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        /* ===== REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (min-width: 540px) {
+            .card-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .benefits-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-shell {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+            .hero-actions {
+                grid-template-columns: 1fr;
+                width: 100%;
+            }
+            .hub-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+                justify-items: center;
+                gap: 12px;
+                padding: 16px;
+            }
+            .hub-topline {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .hub-action {
+                justify-content: center;
+            }
+            .bottom-nav-container {
+                width: min(calc(100% - 16px), 400px);
+            }
+            .nav-button {
+                font-size: 0.55rem;
+                min-height: 48px;
+            }
+            .nav-icon {
+                font-size: 1rem;
+            }
+            .trust-row {
+                gap: 8px;
+            }
+            .trust-item {
+                padding: 10px 4px;
+            }
+            .trust-value {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .brand-text {
+                font-size: 0.85rem;
+            }
+            .lang-toggle {
+                padding: 0 12px;
+                font-size: 0.75rem;
+                min-height: 34px;
+            }
+            .button {
+                font-size: 0.85rem;
+                min-height: 46px;
+                padding: 0 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .liquid-orbs {
+                display: none;
+            }
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+            .nav-fluid-indicator {
+                transition: none;
+            }
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+    </style>
 </head>
 
 <body>
-  <a class="skip-link" href="#channels" data-i18n="skipLink">Skip to channels</a>
 
-  <div class="page-shell">
-    <header class="top-bar" aria-label="Xiaomi World">
-      <a class="brand-mark" href="#home" aria-label="Xiaomi World home">
-        <span class="brand-icon" aria-hidden="true">XW</span>
-        <span class="brand-text" data-i18n="brandName">Xiaomi World</span>
-      </a>
+    <!-- ===== GRADIENT MESH + LIQUID ORBS ===== -->
+    <div class="gradient-mesh" aria-hidden="true">
+        <div class="liquid-orbs"></div>
+    </div>
 
-      <button class="lang-toggle" type="button" data-action="language" aria-label="Switch language">
-        <span aria-hidden="true">🌐</span>
-        <span id="languageLabel">العربية</span>
-      </button>
-    </header>
+    <!-- ===== PAGE SHELL ===== -->
+    <div class="page-shell">
 
-    <main>
-      <section class="hero" id="home" aria-labelledby="hero-title">
-        <div class="hero-copy reveal">
-          <p class="eyebrow" data-i18n="eyebrow">Made for Xiaomi fans coming from TikTok</p>
-          <h1 id="hero-title" data-i18n="heroTitle">Xiaomi World</h1>
-          <p class="hero-subtitle" data-i18n="heroSubtitle">
-            One clean hub for updates, Telegram channels, WhatsApp alerts, wallpapers, and community support.
-          </p>
-        </div>
+        <!-- TOP BAR -->
+        <header class="top-bar" role="banner">
+            <a class="brand-mark" href="#home" aria-label="Xiaomi World home">
+                <span class="brand-icon" aria-hidden="true">XW</span>
+                <span class="brand-text" data-i18n="brandName">Xiaomi World</span>
+            </a>
+            <button class="lang-toggle" type="button" data-action="language" aria-label="Switch language">
+                <span aria-hidden="true">🌐</span>
+                <span id="languageLabel">العربية</span>
+            </button>
+        </header>
 
-        <div class="hero-actions reveal" aria-label="Main actions">
-          <a class="button button-primary" href="https://t.me/redmi3321" target="_blank" rel="noopener noreferrer" data-i18n="joinNow" data-track-link="main-telegram">
-            Join Now
-          </a>
-          <button class="button button-secondary" type="button" data-action="scroll" data-target="channels" data-i18n="exploreChannels">
-            Explore Channels
-          </button>
-        </div>
+        <main>
+            <!-- HERO -->
+            <section class="hero" id="home" aria-labelledby="hero-title">
+                <div class="hero-copy reveal">
+                    <p class="eyebrow" data-i18n="eyebrow">Made for Xiaomi fans coming from TikTok</p>
+                    <h1 id="hero-title" data-i18n="heroTitle">Xiaomi World</h1>
+                    <p class="hero-subtitle" data-i18n="heroSubtitle">
+                        One clean hub for updates, Telegram channels, WhatsApp alerts, wallpapers, and community support.
+                    </p>
+                </div>
 
-        <div class="trust-row reveal" id="stats" aria-label="Page facts">
-          <div class="trust-item">
-            <strong class="trust-value" data-stat-value="4">0</strong>
-            <span class="trust-label" data-i18n="statLinks">direct links</span>
-          </div>
-          <div class="trust-item">
-            <strong class="trust-value" data-stat-value="2">0</strong>
-            <span class="trust-label" data-i18n="statLanguages">languages</span>
-          </div>
-          <div class="trust-item">
-            <strong class="trust-value" data-stat-value="0">0</strong>
-            <span class="trust-label" data-i18n="statTracking">tracking scripts</span>
-          </div>
-        </div>
-      </section>
+                <div class="hero-actions reveal">
+                    <a class="button button-primary" href="https://t.me/redmi3321" target="_blank" rel="noopener noreferrer" data-i18n="joinNow">
+                        Join Now
+                    </a>
+                    <button class="button button-secondary" type="button" data-action="scroll" data-target="channels" data-i18n="exploreChannels">
+                        Explore Channels
+                    </button>
+                </div>
 
-      <section class="section reveal" id="channels" aria-labelledby="channels-title">
-        <div class="section-header">
-          <p class="section-kicker" data-i18n="channelsKicker">Community links</p>
-          <h2 class="section-title" id="channels-title" data-i18n="channelsTitle">Pick your fastest way in</h2>
-          <p class="section-text" data-i18n="channelsText">
-            Short paths, clear labels, and direct clicks for mobile visitors.
-          </p>
-        </div>
-        <div class="card-grid" id="channelsGrid"></div>
-      </section>
+                <div class="trust-row reveal" id="stats" aria-label="Page facts">
+                    <div class="trust-item">
+                        <strong class="trust-value" id="statLinksValue" data-stat-value="4">0</strong>
+                        <span class="trust-label" data-i18n="statLinks">direct links</span>
+                    </div>
+                    <div class="trust-item">
+                        <strong class="trust-value" data-stat-value="2">0</strong>
+                        <span class="trust-label" data-i18n="statLanguages">languages</span>
+                    </div>
+                    <div class="trust-item">
+                        <strong class="trust-value" data-stat-value="0">0</strong>
+                        <span class="trust-label" data-i18n="statTracking">tracking scripts</span>
+                    </div>
+                </div>
+            </section>
 
-      <section class="section reveal" id="benefits" aria-labelledby="benefits-title">
-        <div class="section-header">
-          <p class="section-kicker" data-i18n="benefitsKicker">Why join</p>
-          <h2 class="section-title" id="benefits-title" data-i18n="benefitsTitle">Useful updates without the noise</h2>
-        </div>
-        <div class="benefits-grid" id="benefitsGrid"></div>
-      </section>
+            <!-- CHANNELS -->
+            <section class="section reveal" id="channels" aria-labelledby="channels-title">
+                <div class="section-header">
+                    <p class="section-kicker" data-i18n="channelsKicker">Community links</p>
+                    <h2 class="section-title" id="channels-title" data-i18n="channelsTitle">Pick your fastest way in</h2>
+                    <p class="section-text" data-i18n="channelsText">
+                        Short paths, clear labels, and direct clicks for mobile visitors.
+                    </p>
+                </div>
+                <div class="card-grid" id="channelsGrid"></div>
+            </section>
 
-      <section class="section reveal" id="faq" aria-labelledby="faq-title">
-        <div class="section-header">
-          <p class="section-kicker" data-i18n="faqKicker">Questions</p>
-          <h2 class="section-title" id="faq-title" data-i18n="faqTitle">Before you join</h2>
-        </div>
-        <div class="faq-list" id="faqList"></div>
-      </section>
+            <!-- BENEFITS -->
+            <section class="section reveal" id="benefits" aria-labelledby="benefits-title">
+                <div class="section-header">
+                    <p class="section-kicker" data-i18n="benefitsKicker">Why join</p>
+                    <h2 class="section-title" id="benefits-title" data-i18n="benefitsTitle">Features made for Xiaomi fans</h2>
+                </div>
+                <div class="benefits-grid" id="benefitsGrid"></div>
+            </section>
 
-      <section class="section reveal final-cta" aria-labelledby="final-cta-title">
-        <h2 id="final-cta-title" data-i18n="finalTitle">Ready to join Xiaomi World?</h2>
-        <p data-i18n="finalText">Start with the main Telegram channel, then choose the alerts and wallpaper channels you want.</p>
-        <a class="button button-primary" href="https://t.me/redmi3321" target="_blank" rel="noopener noreferrer" data-i18n="finalButton" data-track-link="final-telegram">
-          Open Telegram
-        </a>
-      </section>
-    </main>
-  </div>
+            <!-- FAQ -->
+            <section class="section reveal" id="faq" aria-labelledby="faq-title">
+                <div class="section-header">
+                    <p class="section-kicker" data-i18n="faqKicker">Questions</p>
+                    <h2 class="section-title" id="faq-title" data-i18n="faqTitle">Before you join</h2>
+                </div>
+                <div class="faq-list" id="faqList"></div>
+            </section>
 
-  <nav class="bottom-nav" aria-label="Quick navigation">
-    <button class="nav-button is-active" type="button" data-action="scroll" data-target="home">
-      <span class="nav-icon" aria-hidden="true">⌂</span>
-      <span data-i18n="navHome">Home</span>
-    </button>
-    <button class="nav-button" type="button" data-action="scroll" data-target="channels">
-      <span class="nav-icon" aria-hidden="true">↗</span>
-      <span data-i18n="navChannels">Channels</span>
-    </button>
-    <button class="nav-button" type="button" data-action="scroll" data-target="benefits">
-      <span class="nav-icon" aria-hidden="true">★</span>
-      <span data-i18n="navBenefits">Benefits</span>
-    </button>
-    <button class="nav-button" type="button" data-action="scroll" data-target="faq">
-      <span class="nav-icon" aria-hidden="true">?</span>
-      <span data-i18n="navFaq">FAQ</span>
-    </button>
-  </nav>
+            <!-- FINAL CTA -->
+            <section class="section reveal final-cta" aria-labelledby="final-cta-title">
+                <h2 id="final-cta-title" data-i18n="finalTitle">Ready to join Xiaomi World?</h2>
+                <p data-i18n="finalText">Start with the main Telegram channel, then choose the alerts and wallpaper channels you want.</p>
+                <a class="button button-primary" href="https://t.me/redmi3321" target="_blank" rel="noopener noreferrer" data-i18n="finalButton">
+                    Open Telegram
+                </a>
+            </section>
+        </main>
+    </div>
 
-  <script>
-    (() => {
-      'use strict';
+    <!-- BOTTOM DOCK -->
+    <div class="bottom-nav-container">
+        <nav class="bottom-nav" aria-label="Quick navigation">
+            <div class="nav-fluid-indicator" id="navIndicator" aria-hidden="true"></div>
 
-      const LANGUAGE_KEY = 'xiaomi-world-language';
-      const LANGUAGES = {
-        EN: 'en',
-        AR: 'ar'
-      };
+            <button class="nav-button is-active" type="button" data-action="scroll" data-target="home" data-index="0" aria-label="Home">
+                <span class="nav-icon" aria-hidden="true">⌂</span>
+                <span data-i18n="navHome">Home</span>
+            </button>
+            <button class="nav-button" type="button" data-action="scroll" data-target="channels" data-index="1" aria-label="Channels">
+                <span class="nav-icon" aria-hidden="true">↗</span>
+                <span data-i18n="navChannels">Channels</span>
+            </button>
+            <button class="nav-button" type="button" data-action="scroll" data-target="benefits" data-index="2" aria-label="Benefits">
+                <span class="nav-icon" aria-hidden="true">★</span>
+                <span data-i18n="navBenefits">Benefits</span>
+            </button>
+            <button class="nav-button" type="button" data-action="scroll" data-target="faq" data-index="3" aria-label="FAQ">
+                <span class="nav-icon" aria-hidden="true">?</span>
+                <span data-i18n="navFaq">FAQ</span>
+            </button>
+        </nav>
+    </div>
 
-      const translations = {
-        en: {
-          skipLink: 'Skip to channels',
-          brandName: 'Xiaomi World',
-          eyebrow: 'Made for Xiaomi fans coming from TikTok',
-          heroTitle: 'Xiaomi World',
-          heroSubtitle: 'One clean hub for updates, Telegram channels, WhatsApp alerts, wallpapers, and community support.',
-          joinNow: 'Join Now',
-          exploreChannels: 'Explore Channels',
-          statLinks: 'direct links',
-          statLanguages: 'languages',
-          statTracking: 'tracking scripts',
-          channelsKicker: 'Community links',
-          channelsTitle: 'Pick your fastest way in',
-          channelsText: 'Short paths, clear labels, and direct clicks for mobile visitors.',
-          benefitsKicker: 'Why join',
-          benefitsTitle: 'Features made for Xiaomi fans',
-          faqKicker: 'Questions',
-          faqTitle: 'Before you join',
-          finalTitle: 'Ready to join Xiaomi World?',
-          finalText: 'Start with the main Telegram channel, then choose the alerts and wallpaper channels you want.',
-          finalButton: 'Open Telegram',
-          navHome: 'Home',
-          navChannels: 'Channels',
-          navBenefits: 'Benefits',
-          navFaq: 'FAQ',
-          channelTelegramTitle: 'Main Telegram Channel',
-          channelTelegramDesc: 'Updates, posts, and Xiaomi news in one place.',
-          channelTelegramCta: 'Open channel',
-          channelGroupTitle: 'Telegram Community',
-          channelGroupDesc: 'Ask, share, and talk with other Xiaomi fans.',
-          channelGroupCta: 'Join group',
-          channelWhatsappTitle: 'WhatsApp Alerts',
-          channelWhatsappDesc: 'Fast notifications for people who prefer WhatsApp.',
-          channelWhatsappCta: 'Follow alerts',
-          channelWallpapersTitle: 'Wallpapers Channel',
-          channelWallpapersDesc: 'Clean Xiaomi-style wallpapers and visual drops.',
-          channelWallpapersCta: 'Get wallpapers',
-          badgeFast: 'Fast',
-          badgeChat: 'Chat',
-          badgeAlerts: 'Alerts',
-          badgeVisuals: 'Visuals',
-          benefitFastTitle: 'Beautiful themes',
-          benefitFastText: 'Premium Xiaomi-style themes and visual ideas for a cleaner phone look.',
-          benefitMobileTitle: 'Full phone customization',
-          benefitMobileText: 'Icons, wallpapers, layout ideas, and settings that help personalize your device.',
-          benefitTrustTitle: 'Private codes',
-          benefitTrustText: 'Useful private codes and shortcuts shared clearly for Xiaomi users.',
-          benefitArabicTitle: 'Credible content',
-          benefitArabicText: 'Original, trusted content with respect for creators and no stolen material.',
-          faqFreeQuestion: 'Is it free to join?',
-          faqFreeAnswer: 'Yes. The linked Telegram and WhatsApp destinations are free to open.',
-          faqOfficialQuestion: 'Is this an official Xiaomi website?',
-          faqOfficialAnswer: 'No. Xiaomi World is a fan/community hub that points visitors to community channels.',
-          faqBestQuestion: 'Which link should I use first?',
-          faqBestAnswer: 'Use the main Telegram channel for updates, then join WhatsApp alerts if you want quick notifications.',
-          faqPrivacyQuestion: 'Does this page track me?',
-          faqPrivacyAnswer: 'No analytics or tracking scripts are included. The only saved setting is your language preference on this device.'
-        },
-        ar: {
-          skipLink: 'انتقل إلى القنوات',
-          brandName: 'عالم شاومي',
-          eyebrow: 'مصمم لمحبي شاومي القادمين من تيك توك',
-          heroTitle: 'عالم شاومي',
-          heroSubtitle: 'صفحة واحدة سريعة للتحديثات وقنوات تيليجرام وتنبيهات واتساب والخلفيات ودعم المجتمع.',
-          joinNow: 'انضم الآن',
-          exploreChannels: 'استكشف القنوات',
-          statLinks: 'روابط مباشرة',
-          statLanguages: 'لغتان',
-          statTracking: 'سكربتات تتبع',
-          channelsKicker: 'روابط المجتمع',
-          channelsTitle: 'اختر أسرع طريقة للدخول',
-          channelsText: 'مسارات قصيرة، عناوين واضحة، ونقرات مباشرة لزوار الموبايل.',
-          benefitsKicker: 'ماذا تنضم',
-          benefitsTitle: 'مميزات مخصصة لمحبي شاومي',
-          faqKicker: 'أسئلة',
-          faqTitle: 'قبل الانضمام',
-          finalTitle: 'جاهز للانضمام إلى عالم شاومي؟',
-          finalText: 'ابدأ بالقناة الرئيسية على تيليجرام، ثم اختر تنبيهات واتساب أو قناة الخلفيات حسب احتياجك.',
-          finalButton: 'افتح تيليجرام',
-          navHome: 'الرئيسية',
-          navChannels: 'القنوات',
-          navBenefits: 'المزايا',
-          navFaq: 'الأسئلة',
-          channelTelegramTitle: 'قناة تيليجرام الرئيسية',
-          channelTelegramDesc: 'تحديثات ومنشورات وأخبار شاومي في مكان واحد.',
-          channelTelegramCta: 'افتح القناة',
-          channelGroupTitle: 'مجتمع تيليجرام',
-          channelGroupDesc: 'اسأل وشارك وتحدث مع محبي شاومي.',
-          channelGroupCta: 'انضم للمجموعة',
-          channelWhatsappTitle: 'تنبيهات واتساب',
-          channelWhatsappDesc: 'إشعارات سريعة لمن يفضلون واتساب.',
-          channelWhatsappCta: 'تابع التنبيهات',
-          channelWallpapersTitle: 'قناة الخلفيات',
-          channelWallpapersDesc: 'خلفيات نظيفة بأسلوب شاومي ومحتوى بصري متجدد.',
-          channelWallpapersCta: 'احصل على الخلفيات',
-          badgeFast: 'سريع',
-          badgeChat: 'دردشة',
-          badgeAlerts: 'تنبيهات',
-          badgeVisuals: 'خلفيات',
-          benefitFastTitle: 'ثيمات رائعة',
-          benefitFastText: 'ثيمات وأفكار بصرية مميزة بأسلوب شاومي لمظهر أنظف وأجمل للهاتف.',
-          benefitMobileTitle: 'تخصيص كامل للهاتف',
-          benefitMobileText: 'أيقونات وخلفيات وأفكار ترتيب وإعدادات تساعدك تخصص جهازك بطريقتك.',
-          benefitTrustTitle: 'أكواد بريفيت',
-          benefitTrustText: 'أكواد واختصارات مفيدة يتم عرضها بوضوح لمستخدمي شاومي.',
-          benefitArabicTitle: 'مصداقية وعدم سرقة محتوى',
-          benefitArabicText: 'محتوى موثوق وأصلي مع احترام صناع المحتوى وعدم نشر مواد مسروقة.',
-          faqFreeQuestion: 'هل الانضمام مجاني؟',
-          faqFreeAnswer: 'نعم. روابط تيليجرام وواتساب الموجودة مجانية الفتح.',
-          faqOfficialQuestion: 'هل هذا موقع رسمي من شاومي؟',
-          faqOfficialAnswer: 'لا. عالم شاومي هو مركز لمحبي شاومي وروابط المجتمع.',
-          faqBestQuestion: 'أي رابط أستخدم أولا؟',
-          faqBestAnswer: 'ابدأ بقناة تيليجرام الرئيسية للتحديثات، ثم تابع واتساب إذا كنت تريد إشعارات سريعة.',
-          faqPrivacyQuestion: 'هل الصفحة تتبعني؟',
-          faqPrivacyAnswer: 'لا توجد سكربتات تحليلات أو تتبع. الإعداد الوحيد المحفوظ هو اللغة المفضلة على هذا الجهاز.'
-        }
-      };
+    <script>
+        (() => {
+            'use strict';
 
-      const channels = [
-        {
-          icon: 'T',
-          titleKey: 'channelTelegramTitle',
-          descriptionKey: 'channelTelegramDesc',
-          ctaKey: 'channelTelegramCta',
-          badgeKey: 'badgeFast',
-          href: 'https://t.me/redmi3321',
-          track: 'telegram-main'
-        },
-        {
-          icon: 'G',
-          titleKey: 'channelGroupTitle',
-          descriptionKey: 'channelGroupDesc',
-          ctaKey: 'channelGroupCta',
-          badgeKey: 'badgeChat',
-          href: 'https://t.me/themes345',
-          track: 'telegram-group'
-        },
-        {
-          icon: 'W',
-          titleKey: 'channelWhatsappTitle',
-          descriptionKey: 'channelWhatsappDesc',
-          ctaKey: 'channelWhatsappCta',
-          badgeKey: 'badgeAlerts',
-          href: 'https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H',
-          track: 'whatsapp-alerts'
-        },
-        {
-          icon: '4K',
-          titleKey: 'channelWallpapersTitle',
-          descriptionKey: 'channelWallpapersDesc',
-          ctaKey: 'channelWallpapersCta',
-          badgeKey: 'badgeVisuals',
-          href: 'https://t.me/themesXiaomia',
-          track: 'wallpapers'
-        }
-      ];
+            const LANGUAGE_KEY = 'xiaomi-world-language';
+            const LANGUAGES = { EN: 'en', AR: 'ar' };
 
-      const benefits = [
-        {
-          symbol: '01',
-          titleKey: 'benefitFastTitle',
-          textKey: 'benefitFastText'
-        },
-        {
-          symbol: '02',
-          titleKey: 'benefitMobileTitle',
-          textKey: 'benefitMobileText'
-        },
-        {
-          symbol: '03',
-          titleKey: 'benefitTrustTitle',
-          textKey: 'benefitTrustText'
-        },
-        {
-          symbol: '04',
-          titleKey: 'benefitArabicTitle',
-          textKey: 'benefitArabicText'
-        }
-      ];
+            // ===== TRANSLATIONS =====
+            const translations = {
+                en: {
+                    brandName: 'Xiaomi World',
+                    eyebrow: 'Made for Xiaomi fans coming from TikTok',
+                    heroTitle: 'Xiaomi World',
+                    heroSubtitle: 'One clean hub for updates, Telegram channels, WhatsApp alerts, wallpapers, and community support.',
+                    joinNow: 'Join Now',
+                    exploreChannels: 'Explore Channels',
+                    statLinks: 'direct links',
+                    statLanguages: 'languages',
+                    statTracking: 'tracking scripts',
+                    channelsKicker: 'Community links',
+                    channelsTitle: 'Pick your fastest way in',
+                    channelsText: 'Short paths, clear labels, and direct clicks for mobile visitors.',
+                    benefitsKicker: 'Why join',
+                    benefitsTitle: 'Features made for Xiaomi fans',
+                    faqKicker: 'Questions',
+                    faqTitle: 'Before you join',
+                    finalTitle: 'Ready to join Xiaomi World?',
+                    finalText: 'Start with the main Telegram channel, then choose the alerts and wallpaper channels you want.',
+                    finalButton: 'Open Telegram',
+                    navHome: 'Home',
+                    navChannels: 'Channels',
+                    navBenefits: 'Benefits',
+                    navFaq: 'FAQ',
+                    channelTelegramTitle: 'Main Telegram Channel',
+                    channelTelegramDesc: 'Updates, posts, and Xiaomi news in one place.',
+                    channelTelegramCta: 'Open channel',
+                    channelGroupTitle: 'Telegram Community',
+                    channelGroupDesc: 'Ask, share, and talk with other Xiaomi fans.',
+                    channelGroupCta: 'Join group',
+                    channelWhatsappTitle: 'WhatsApp Alerts',
+                    channelWhatsappDesc: 'Fast notifications for people who prefer WhatsApp.',
+                    channelWhatsappCta: 'Follow alerts',
+                    channelWallpapersTitle: 'Wallpapers Channel',
+                    channelWallpapersDesc: 'Clean Xiaomi-style wallpapers and visual drops.',
+                    channelWallpapersCta: 'Get wallpapers',
+                    badgeFast: 'Fast',
+                    badgeChat: 'Chat',
+                    badgeAlerts: 'Alerts',
+                    badgeVisuals: 'Visuals',
+                    benefitFastTitle: 'Beautiful themes',
+                    benefitFastText: 'Premium Xiaomi-style themes and visual ideas for a cleaner phone look.',
+                    benefitMobileTitle: 'Full phone customization',
+                    benefitMobileText: 'Icons, wallpapers, layout ideas, and settings that help personalize your device.',
+                    benefitTrustTitle: 'Private codes',
+                    benefitTrustText: 'Useful private codes and shortcuts shared clearly for Xiaomi users.',
+                    benefitArabicTitle: 'Credible content',
+                    benefitArabicText: 'Original, trusted content with respect for creators and no stolen material.',
+                    faqFreeQuestion: 'Is it free to join?',
+                    faqFreeAnswer: 'Yes. The linked Telegram and WhatsApp destinations are free to open.',
+                    faqOfficialQuestion: 'Is this an official Xiaomi website?',
+                    faqOfficialAnswer: 'No. Xiaomi World is a fan/community hub that points visitors to community channels.',
+                    faqBestQuestion: 'Which link should I use first?',
+                    faqBestAnswer: 'Use the main Telegram channel for updates, then join WhatsApp alerts if you want quick notifications.',
+                    faqPrivacyQuestion: 'Does this page track me?',
+                    faqPrivacyAnswer: 'No analytics or tracking scripts are included. The only saved setting is your language preference on this device.'
+                },
+                ar: {
+                    brandName: 'عالم شاومي',
+                    eyebrow: 'مصمم لمحبي شاومي القادمين من تيك توك',
+                    heroTitle: 'عالم شاومي',
+                    heroSubtitle: 'صفحة واحدة سريعة للتحديثات وقنوات تيليجرام وتنبيهات واتساب والخلفيات ودعم المجتمع.',
+                    joinNow: 'انضم الآن',
+                    exploreChannels: 'استكشف القنوات',
+                    statLinks: 'روابط مباشرة',
+                    statLanguages: 'لغتان',
+                    statTracking: 'سكربتات تتبع',
+                    channelsKicker: 'روابط المجتمع',
+                    channelsTitle: 'اختر أسرع طريقة للدخول',
+                    channelsText: 'مسارات قصيرة، عناوين واضحة، ونقرات مباشرة لزوار الموبايل.',
+                    benefitsKicker: 'لماذا تنضم',
+                    benefitsTitle: 'مميزات مخصصة لمحبي شاومي',
+                    faqKicker: 'أسئلة',
+                    faqTitle: 'قبل الانضمام',
+                    finalTitle: 'جاهز للانضمام إلى عالم شاومي؟',
+                    finalText: 'ابدأ بالقناة الرئيسية على تيليجرام، ثم اختر تنبيهات واتساب أو قناة الخلفيات حسب احتياجك.',
+                    finalButton: 'افتح تيليجرام',
+                    navHome: 'الرئيسية',
+                    navChannels: 'القنوات',
+                    navBenefits: 'المزايا',
+                    navFaq: 'الأسئلة',
+                    channelTelegramTitle: 'قناة تيليجرام الرئيسية',
+                    channelTelegramDesc: 'تحديثات ومنشورات وأخبار شاومي في مكان واحد.',
+                    channelTelegramCta: 'افتح القناة',
+                    channelGroupTitle: 'مجتمع تيليجرام',
+                    channelGroupDesc: 'اسأل وشارك وتحدث مع محبي شاومي.',
+                    channelGroupCta: 'انضم للمجموعة',
+                    channelWhatsappTitle: 'تنبيهات واتساب',
+                    channelWhatsappDesc: 'إشعارات سريعة لمن يفضلون واتساب.',
+                    channelWhatsappCta: 'تابع التنبيهات',
+                    channelWallpapersTitle: 'قناة الخلفيات',
+                    channelWallpapersDesc: 'خلفيات نظيفة بأسلوب شاومي ومحتوى بصري متجدد.',
+                    channelWallpapersCta: 'احصل على الخلفيات',
+                    badgeFast: 'سريع',
+                    badgeChat: 'دردشة',
+                    badgeAlerts: 'تنبيهات',
+                    badgeVisuals: 'خلفيات',
+                    benefitFastTitle: 'ثيمات رائعة',
+                    benefitFastText: 'ثيمات وأفكار بصرية مميزة بأسلوب شاومي لمظهر أنظف وأجمل للهاتف.',
+                    benefitMobileTitle: 'تخصيص كامل للهاتف',
+                    benefitMobileText: 'أيقونات وخلفيات وأفكار ترتيب وإعدادات تساعدك تخصص جهازك بطريقتك.',
+                    benefitTrustTitle: 'أكواد بريفيت',
+                    benefitTrustText: 'أكواد واختصارات مفيدة يتم عرضها بوضوح لمستخدمي شاومي.',
+                    benefitArabicTitle: 'مصداقية وعدم سرقة محتوى',
+                    benefitArabicText: 'محتوى موثوق وأصلي مع احترام صناع المحتوى وعدم نشر مواد مسروقة.',
+                    faqFreeQuestion: 'هل الانضمام مجاني؟',
+                    faqFreeAnswer: 'نعم. روابط تيليجرام وواتساب الموجودة مجانية الفتح.',
+                    faqOfficialQuestion: 'هل هذا موقع رسمي من شاومي؟',
+                    faqOfficialAnswer: 'لا. عالم شاومي هو مركز لمحبي شاومي وروابط المجتمع.',
+                    faqBestQuestion: 'أي رابط أستخدم أولاً؟',
+                    faqBestAnswer: 'ابدأ بقناة تيليجرام الرئيسية للتحديثات، ثم تابع واتساب إذا كنت تريد إشعارات سريعة.',
+                    faqPrivacyQuestion: 'هل الصفحة تتبعني؟',
+                    faqPrivacyAnswer: 'لا توجد سكربتات تحليلات أو تتبع. الإعداد الوحيد المحفوظ هو اللغة المفضلة على هذا الجهاز.'
+                }
+            };
 
-      const faqs = [
-        {
-          questionKey: 'faqFreeQuestion',
-          answerKey: 'faqFreeAnswer'
-        },
-        {
-          questionKey: 'faqOfficialQuestion',
-          answerKey: 'faqOfficialAnswer'
-        },
-        {
-          questionKey: 'faqBestQuestion',
-          answerKey: 'faqBestAnswer'
-        },
-        {
-          questionKey: 'faqPrivacyQuestion',
-          answerKey: 'faqPrivacyAnswer'
-        }
-      ];
+            // ===== DATA =====
+            const channels = [
+                { icon: '📢', titleKey: 'channelTelegramTitle', descKey: 'channelTelegramDesc', ctaKey: 'channelTelegramCta',
+                    badgeKey: 'badgeFast', href: 'https://t.me/redmi3321' },
+                { icon: '💬', titleKey: 'channelGroupTitle', descKey: 'channelGroupDesc', ctaKey: 'channelGroupCta',
+                    badgeKey: 'badgeChat', href: 'https://t.me/themes345' },
+                { icon: '📲', titleKey: 'channelWhatsappTitle', descKey: 'channelWhatsappDesc', ctaKey: 'channelWhatsappCta',
+                    badgeKey: 'badgeAlerts', href: 'https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H' },
+                { icon: '🖼️', titleKey: 'channelWallpapersTitle', descKey: 'channelWallpapersDesc',
+                    ctaKey: 'channelWallpapersCta', badgeKey: 'badgeVisuals', href: 'https://t.me/themesXiaomia' }
+            ];
 
-      const state = {
-        language: readLanguage(),
-        reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-        statsStarted: false
-      };
+            const benefits = [
+                { symbol: '🎨', titleKey: 'benefitFastTitle', textKey: 'benefitFastText' },
+                { symbol: '📱', titleKey: 'benefitMobileTitle', textKey: 'benefitMobileText' },
+                { symbol: '🔑', titleKey: 'benefitTrustTitle', textKey: 'benefitTrustText' },
+                { symbol: '✅', titleKey: 'benefitArabicTitle', textKey: 'benefitArabicText' }
+            ];
 
-      const selectors = {
-        languageLabel: document.getElementById('languageLabel'),
-        channelsGrid: document.getElementById('channelsGrid'),
-        benefitsGrid: document.getElementById('benefitsGrid'),
-        faqList: document.getElementById('faqList'),
-        navButtons: Array.from(document.querySelectorAll('.nav-button')),
-        revealItems: Array.from(document.querySelectorAll('.reveal')),
-        statValues: Array.from(document.querySelectorAll('[data-stat-value]'))
-      };
+            const faqs = [
+                { qKey: 'faqFreeQuestion', aKey: 'faqFreeAnswer' },
+                { qKey: 'faqOfficialQuestion', aKey: 'faqOfficialAnswer' },
+                { qKey: 'faqBestQuestion', aKey: 'faqBestAnswer' },
+                { qKey: 'faqPrivacyQuestion', aKey: 'faqPrivacyAnswer' }
+            ];
 
-      function readLanguage() {
-        try {
-          const stored = localStorage.getItem(LANGUAGE_KEY);
-          return stored === LANGUAGES.AR ? LANGUAGES.AR : LANGUAGES.EN;
-        } catch (_) {
-          return LANGUAGES.EN;
-        }
-      }
+            // ===== STATE =====
+            const state = {
+                language: readLanguage(),
+                reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+                statsAnimated: false
+            };
 
-      function saveLanguage(language) {
-        try {
-          localStorage.setItem(LANGUAGE_KEY, language);
-        } catch (_) {
-          // Private browsing may block storage; the page still works.
-        }
-      }
+            // ===== DOM REFS =====
+            const $ = (sel) => document.querySelector(sel);
+            const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-      function t(key) {
-        return translations[state.language][key] || translations.en[key] || '';
-      }
+            const dom = {
+                langLabel: $('#languageLabel'),
+                channelsGrid: $('#channelsGrid'),
+                benefitsGrid: $('#benefitsGrid'),
+                faqList: $('#faqList'),
+                navButtons: $$('.nav-button'),
+                navIndicator: $('#navIndicator'),
+                revealItems: $$('.reveal'),
+                statValues: $$('[data-stat-value]'),
+                statLinksValue: $('#statLinksValue')
+            };
 
-      function createElement(tag, options = {}, children = []) {
-        const element = document.createElement(tag);
-        const childList = Array.isArray(children) ? children : [children];
-
-        if (options.className) {
-          element.className = options.className;
-        }
-
-        if (options.text !== undefined) {
-          element.textContent = options.text;
-        }
-
-        if (options.i18n) {
-          element.dataset.i18n = options.i18n;
-        }
-
-        if (options.attrs) {
-          Object.entries(options.attrs).forEach(([name, value]) => {
-            if (value !== false && value !== null && value !== undefined) {
-              element.setAttribute(name, value === true ? '' : String(value));
-            }
-          });
-        }
-
-        childList.filter(Boolean).forEach((child) => element.append(child));
-        return element;
-      }
-
-      function renderCollection(container, nodes) {
-        const fragment = document.createDocumentFragment();
-        nodes.forEach((node) => fragment.append(node));
-        container.replaceChildren(fragment);
-      }
-
-      function createChannelCard(channel) {
-        return createElement('a', {
-          className: 'hub-card',
-          attrs: {
-            href: channel.href,
-            target: '_blank',
-            rel: 'noopener noreferrer',
-            'data-track-link': channel.track
-          }
-        }, [
-          createElement('span', { className: 'hub-icon', text: channel.icon, attrs: { 'aria-hidden': 'true' } }),
-          createElement('span', { className: 'hub-content' }, [
-            createElement('span', { className: 'hub-topline' }, [
-              createElement('strong', { className: 'hub-title', i18n: channel.titleKey }),
-              createElement('span', { className: 'hub-pill', i18n: channel.badgeKey })
-            ]),
-            createElement('span', { className: 'hub-description', i18n: channel.descriptionKey }),
-            createElement('span', { className: 'hub-action' }, [
-              createElement('span', { i18n: channel.ctaKey }),
-              createElement('span', { text: '→', attrs: { 'aria-hidden': 'true' } })
-            ])
-          ])
-        ]);
-      }
-
-      function createBenefitCard(benefit) {
-        return createElement('article', { className: 'benefit-card' }, [
-          createElement('span', { className: 'benefit-symbol', text: benefit.symbol, attrs: { 'aria-hidden': 'true' } }),
-          createElement('h3', { i18n: benefit.titleKey }),
-          createElement('p', { i18n: benefit.textKey })
-        ]);
-      }
-
-      function createFaqItem(faq, index) {
-        const buttonId = `faq-button-${index}`;
-        const panelId = `faq-panel-${index}`;
-
-        const button = createElement('button', {
-          className: 'faq-button',
-          attrs: {
-            id: buttonId,
-            type: 'button',
-            'aria-expanded': 'false',
-            'aria-controls': panelId,
-            'data-action': 'faq'
-          }
-        }, [
-          createElement('span', { i18n: faq.questionKey }),
-          createElement('span', { className: 'faq-indicator', text: '+', attrs: { 'aria-hidden': 'true' } })
-        ]);
-
-        const panel = createElement('div', {
-          className: 'faq-panel',
-          attrs: {
-            id: panelId,
-            role: 'region',
-            'aria-labelledby': buttonId
-          }
-        }, createElement('div', { className: 'faq-panel-inner' },
-          createElement('p', { className: 'faq-answer', i18n: faq.answerKey })
-        ));
-
-        return createElement('article', { className: 'faq-item' }, [button, panel]);
-      }
-
-      function applyLanguage(language) {
-        state.language = language;
-        const isArabic = language === LANGUAGES.AR;
-
-        document.documentElement.lang = language;
-        document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
-        document.body.dir = isArabic ? 'rtl' : 'ltr';
-        selectors.languageLabel.textContent = isArabic ? 'English' : 'العربية';
-
-        document.querySelectorAll('[data-i18n]').forEach((element) => {
-          element.textContent = t(element.dataset.i18n);
-        });
-
-        saveLanguage(language);
-      }
-
-      function scrollToTarget(id) {
-        const target = document.getElementById(id);
-
-        if (!target) {
-          return;
-        }
-
-        target.scrollIntoView({
-          behavior: state.reducedMotion ? 'auto' : 'smooth',
-          block: 'start'
-        });
-      }
-
-      function toggleFaq(button) {
-        const item = button.closest('.faq-item');
-        const isOpen = item.classList.toggle('is-open');
-        button.setAttribute('aria-expanded', String(isOpen));
-      }
-
-      function updateActiveNav(id) {
-        selectors.navButtons.forEach((button) => {
-          button.classList.toggle('is-active', button.dataset.target === id);
-        });
-      }
-
-      function animateStats() {
-        if (state.statsStarted) {
-          return;
-        }
-
-        state.statsStarted = true;
-
-        selectors.statValues.forEach((element) => {
-          const target = Number(element.dataset.statValue || 0);
-
-          if (state.reducedMotion || target === 0) {
-            element.textContent = String(target);
-            return;
-          }
-
-          const start = performance.now();
-          const duration = 620;
-
-          function frame(now) {
-            const progress = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            element.textContent = String(Math.round(target * eased));
-
-            if (progress < 1) {
-              requestAnimationFrame(frame);
-            }
-          }
-
-          requestAnimationFrame(frame);
-        });
-      }
-
-      function observeSections() {
-        if (!('IntersectionObserver' in window) || state.reducedMotion) {
-          selectors.revealItems.forEach((item) => item.classList.add('is-visible'));
-          animateStats();
-          return;
-        }
-
-        const revealObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) {
-              return;
+            // ===== HELPERS =====
+            function readLanguage() {
+                try {
+                    const stored = localStorage.getItem(LANGUAGE_KEY);
+                    if (stored === LANGUAGES.AR || stored === LANGUAGES.EN) return stored;
+                } catch (_) {}
+                // fallback to browser language
+                return navigator.language.startsWith('ar') ? LANGUAGES.AR : LANGUAGES.EN;
             }
 
-            entry.target.classList.add('is-visible');
-            revealObserver.unobserve(entry.target);
-          });
-        }, {
-          rootMargin: '0px 0px -10% 0px',
-          threshold: 0.1
-        });
-
-        selectors.revealItems.forEach((item) => revealObserver.observe(item));
-
-        const sectionObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) {
-              return;
+            function saveLanguage(lang) {
+                try { localStorage.setItem(LANGUAGE_KEY, lang); } catch (_) {}
             }
 
-            if (entry.target.id === 'stats') {
-              animateStats();
-              return;
+            function t(key) {
+                return translations[state.language]?.[key] || translations.en[key] || '';
             }
 
-            updateActiveNav(entry.target.id);
-          });
-        }, {
-          rootMargin: '-42% 0px -50% 0px',
-          threshold: 0.01
-        });
+            function createElement(tag, opts = {}, children = []) {
+                const el = document.createElement(tag);
+                if (opts.className) el.className = opts.className;
+                if (opts.text !== undefined) el.textContent = opts.text;
+                if (opts.i18n) el.dataset.i18n = opts.i18n;
+                if (opts.attrs) {
+                    Object.entries(opts.attrs).forEach(([k, v]) => {
+                        if (v !== null && v !== undefined) el.setAttribute(k, String(v));
+                    });
+                }
+                (Array.isArray(children) ? children : [children]).filter(Boolean).forEach(c => el.append(c));
+                return el;
+            }
 
-        ['home', 'channels', 'benefits', 'faq', 'stats'].forEach((id) => {
-          const section = document.getElementById(id);
-          if (section) {
-            sectionObserver.observe(section);
-          }
-        });
-      }
+            function render(container, nodes) {
+                const frag = document.createDocumentFragment();
+                nodes.forEach(n => frag.append(n));
+                container.replaceChildren(frag);
+            }
 
-      function handleClick(event) {
-        const target = event.target.closest('[data-action]');
+            // ===== BUILDERS =====
+            function buildChannelCard(ch) {
+                return createElement('a', {
+                    className: 'hub-card',
+                    attrs: { href: ch.href, target: '_blank', rel: 'noopener noreferrer' }
+                }, [
+                    createElement('span', { className: 'hub-icon', text: ch.icon, attrs: { 'aria-hidden': 'true' } }),
+                    createElement('span', { className: 'hub-content' }, [
+                        createElement('span', { className: 'hub-topline' }, [
+                            createElement('strong', { className: 'hub-title', i18n: ch.titleKey }),
+                            createElement('span', { className: 'hub-pill', i18n: ch.badgeKey })
+                        ]),
+                        createElement('span', { className: 'hub-description', i18n: ch.descKey }),
+                        createElement('span', { className: 'hub-action' }, [
+                            createElement('span', { i18n: ch.ctaKey }),
+                            createElement('span', { className: 'hub-arrow', text: '→', attrs: { 'aria-hidden': 'true' } })
+                        ])
+                    ])
+                ]);
+            }
 
-        if (!target) {
-          return;
-        }
+            function buildBenefitCard(b) {
+                return createElement('article', { className: 'benefit-card' }, [
+                    createElement('span', { className: 'benefit-symbol', text: b.symbol, attrs: { 'aria-hidden': 'true' } }),
+                    createElement('h3', { i18n: b.titleKey }),
+                    createElement('p', { i18n: b.textKey })
+                ]);
+            }
 
-        if (target.dataset.action === 'language') {
-          applyLanguage(state.language === LANGUAGES.EN ? LANGUAGES.AR : LANGUAGES.EN);
-          return;
-        }
+            function buildFaqItem(faq, idx) {
+                const btnId = `faq-btn-${idx}`;
+                const panelId = `faq-panel-${idx}`;
 
-        if (target.dataset.action === 'scroll') {
-          scrollToTarget(target.dataset.target);
-          return;
-        }
+                const btn = createElement('button', {
+                    className: 'faq-button',
+                    attrs: { id: btnId, type: 'button', 'aria-expanded': 'false', 'aria-controls': panelId,
+                        'data-action': 'faq' }
+                }, [
+                    createElement('span', { i18n: faq.qKey }),
+                    createElement('span', { className: 'faq-indicator', text: '+', attrs: { 'aria-hidden': 'true' } })
+                ]);
 
-        if (target.dataset.action === 'faq') {
-          toggleFaq(target);
-        }
-      }
+                const panel = createElement('div', {
+                    className: 'faq-panel',
+                    attrs: { id: panelId, role: 'region', 'aria-labelledby': btnId }
+                }, createElement('div', { className: 'faq-panel-inner' },
+                    createElement('p', { className: 'faq-answer', i18n: faq.aKey })
+                ));
 
-      function init() {
-        renderCollection(selectors.channelsGrid, channels.map(createChannelCard));
-        renderCollection(selectors.benefitsGrid, benefits.map(createBenefitCard));
-        renderCollection(selectors.faqList, faqs.map(createFaqItem));
-        applyLanguage(state.language);
-        observeSections();
-        document.addEventListener('click', handleClick);
+                return createElement('article', { className: 'faq-item' }, [btn, panel]);
+            }
 
-        window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (event) => {
-          state.reducedMotion = event.matches;
-        });
-      }
+            // ===== LANGUAGE =====
+            function applyLanguage(lang) {
+                state.language = lang;
+                const isAr = lang === LANGUAGES.AR;
 
-      init();
-    })();
-  </script>
+                document.documentElement.lang = lang;
+                document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+                document.body.dir = isAr ? 'rtl' : 'ltr';
+                dom.langLabel.textContent = isAr ? 'English' : 'العربية';
+
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    el.textContent = t(el.dataset.i18n);
+                });
+
+                saveLanguage(lang);
+
+                const active = dom.navButtons.find(b => b.classList.contains('is-active'));
+                if (active) updateIndicatorPosition(active);
+            }
+
+            // ===== NAV INDICATOR =====
+            function updateIndicatorPosition(activeBtn) {
+                if (state.reducedMotion) return;
+                const index = parseInt(activeBtn.dataset.index, 10);
+                const isRtl = document.documentElement.dir === 'rtl';
+                const percent = index * 100;
+                // use transform based on direction
+                const translate = isRtl ? -percent : percent;
+                dom.navIndicator.style.transform = `translateX(${translate}%)`;
+            }
+
+            function updateActiveNav(id) {
+                dom.navButtons.forEach(btn => {
+                    const active = btn.dataset.target === id;
+                    btn.classList.toggle('is-active', active);
+                    if (active) updateIndicatorPosition(btn);
+                });
+            }
+
+            // ===== SCROLL & FAQ =====
+            function scrollToTarget(id) {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.scrollIntoView({
+                    behavior: state.reducedMotion ? 'auto' : 'smooth',
+                    block: 'start'
+                });
+            }
+
+            function toggleFaq(btn) {
+                const item = btn.closest('.faq-item');
+                const isOpen = item.classList.toggle('is-open');
+                btn.setAttribute('aria-expanded', String(isOpen));
+
+                // Accordion: close others
+                if (isOpen) {
+                    document.querySelectorAll('.faq-item').forEach(other => {
+                        if (other !== item && other.classList.contains('is-open')) {
+                            other.classList.remove('is-open');
+                            const otherBtn = other.querySelector('.faq-button');
+                            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                }
+            }
+
+            // ===== STATS ANIMATION =====
+            function animateStats() {
+                if (state.statsAnimated) return;
+                state.statsAnimated = true;
+
+                dom.statValues.forEach(el => {
+                    const target = Number(el.dataset.statValue || 0);
+                    if (state.reducedMotion || target === 0) {
+                        el.textContent = String(target);
+                        return;
+                    }
+
+                    const start = performance.now();
+                    const duration = 700;
+
+                    function tick(now) {
+                        const progress = Math.min((now - start) / duration, 1);
+                        const eased = 1 - Math.pow(2, -10 * progress);
+                        el.textContent = String(Math.round(target * eased));
+                        if (progress < 1) requestAnimationFrame(tick);
+                    }
+                    requestAnimationFrame(tick);
+                });
+            }
+
+            // ===== OBSERVERS =====
+            function observeReveals() {
+                if (!('IntersectionObserver' in window) || state.reducedMotion) {
+                    dom.revealItems.forEach(el => el.classList.add('is-visible'));
+                    animateStats();
+                    return;
+                }
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    });
+                }, { rootMargin: '0px 0px -10% 0px', threshold: 0.02 });
+
+                dom.revealItems.forEach(el => observer.observe(el));
+
+                const sectionObs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return;
+                        if (entry.target.id === 'stats') {
+                            animateStats();
+                            return;
+                        }
+                        updateActiveNav(entry.target.id);
+                    });
+                }, { rootMargin: '-25% 0px -55% 0px', threshold: 0.01 });
+
+                ['home', 'channels', 'benefits', 'faq', 'stats'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) sectionObs.observe(el);
+                });
+            }
+
+            // ===== EVENT HANDLING =====
+            function handleClick(e) {
+                const target = e.target.closest('[data-action]');
+                if (!target) return;
+
+                const action = target.dataset.action;
+                if (action === 'language') {
+                    const next = state.language === LANGUAGES.EN ? LANGUAGES.AR : LANGUAGES.EN;
+                    applyLanguage(next);
+                    return;
+                }
+                if (action === 'scroll') {
+                    scrollToTarget(target.dataset.target);
+                    updateActiveNav(target.dataset.target);
+                    return;
+                }
+                if (action === 'faq') {
+                    toggleFaq(target);
+                    return;
+                }
+            }
+
+            // ===== INIT =====
+            function init() {
+                if (dom.statLinksValue) {
+                    dom.statLinksValue.dataset.statValue = String(channels.length);
+                }
+
+                render(dom.channelsGrid, channels.map(buildChannelCard));
+                render(dom.benefitsGrid, benefits.map(buildBenefitCard));
+                render(dom.faqList, faqs.map((f, i) => buildFaqItem(f, i)));
+
+                applyLanguage(state.language);
+                observeReveals();
+
+                document.addEventListener('click', handleClick);
+
+                window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
+                    state.reducedMotion = e.matches;
+                });
+            }
+
+            init();
+        })();
+    </script>
 </body>
 </html>
