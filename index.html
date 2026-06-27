@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -6,12 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0a0a14">
     <meta name="color-scheme" content="dark">
-    <meta name="description" content="Xiaomi World – bilingual hub for Telegram, WhatsApp, updates, wallpapers, and community.">
-    <title>Xiaomi World | Liquid Glass</title>
+    <meta name="description" content="Xiaomi World – premium bilingual hub for Telegram, WhatsApp, updates, wallpapers, and community.">
 
-    <!-- Self-hosted fonts (fallback) -->
+    <!-- CSP محسّن -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline';">
+
+    <title>Xiaomi World | HyperOS Edition</title>
+
     <style>
-        /* ===== RESET & ROOT ===== */
+        /* ============================================================
+           الخط المحلي (عدل اسم الملف هنا)
+           ============================================================ */
+        @font-face {
+            font-family: 'MyCustomBold';
+            src: url('/fonts/MyFont.woff2') format('woff2'),
+                url('/fonts/MyFont.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* ============================================================
+           RESET & ROOT
+           ============================================================ */
         *,
         *::before,
         *::after {
@@ -19,6 +35,7 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            font-family: 'MyCustomBold', system-ui, -apple-system, sans-serif !important;
         }
 
         :root {
@@ -28,9 +45,14 @@
             --text-strong: #e8ecf4;
             --accent-orange: #ff6b35;
             --accent-blue: #00d2ff;
+            --accent-purple: #7B2FBE;
+            --accent-pink: #ff006e;
+
             --glass-bg: rgba(255, 255, 255, 0.04);
             --glass-border: rgba(255, 255, 255, 0.06);
             --glass-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.5);
+            --glass-blur: blur(16px) saturate(1.2);
+
             --radius-xl: 28px;
             --radius-lg: 20px;
             --radius-md: 14px;
@@ -38,6 +60,10 @@
             --dock-height: 76px;
             --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             --smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+            /* Ambient Light Variables */
+            --ambient-color: #ff6b35;
+            --ambient-intensity: 0.25;
         }
 
         html {
@@ -49,18 +75,15 @@
             min-height: 100svh;
             background: var(--bg-primary);
             color: var(--text-primary);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             position: relative;
         }
 
-        body[dir="rtl"] {
-            font-family: 'Cairo', system-ui, sans-serif;
-        }
-
-        /* ===== GRADIENT MESH BACKGROUND (no blur) ===== */
+        /* ============================================================
+           BACKGROUND LAYERS
+           ============================================================ */
         .gradient-mesh {
             position: fixed;
             inset: 0;
@@ -72,9 +95,20 @@
                 radial-gradient(circle at 70% 20%, rgba(255, 0, 110, 0.20) 0%, transparent 40%),
                 var(--bg-primary);
             overflow: hidden;
+            transition: background 1.2s var(--smooth);
         }
 
-        /* Liquid moving orbs – soft, organic, no blur */
+        .ambient-glow {
+            position: fixed;
+            inset: -20%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, var(--ambient-color) 0%, transparent 60%);
+            opacity: var(--ambient-intensity);
+            transition: background 1.2s var(--smooth), opacity 1.2s var(--smooth);
+            pointer-events: none;
+            filter: blur(80px);
+        }
+
         .liquid-orbs {
             position: absolute;
             inset: -20%;
@@ -106,7 +140,36 @@
             }
         }
 
-        /* ===== LAYOUT ===== */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04' mix-blend-mode='overlay'/%3E%3C/svg%3E");
+            opacity: 0.5;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        /* ============================================================
+           FALLBACK GLASS
+           ============================================================ */
+        .glass-fallback {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+        }
+
+        @supports not (backdrop-filter: blur(1px)) {
+            .glass-fallback {
+                background: rgba(20, 20, 26, 0.85);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+        }
+
+        /* ============================================================
+           LAYOUT
+           ============================================================ */
         .sr-only {
             position: absolute;
             width: 1px;
@@ -127,7 +190,9 @@
             z-index: 1;
         }
 
-        /* ===== TOP BAR ===== */
+        /* ============================================================
+           TOP BAR
+           ============================================================ */
         .top-bar {
             display: flex;
             align-items: center;
@@ -176,6 +241,8 @@
             border-radius: 999px;
             padding: 0 18px;
             background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
             color: var(--text-primary);
             cursor: pointer;
@@ -192,7 +259,9 @@
             transform: scale(0.94);
         }
 
-        /* ===== HERO ===== */
+        /* ============================================================
+           HERO
+           ============================================================ */
         .hero {
             min-height: min(560px, calc(100svh - 140px));
             display: grid;
@@ -214,6 +283,8 @@
             border-radius: 999px;
             padding: 5px 18px;
             background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             color: var(--text-strong);
             font-size: 0.78rem;
             font-weight: 600;
@@ -238,15 +309,82 @@
             font-weight: 400;
         }
 
-        .hero-actions {
+        /* ============================================================
+           WIDGETS
+           ============================================================ */
+        .widgets-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 2fr 1fr 1fr;
             gap: 12px;
-            width: min(100%, 400px);
-            margin: 6px auto 0;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
         }
 
-        /* ===== BUTTONS ===== */
+        .widget-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 14px 12px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s var(--spring), border-color 0.3s;
+            text-align: left;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .widget-card.large {
+            grid-column: span 1;
+        }
+
+        .widget-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .widget-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--text-primary);
+        }
+
+        .widget-value .small {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-left: 4px;
+        }
+
+        .widget-badge {
+            background: rgba(0, 210, 255, 0.15);
+            color: var(--accent-blue);
+            border-radius: 999px;
+            padding: 2px 10px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 4px;
+            align-self: flex-start;
+        }
+
+        .widget-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        /* ============================================================
+           BUTTONS
+           ============================================================ */
         .button {
             min-height: 52px;
             display: inline-flex;
@@ -260,12 +398,27 @@
             cursor: pointer;
             border: none;
             text-decoration: none;
+            position: relative;
+            overflow: hidden;
             transition: transform 0.35s var(--spring), box-shadow 0.35s, background 0.25s;
-            will-change: transform;
         }
 
+        .button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .button:active::after {
+            opacity: 1;
+            transition: opacity 0s;
+        }
         .button:active {
-            transform: scale(0.95);
+            transform: scale(0.94);
         }
 
         .button-primary {
@@ -280,6 +433,8 @@
 
         .button-secondary {
             background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             color: var(--text-primary);
             border: 1px solid var(--glass-border);
             box-shadow: var(--glass-shadow);
@@ -290,48 +445,21 @@
             border-color: rgba(255, 255, 255, 0.18);
         }
 
-        /* ===== TRUST ROW ===== */
-        .trust-row {
+        .hero-actions {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
-            width: min(100%, 420px);
-            margin: 0 auto;
+            width: min(100%, 400px);
+            margin: 6px auto 0;
         }
 
-        .trust-item {
-            display: grid;
-            place-items: center;
-            gap: 2px;
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-md);
-            background: var(--glass-bg);
-            padding: 14px 8px;
-            box-shadow: var(--glass-shadow);
-            transition: transform 0.3s var(--spring), background 0.25s;
-        }
-        .trust-item:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .trust-value {
-            color: var(--text-primary);
-            font-size: 1.3rem;
-            font-weight: 800;
-        }
-        .trust-label {
-            color: var(--text-secondary);
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        /* ===== SECTIONS ===== */
+        /* ============================================================
+           SECTIONS
+           ============================================================ */
         .section {
             scroll-margin-top: 20px;
             margin: 40px 0 52px;
+            position: relative;
         }
 
         .section-header {
@@ -364,7 +492,9 @@
             font-size: 0.95rem;
         }
 
-        /* ===== GLASS CARDS (no backdrop-filter) ===== */
+        /* ============================================================
+           CARDS
+           ============================================================ */
         .card-grid {
             display: grid;
             gap: 14px;
@@ -375,15 +505,15 @@
         .faq-item {
             border: 1px solid var(--glass-border);
             background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             box-shadow: var(--glass-shadow);
             border-radius: var(--radius-lg);
             transition: transform 0.35s var(--spring), border-color 0.3s, background 0.3s, box-shadow 0.3s;
-            will-change: transform;
             position: relative;
             overflow: hidden;
         }
 
-        /* subtle shimmer */
         .hub-card::after,
         .benefit-card::after,
         .faq-item::after {
@@ -529,6 +659,9 @@
             font-size: 0.9rem;
         }
 
+        /* ============================================================
+           FAQ
+           ============================================================ */
         .faq-list {
             display: grid;
             gap: 10px;
@@ -601,6 +734,9 @@
             line-height: 1.7;
         }
 
+        /* ============================================================
+           FINAL CTA
+           ============================================================ */
         .final-cta {
             display: grid;
             gap: 14px;
@@ -609,6 +745,8 @@
             border-radius: var(--radius-xl);
             padding: 32px 20px;
             background: radial-gradient(ellipse at 50% 0%, rgba(255, 107, 53, 0.06) 0%, transparent 70%);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             box-shadow: var(--glass-shadow);
         }
         .final-cta h2 {
@@ -621,7 +759,9 @@
             margin: 0 auto;
         }
 
-        /* ===== BOTTOM DOCK ===== */
+        /* ============================================================
+           BOTTOM DOCK
+           ============================================================ */
         .bottom-nav-container {
             position: fixed;
             left: 50%;
@@ -641,8 +781,31 @@
             padding: 6px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 999px;
-            background: rgba(10, 14, 26, 0.7);
-            box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            background: rgba(10, 14, 26, 0.65);
+            backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .bottom-nav::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%, rgba(255, 255, 255, 0.02) 100%);
+            pointer-events: none;
+            z-index: 0;
+            animation: reflectionMove 8s linear infinite;
+            background-size: 200% 100%;
+        }
+
+        @keyframes reflectionMove {
+            0% {
+                background-position: -100% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
         }
 
         .nav-fluid-indicator {
@@ -651,12 +814,14 @@
             inset-inline-start: 6px;
             height: calc(100% - 12px);
             width: calc(25% - 7px);
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.07);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 999px;
             pointer-events: none;
             transition: transform 0.5s var(--smooth), width 0.5s var(--smooth);
             will-change: transform, width;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .nav-button {
@@ -689,7 +854,9 @@
             line-height: 1;
         }
 
-        /* ===== REVEAL ===== */
+        /* ============================================================
+           REVEAL
+           ============================================================ */
         .reveal {
             opacity: 0;
             transform: translateY(16px);
@@ -700,7 +867,9 @@
             transform: translateY(0);
         }
 
-        /* ===== RESPONSIVE ===== */
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
         @media (min-width: 540px) {
             .card-grid {
                 grid-template-columns: 1fr 1fr;
@@ -719,6 +888,17 @@
                 grid-template-columns: 1fr;
                 width: 100%;
             }
+            .widgets-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .widget-card.large {
+                grid-column: span 2;
+            }
+            .widget-value {
+                font-size: 1.3rem;
+            }
+
             .hub-card {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -742,15 +922,6 @@
             }
             .nav-icon {
                 font-size: 1rem;
-            }
-            .trust-row {
-                gap: 8px;
-            }
-            .trust-item {
-                padding: 10px 4px;
-            }
-            .trust-value {
-                font-size: 1.1rem;
             }
         }
 
@@ -778,7 +949,8 @@
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
-            .liquid-orbs {
+            .liquid-orbs,
+            .bottom-nav::before {
                 display: none;
             }
             .reveal {
@@ -814,12 +986,14 @@
 
 <body>
 
-    <!-- ===== GRADIENT MESH + LIQUID ORBS ===== -->
+    <!-- BACKGROUND LAYERS -->
     <div class="gradient-mesh" aria-hidden="true">
         <div class="liquid-orbs"></div>
     </div>
+    <div class="ambient-glow" id="ambientGlow" aria-hidden="true"></div>
+    <div class="noise-overlay" aria-hidden="true"></div>
 
-    <!-- ===== PAGE SHELL ===== -->
+    <!-- PAGE SHELL -->
     <div class="page-shell">
 
         <!-- TOP BAR -->
@@ -835,14 +1009,35 @@
         </header>
 
         <main>
+
             <!-- HERO -->
-            <section class="hero" id="home" aria-labelledby="hero-title">
+            <section class="hero" id="home" data-ambient="home" aria-labelledby="hero-title">
                 <div class="hero-copy reveal">
                     <p class="eyebrow" data-i18n="eyebrow">Made for Xiaomi fans coming from TikTok</p>
                     <h1 id="hero-title" data-i18n="heroTitle">Xiaomi World</h1>
                     <p class="hero-subtitle" data-i18n="heroSubtitle">
                         One clean hub for updates, Telegram channels, WhatsApp alerts, wallpapers, and community support.
                     </p>
+                </div>
+
+                <!-- HyperOS Widgets -->
+                <div class="widgets-grid reveal">
+                    <div class="widget-card large">
+                        <div class="widget-icon">⏱️</div>
+                        <div class="widget-label">Community Status</div>
+                        <div class="widget-value">12.4K <span class="small">Online</span></div>
+                        <span class="widget-badge">● Live</span>
+                    </div>
+                    <div class="widget-card">
+                        <div class="widget-icon">🔋</div>
+                        <div class="widget-label">Updates</div>
+                        <div class="widget-value">2 <span class="small">new</span></div>
+                    </div>
+                    <div class="widget-card">
+                        <div class="widget-icon">👥</div>
+                        <div class="widget-label">Members</div>
+                        <div class="widget-value">87k</div>
+                    </div>
                 </div>
 
                 <div class="hero-actions reveal">
@@ -853,25 +1048,10 @@
                         Explore Channels
                     </button>
                 </div>
-
-                <div class="trust-row reveal" id="stats" aria-label="Page facts">
-                    <div class="trust-item">
-                        <strong class="trust-value" id="statLinksValue" data-stat-value="4">0</strong>
-                        <span class="trust-label" data-i18n="statLinks">direct links</span>
-                    </div>
-                    <div class="trust-item">
-                        <strong class="trust-value" data-stat-value="2">0</strong>
-                        <span class="trust-label" data-i18n="statLanguages">languages</span>
-                    </div>
-                    <div class="trust-item">
-                        <strong class="trust-value" data-stat-value="0">0</strong>
-                        <span class="trust-label" data-i18n="statTracking">tracking scripts</span>
-                    </div>
-                </div>
             </section>
 
             <!-- CHANNELS -->
-            <section class="section reveal" id="channels" aria-labelledby="channels-title">
+            <section class="section reveal" id="channels" data-ambient="channels" aria-labelledby="channels-title">
                 <div class="section-header">
                     <p class="section-kicker" data-i18n="channelsKicker">Community links</p>
                     <h2 class="section-title" id="channels-title" data-i18n="channelsTitle">Pick your fastest way in</h2>
@@ -883,7 +1063,7 @@
             </section>
 
             <!-- BENEFITS -->
-            <section class="section reveal" id="benefits" aria-labelledby="benefits-title">
+            <section class="section reveal" id="benefits" data-ambient="benefits" aria-labelledby="benefits-title">
                 <div class="section-header">
                     <p class="section-kicker" data-i18n="benefitsKicker">Why join</p>
                     <h2 class="section-title" id="benefits-title" data-i18n="benefitsTitle">Features made for Xiaomi fans</h2>
@@ -892,7 +1072,7 @@
             </section>
 
             <!-- FAQ -->
-            <section class="section reveal" id="faq" aria-labelledby="faq-title">
+            <section class="section reveal" id="faq" data-ambient="faq" aria-labelledby="faq-title">
                 <div class="section-header">
                     <p class="section-kicker" data-i18n="faqKicker">Questions</p>
                     <h2 class="section-title" id="faq-title" data-i18n="faqTitle">Before you join</h2>
@@ -939,10 +1119,22 @@
         (() => {
             'use strict';
 
+            // ============================================================
+            // CONFIG
+            // ============================================================
             const LANGUAGE_KEY = 'xiaomi-world-language';
             const LANGUAGES = { EN: 'en', AR: 'ar' };
 
-            // ===== TRANSLATIONS =====
+            const AMBIENT_COLORS = {
+                home: '#ff6b35',
+                channels: '#00d2ff',
+                benefits: '#ff8d35',
+                faq: '#7B2FBE'
+            };
+
+            // ============================================================
+            // TRANSLATIONS (كاملة)
+            // ============================================================
             const translations = {
                 en: {
                     brandName: 'Xiaomi World',
@@ -951,9 +1143,6 @@
                     heroSubtitle: 'One clean hub for updates, Telegram channels, WhatsApp alerts, wallpapers, and community support.',
                     joinNow: 'Join Now',
                     exploreChannels: 'Explore Channels',
-                    statLinks: 'direct links',
-                    statLanguages: 'languages',
-                    statTracking: 'tracking scripts',
                     channelsKicker: 'Community links',
                     channelsTitle: 'Pick your fastest way in',
                     channelsText: 'Short paths, clear labels, and direct clicks for mobile visitors.',
@@ -1008,9 +1197,6 @@
                     heroSubtitle: 'صفحة واحدة سريعة للتحديثات وقنوات تيليجرام وتنبيهات واتساب والخلفيات ودعم المجتمع.',
                     joinNow: 'انضم الآن',
                     exploreChannels: 'استكشف القنوات',
-                    statLinks: 'روابط مباشرة',
-                    statLanguages: 'لغتان',
-                    statTracking: 'سكربتات تتبع',
                     channelsKicker: 'روابط المجتمع',
                     channelsTitle: 'اختر أسرع طريقة للدخول',
                     channelsText: 'مسارات قصيرة، عناوين واضحة، ونقرات مباشرة لزوار الموبايل.',
@@ -1060,7 +1246,9 @@
                 }
             };
 
-            // ===== DATA =====
+            // ============================================================
+            // DATA
+            // ============================================================
             const channels = [
                 { icon: '📢', titleKey: 'channelTelegramTitle', descKey: 'channelTelegramDesc', ctaKey: 'channelTelegramCta',
                     badgeKey: 'badgeFast', href: 'https://t.me/redmi3321' },
@@ -1086,14 +1274,19 @@
                 { qKey: 'faqPrivacyQuestion', aKey: 'faqPrivacyAnswer' }
             ];
 
-            // ===== STATE =====
+            // ============================================================
+            // STATE
+            // ============================================================
             const state = {
                 language: readLanguage(),
                 reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-                statsAnimated: false
+                statsAnimated: false,
+                currentAmbient: 'home'
             };
 
-            // ===== DOM REFS =====
+            // ============================================================
+            // DOM REFS
+            // ============================================================
             const $ = (sel) => document.querySelector(sel);
             const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
@@ -1106,17 +1299,19 @@
                 navIndicator: $('#navIndicator'),
                 revealItems: $$('.reveal'),
                 statValues: $$('[data-stat-value]'),
-                statLinksValue: $('#statLinksValue')
+                ambientGlow: $('#ambientGlow'),
+                sections: $$('[data-ambient]')
             };
 
-            // ===== HELPERS =====
+            // ============================================================
+            // HELPERS
+            // ============================================================
             function readLanguage() {
                 try {
                     const stored = localStorage.getItem(LANGUAGE_KEY);
-                    if (stored === LANGUAGES.AR || stored === LANGUAGES.EN) return stored;
+                    if (stored) return stored;
                 } catch (_) {}
-                // fallback to browser language
-                return navigator.language.startsWith('ar') ? LANGUAGES.AR : LANGUAGES.EN;
+                return navigator.language?.startsWith("ar") ? LANGUAGES.AR : LANGUAGES.EN;
             }
 
             function saveLanguage(lang) {
@@ -1147,10 +1342,78 @@
                 container.replaceChildren(frag);
             }
 
-            // ===== BUILDERS =====
+            // ============================================================
+            // AMBIENT LIGHT
+            // ============================================================
+            function updateAmbientLight(sectionId) {
+                const color = AMBIENT_COLORS[sectionId] || AMBIENT_COLORS.home;
+                const intensity = sectionId === 'home' ? 0.25 : 0.35;
+                dom.ambientGlow.style.setProperty('--ambient-color', color);
+                dom.ambientGlow.style.setProperty('--ambient-intensity', intensity);
+                state.currentAmbient = sectionId;
+            }
+
+            // ============================================================
+            // NAV INDICATOR (RTL Fixed)
+            // ============================================================
+            function updateIndicatorPosition(activeBtn) {
+                if (state.reducedMotion) return;
+                const index = Number(activeBtn.dataset.index);
+                const total = dom.navButtons.length - 1;
+                const isRtl = document.documentElement.dir === 'rtl';
+
+                if (isRtl) {
+                    dom.navIndicator.style.transform = `translateX(${(total - index) * 100}%)`;
+                } else {
+                    dom.navIndicator.style.transform = `translateX(${index * 100}%)`;
+                }
+            }
+
+            function updateActiveNav(id) {
+                dom.navButtons.forEach(btn => {
+                    const active = btn.dataset.target === id;
+                    btn.classList.toggle('is-active', active);
+                    if (active) {
+                        updateIndicatorPosition(btn);
+                        updateAmbientLight(id);
+                    }
+                });
+            }
+
+            // ============================================================
+            // SCROLL & FAQ
+            // ============================================================
+            function scrollToTarget(id) {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.scrollIntoView({
+                    behavior: state.reducedMotion ? 'auto' : 'smooth',
+                    block: 'start'
+                });
+                updateActiveNav(id);
+                updateAmbientLight(id);
+            }
+
+            function toggleFaq(btn) {
+                const item = btn.closest(".faq-item");
+
+                document.querySelectorAll(".faq-item").forEach(el => {
+                    if (el !== item) {
+                        el.classList.remove("is-open");
+                        el.querySelector(".faq-button")?.setAttribute("aria-expanded", "false");
+                    }
+                });
+
+                const isOpen = item.classList.toggle("is-open");
+                btn.setAttribute("aria-expanded", String(isOpen));
+            }
+
+            // ============================================================
+            // BUILDERS
+            // ============================================================
             function buildChannelCard(ch) {
                 return createElement('a', {
-                    className: 'hub-card',
+                    className: 'hub-card glass-fallback',
                     attrs: { href: ch.href, target: '_blank', rel: 'noopener noreferrer' }
                 }, [
                     createElement('span', { className: 'hub-icon', text: ch.icon, attrs: { 'aria-hidden': 'true' } }),
@@ -1169,7 +1432,7 @@
             }
 
             function buildBenefitCard(b) {
-                return createElement('article', { className: 'benefit-card' }, [
+                return createElement('article', { className: 'benefit-card glass-fallback' }, [
                     createElement('span', { className: 'benefit-symbol', text: b.symbol, attrs: { 'aria-hidden': 'true' } }),
                     createElement('h3', { i18n: b.titleKey }),
                     createElement('p', { i18n: b.textKey })
@@ -1196,14 +1459,24 @@
                     createElement('p', { className: 'faq-answer', i18n: faq.aKey })
                 ));
 
-                return createElement('article', { className: 'faq-item' }, [btn, panel]);
+                return createElement('article', { className: 'faq-item glass-fallback' }, [btn, panel]);
             }
 
-            // ===== LANGUAGE =====
+            // ============================================================
+            // RENDER DATA
+            // ============================================================
+            function renderData() {
+                render(dom.channelsGrid, channels.map(buildChannelCard));
+                render(dom.benefitsGrid, benefits.map(buildBenefitCard));
+                render(dom.faqList, faqs.map((f, i) => buildFaqItem(f, i)));
+            }
+
+            // ============================================================
+            // LANGUAGE
+            // ============================================================
             function applyLanguage(lang) {
                 state.language = lang;
                 const isAr = lang === LANGUAGES.AR;
-
                 document.documentElement.lang = lang;
                 document.documentElement.dir = isAr ? 'rtl' : 'ltr';
                 document.body.dir = isAr ? 'rtl' : 'ltr';
@@ -1219,113 +1492,42 @@
                 if (active) updateIndicatorPosition(active);
             }
 
-            // ===== NAV INDICATOR =====
-            function updateIndicatorPosition(activeBtn) {
-                if (state.reducedMotion) return;
-                const index = parseInt(activeBtn.dataset.index, 10);
-                const isRtl = document.documentElement.dir === 'rtl';
-                const percent = index * 100;
-                // use transform based on direction
-                const translate = isRtl ? -percent : percent;
-                dom.navIndicator.style.transform = `translateX(${translate}%)`;
-            }
-
-            function updateActiveNav(id) {
-                dom.navButtons.forEach(btn => {
-                    const active = btn.dataset.target === id;
-                    btn.classList.toggle('is-active', active);
-                    if (active) updateIndicatorPosition(btn);
-                });
-            }
-
-            // ===== SCROLL & FAQ =====
-            function scrollToTarget(id) {
-                const el = document.getElementById(id);
-                if (!el) return;
-                el.scrollIntoView({
-                    behavior: state.reducedMotion ? 'auto' : 'smooth',
-                    block: 'start'
-                });
-            }
-
-            function toggleFaq(btn) {
-                const item = btn.closest('.faq-item');
-                const isOpen = item.classList.toggle('is-open');
-                btn.setAttribute('aria-expanded', String(isOpen));
-
-                // Accordion: close others
-                if (isOpen) {
-                    document.querySelectorAll('.faq-item').forEach(other => {
-                        if (other !== item && other.classList.contains('is-open')) {
-                            other.classList.remove('is-open');
-                            const otherBtn = other.querySelector('.faq-button');
-                            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
-                        }
-                    });
-                }
-            }
-
-            // ===== STATS ANIMATION =====
-            function animateStats() {
-                if (state.statsAnimated) return;
-                state.statsAnimated = true;
-
-                dom.statValues.forEach(el => {
-                    const target = Number(el.dataset.statValue || 0);
-                    if (state.reducedMotion || target === 0) {
-                        el.textContent = String(target);
-                        return;
-                    }
-
-                    const start = performance.now();
-                    const duration = 700;
-
-                    function tick(now) {
-                        const progress = Math.min((now - start) / duration, 1);
-                        const eased = 1 - Math.pow(2, -10 * progress);
-                        el.textContent = String(Math.round(target * eased));
-                        if (progress < 1) requestAnimationFrame(tick);
-                    }
-                    requestAnimationFrame(tick);
-                });
-            }
-
-            // ===== OBSERVERS =====
-            function observeReveals() {
+            // ============================================================
+            // OBSERVERS
+            // ============================================================
+            function observeSections() {
                 if (!('IntersectionObserver' in window) || state.reducedMotion) {
                     dom.revealItems.forEach(el => el.classList.add('is-visible'));
-                    animateStats();
                     return;
                 }
 
-                const observer = new IntersectionObserver((entries) => {
+                const revealObs = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (!entry.isIntersecting) return;
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
+                        revealObs.unobserve(entry.target);
                     });
                 }, { rootMargin: '0px 0px -10% 0px', threshold: 0.02 });
-
-                dom.revealItems.forEach(el => observer.observe(el));
+                dom.revealItems.forEach(el => revealObs.observe(el));
 
                 const sectionObs = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (!entry.isIntersecting) return;
-                        if (entry.target.id === 'stats') {
-                            animateStats();
-                            return;
-                        }
-                        updateActiveNav(entry.target.id);
+                        const id = entry.target.id;
+                        updateActiveNav(id);
+                        updateAmbientLight(id);
                     });
-                }, { rootMargin: '-25% 0px -55% 0px', threshold: 0.01 });
+                }, { rootMargin: '-20% 0px -60% 0px', threshold: 0.01 });
 
-                ['home', 'channels', 'benefits', 'faq', 'stats'].forEach(id => {
+                ['home', 'channels', 'benefits', 'faq'].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) sectionObs.observe(el);
                 });
             }
 
-            // ===== EVENT HANDLING =====
+            // ============================================================
+            // EVENT HANDLING
+            // ============================================================
             function handleClick(e) {
                 const target = e.target.closest('[data-action]');
                 if (!target) return;
@@ -1337,8 +1539,8 @@
                     return;
                 }
                 if (action === 'scroll') {
+                    e.preventDefault();
                     scrollToTarget(target.dataset.target);
-                    updateActiveNav(target.dataset.target);
                     return;
                 }
                 if (action === 'faq') {
@@ -1347,19 +1549,14 @@
                 }
             }
 
-            // ===== INIT =====
+            // ============================================================
+            // INIT
+            // ============================================================
             function init() {
-                if (dom.statLinksValue) {
-                    dom.statLinksValue.dataset.statValue = String(channels.length);
-                }
-
-                render(dom.channelsGrid, channels.map(buildChannelCard));
-                render(dom.benefitsGrid, benefits.map(buildBenefitCard));
-                render(dom.faqList, faqs.map((f, i) => buildFaqItem(f, i)));
-
+                renderData();
                 applyLanguage(state.language);
-                observeReveals();
-
+                observeSections();
+                updateAmbientLight('home');
                 document.addEventListener('click', handleClick);
 
                 window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
@@ -1368,6 +1565,7 @@
             }
 
             init();
+
         })();
     </script>
 </body>
