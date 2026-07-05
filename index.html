@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -7,11 +6,94 @@
     <meta name="theme-color" content="#0a0a14">
     <meta name="color-scheme" content="dark">
     <meta name="description" content="Xiaomi World – premium bilingual hub for Telegram, WhatsApp, updates, wallpapers, and community.">
+    <meta name="robots" content="index, follow">
 
     <!-- CSP محسّن -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline';">
 
+    <!-- ⚠️ عدّل الدومين ده لدومينك الحقيقي قبل النشر -->
+    <link rel="canonical" href="https://xiaomiworld.example.com/">
+
+    <!-- Preload للخط الأساسي (لازم يتأكد إن /fonts/MyFont.woff2 موجود فعليًا على السيرفر) -->
+    <link rel="preload" href="/fonts/MyFont.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
     <title>Xiaomi World | HyperOS Edition</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Xiaomi World">
+    <meta property="og:title" content="Xiaomi World | HyperOS Edition">
+    <meta property="og:description" content="Xiaomi World – premium bilingual hub for Telegram, WhatsApp, updates, wallpapers, and community.">
+    <meta property="og:url" content="https://xiaomiworld.example.com/">
+    <meta property="og:image" content="https://xiaomiworld.example.com/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="ar_AR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Xiaomi World | HyperOS Edition">
+    <meta name="twitter:description" content="Xiaomi World – premium bilingual hub for Telegram, WhatsApp, updates, wallpapers, and community.">
+    <meta name="twitter:image" content="https://xiaomiworld.example.com/og-image.jpg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Xiaomi World",
+        "url": "https://xiaomiworld.example.com/",
+        "description": "Premium bilingual hub for Telegram, WhatsApp, updates, wallpapers, and community.",
+        "inLanguage": ["en", "ar"],
+        "sameAs": [
+            "https://t.me/redmi3321",
+            "https://t.me/themes345",
+            "https://t.me/themesXiaomia",
+            "https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H"
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is it free to join?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. The linked Telegram and WhatsApp destinations are free to open."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is this an official Xiaomi website?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Xiaomi World is a fan/community hub that points visitors to community channels."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which link should I use first?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Use the main Telegram channel for updates, then join WhatsApp alerts if you want quick notifications."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does this page track me?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No analytics or tracking scripts are included. The only saved setting is your language preference on this device."
+                }
+            }
+        ]
+    }
+    </script>
 
     <style>
         /* ============================================================
@@ -42,7 +124,7 @@
         :root {
             --bg-primary: #0a0a14;
             --text-primary: #ffffff;
-            --text-secondary: #b0b8c8;
+            --text-secondary: #b8c1d6;
             --text-strong: #e8ecf4;
             --accent-orange: #ff6b35;
             --accent-blue: #00d2ff;
@@ -65,6 +147,34 @@
             /* Ambient Light Variables */
             --ambient-color: #ff6b35;
             --ambient-intensity: 0.25;
+
+            /* ============================================================
+               ELEVATION / GLOW SCALE (Design System)
+               shadow-*  = درجات ظل عادية (بدون لون)
+               glow-*    = ظل بلون البراند (للعناصر البرتقالية الرئيسية)
+               --glass-shadow فوق ده تبقى "shadow-md" فعليًا وفضلت باسمها الأصلي
+               عشان بقية الكود يستخدمها
+               ============================================================ */
+            --shadow-sm: 0 8px 24px rgba(255, 107, 53, 0.25);
+            --shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.7);
+            --shadow-dock: 0 24px 56px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            --glow-orange: 0 12px 28px rgba(255, 107, 53, 0.3);
+            --glow-orange-strong: 0 18px 40px rgba(255, 107, 53, 0.45);
+
+            /* ============================================================
+               SPACING SCALE (Design System)
+               مطبقة على المسافات الهيكلية المتكررة (sections/grids/shell).
+               قيم دقيقة صغيرة جوه مكوّن واحد (زي 2px/4px offsets) سيبناها
+               كأرقام مباشرة لأنها خاصة بالمكوّن ومش متكررة في حتة تانية.
+               ============================================================ */
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 14px;
+            --space-5: 18px;
+            --space-6: 20px;
+            --space-7: 28px;
+            --space-8: 40px;
+            --space-9: 52px;
         }
 
         html {
@@ -184,10 +294,32 @@
             border: 0;
         }
 
+        /* ============================================================
+           SKIP LINK (Accessibility)
+           ============================================================ */
+        .skip-link {
+            position: fixed;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: var(--accent-blue);
+            color: #001018;
+            font-weight: 800;
+            font-size: 0.9rem;
+            padding: 10px 22px;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: top 0.25s var(--smooth);
+        }
+        .skip-link:focus-visible {
+            top: 14px;
+        }
+
         .page-shell {
             width: min(100%, 680px);
             margin: 0 auto;
-            padding: 20px 18px calc(var(--dock-height) + env(safe-area-inset-bottom, 0px) + 28px);
+            padding: var(--space-6) var(--space-5) calc(var(--dock-height) + env(safe-area-inset-bottom, 0px) + var(--space-7));
             position: relative;
             z-index: 1;
         }
@@ -199,7 +331,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 14px;
+            gap: var(--space-4);
             margin-bottom: 32px;
             padding: 4px 0;
         }
@@ -228,7 +360,7 @@
             color: #fff;
             font-size: 0.85rem;
             font-weight: 800;
-            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.25);
+            box-shadow: var(--shadow-sm);
             transition: transform 0.4s var(--spring);
         }
         .brand-mark:hover .brand-icon {
@@ -274,7 +406,7 @@
 
         .hero-copy {
             display: grid;
-            gap: 14px;
+            gap: var(--space-4);
             text-align: center;
         }
 
@@ -307,6 +439,7 @@
             color: var(--text-secondary);
             font-size: clamp(1rem, 3.6vw, 1.15rem);
             font-weight: 400;
+            text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
         }
 
         /* ============================================================
@@ -315,7 +448,7 @@
         .widgets-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
-            gap: 12px;
+            gap: var(--space-3);
             width: 100%;
             max-width: 480px;
             margin: 0 auto;
@@ -422,11 +555,11 @@
         .button-primary {
             background: linear-gradient(135deg, var(--accent-orange), #ff8d35);
             color: #fff;
-            box-shadow: 0 12px 28px rgba(255, 107, 53, 0.3);
+            box-shadow: var(--glow-orange);
         }
         .button-primary:hover {
             transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 18px 40px rgba(255, 107, 53, 0.45);
+            box-shadow: var(--glow-orange-strong);
         }
 
         .button-secondary {
@@ -444,7 +577,7 @@
         .hero-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: var(--space-3);
             width: min(100%, 400px);
             margin: 6px auto 0;
         }
@@ -454,8 +587,10 @@
            ============================================================ */
         .section {
             scroll-margin-top: 20px;
-            margin: 40px 0 52px;
+            margin: var(--space-8) 0 var(--space-9);
             position: relative;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 560px;
         }
 
         .section-header {
@@ -486,6 +621,7 @@
             color: var(--text-secondary);
             max-width: 36rem;
             font-size: 0.95rem;
+            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
         }
 
         /* ============================================================
@@ -493,7 +629,7 @@
            ============================================================ */
         .card-grid {
             display: grid;
-            gap: 14px;
+            gap: var(--space-4);
         }
 
         .hub-card,
@@ -541,7 +677,11 @@
             transform: translateY(-4px) scale(1.01);
             border-color: rgba(255, 255, 255, 0.15);
             background: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7);
+            box-shadow: var(--shadow-lg);
+        }
+        .hub-card:active {
+            transform: scale(0.98);
+            transition-duration: 0.1s;
         }
 
         .hub-icon {
@@ -620,7 +760,7 @@
 
         .benefits-grid {
             display: grid;
-            gap: 14px;
+            gap: var(--space-4);
         }
 
         .benefit-card {
@@ -632,6 +772,10 @@
         .benefit-card:hover {
             transform: translateY(-3px);
             border-color: rgba(255, 255, 255, 0.15);
+        }
+        .benefit-card:active {
+            transform: scale(0.98);
+            transition-duration: 0.1s;
         }
 
         .benefit-symbol {
@@ -689,6 +833,9 @@
         .faq-button:hover {
             color: #fff;
         }
+        .faq-button:active {
+            opacity: 0.8;
+        }
 
         .faq-indicator {
             width: 26px;
@@ -733,7 +880,7 @@
            ============================================================ */
         .final-cta {
             display: grid;
-            gap: 14px;
+            gap: var(--space-4);
             text-align: center;
             border: 1px solid rgba(255, 107, 53, 0.2);
             border-radius: var(--radius-xl);
@@ -751,6 +898,7 @@
             color: var(--text-secondary);
             max-width: 30rem;
             margin: 0 auto;
+            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
         }
 
         /* ============================================================
@@ -778,7 +926,7 @@
             background: rgba(10, 14, 26, 0.72);
             backdrop-filter: blur(14px) saturate(1.3);
             -webkit-backdrop-filter: blur(14px) saturate(1.3);
-            box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow-dock);
         }
 
         .bottom-nav::before {
@@ -902,7 +1050,7 @@
                 grid-template-columns: 1fr;
                 text-align: center;
                 justify-items: center;
-                gap: 12px;
+                gap: var(--space-3);
                 padding: 16px;
             }
             .hub-topline {
@@ -961,9 +1109,50 @@
             }
         }
 
+        /* ============================================================
+           ANIMATION SYSTEM: pause when the tab isn't visible
+           (Page Visibility API sets .tab-hidden on <html> from JS)
+           liquid-orbs و bottom-nav::before أصلاً شغالين بس على
+           pointer:fine، فده بيوقفهم كمان لو المستخدم بدّل تاب.
+           ============================================================ */
+        html.tab-hidden .liquid-orbs,
+        html.tab-hidden .bottom-nav::before {
+            animation-play-state: paused;
+        }
+
+        /* ============================================================
+           FOCUS STATES (Accessibility)
+           كل عناصر التفاعل بترث الأساسي، والعناصر الدائرية (pills)
+           بتاخد نفس الـ radius في الـ outline بدل مستطيل حاد.
+           ============================================================ */
         :focus-visible {
             outline: 2px solid var(--accent-blue);
             outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        .lang-toggle:focus-visible,
+        .button:focus-visible,
+        .nav-button:focus-visible,
+        .eyebrow:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 3px;
+            border-radius: 999px;
+        }
+
+        .hub-card:focus-visible,
+        .benefit-card:focus-visible,
+        .faq-item:focus-visible,
+        .widget-card:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 3px;
+            border-radius: var(--radius-lg);
+        }
+
+        .faq-button:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: -2px;
+            border-radius: var(--radius-md);
         }
 
         ::-webkit-scrollbar {
@@ -984,6 +1173,8 @@
 </head>
 
 <body>
+
+    <a class="skip-link" href="#main-content" data-i18n="skipToContent">Skip to content</a>
 
     <!-- BACKGROUND LAYERS -->
     <div class="gradient-mesh" aria-hidden="true">
@@ -1007,7 +1198,7 @@
             </button>
         </header>
 
-        <main>
+        <main id="main-content" tabindex="-1">
 
             <!-- HERO -->
             <section class="hero" id="home" data-ambient="home" aria-labelledby="hero-title">
@@ -1136,6 +1327,7 @@
             // ============================================================
             const translations = {
                 en: {
+                    skipToContent: 'Skip to content',
                     brandName: 'Xiaomi World',
                     eyebrow: 'Made for Xiaomi fans coming from TikTok',
                     heroTitle: 'Xiaomi World',
@@ -1190,6 +1382,7 @@
                     faqPrivacyAnswer: 'No analytics or tracking scripts are included. The only saved setting is your language preference on this device.'
                 },
                 ar: {
+                    skipToContent: 'تخطي إلى المحتوى',
                     brandName: 'عالم شاومي',
                     eyebrow: 'مصمم لمحبي شاومي القادمين من تيك توك',
                     heroTitle: 'عالم شاومي',
@@ -1279,7 +1472,6 @@
             const state = {
                 language: readLanguage(),
                 reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-                statsAnimated: false,
                 currentAmbient: 'home'
             };
 
@@ -1297,7 +1489,6 @@
                 navButtons: $$('.nav-button'),
                 navIndicator: $('#navIndicator'),
                 revealItems: $$('.reveal'),
-                statValues: $$('[data-stat-value]'),
                 ambientGlow: $('#ambientGlow'),
                 sections: $$('[data-ambient]')
             };
@@ -1372,6 +1563,7 @@
                 dom.navButtons.forEach(btn => {
                     const active = btn.dataset.target === id;
                     btn.classList.toggle('is-active', active);
+                    btn.setAttribute('aria-current', active ? 'true' : 'false');
                     if (active) {
                         updateIndicatorPosition(btn);
                         updateAmbientLight(id);
@@ -1551,6 +1743,10 @@
             // ============================================================
             // INIT
             // ============================================================
+            function handleVisibilityChange() {
+                document.documentElement.classList.toggle('tab-hidden', document.hidden);
+            }
+
             function init() {
                 renderData();
                 applyLanguage(state.language);
@@ -1561,6 +1757,9 @@
                 window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
                     state.reducedMotion = e.matches;
                 });
+
+                document.addEventListener('visibilitychange', handleVisibilityChange);
+                handleVisibilityChange();
             }
 
             init();
