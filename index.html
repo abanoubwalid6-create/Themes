@@ -3,71 +3,154 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Xiaomi Studio — a clean bilingual hub for Xiaomi themes, Telegram, WhatsApp and community updates.">
-<meta name="theme-color" content="#0a0a0a">
+<meta name="description" content="Xiaomi Studio — themes, wallpapers and community channels for Xiaomi fans.">
+<meta name="theme-color" content="#090909">
+<meta property="og:title" content="Xiaomi Studio">
+<meta property="og:description" content="Themes, wallpapers and community channels for Xiaomi fans.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ff6900'/%3E%3Ctext x='32' y='41' font-family='Arial,sans-serif' font-size='24' font-weight='bold' fill='white' text-anchor='middle'%3EXS%3C/text%3E%3C/svg%3E">
 <title>Xiaomi Studio</title>
 <style>
 :root{
-  --bg:#0a0a0a;--surface:#141414;--surface-2:#1a1a1a;--text:#fff;--muted:#a7a7a7;
-  --border:rgba(255,255,255,.09);--accent:#ff6900;--accent-2:#ff8a33;--radius:18px;
-  --shadow:0 14px 35px rgba(0,0,0,.28);--max:720px;
+  --bg:#090909;--surface:#111111;--text:#fafafa;--muted:#8f8f8f;
+  --line:rgba(255,255,255,.14);
+  --orange:#ff6900;--telegram:#2aabee;--whatsapp:#25d366;--youtube:#ff0033;--violet:#8b5cf6;
+  --radius:26px;--max:720px;
 }
 html[data-theme="light"]{
-  --bg:#f5f6f8;--surface:#fff;--surface-2:#f0f1f4;--text:#171717;--muted:#59606b;
-  --border:rgba(20,20,20,.10);--shadow:0 12px 28px rgba(20,20,20,.08);
+  --bg:#f2f2f0;--surface:#ffffff;--text:#101010;--muted:#5c5c5c;
+  --line:rgba(0,0,0,.12);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;background:var(--bg)}
-body{min-height:100vh;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.55}
+html{background:var(--bg)}
+body{
+  min-height:100vh;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5;
+}
 a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 button,a{-webkit-tap-highlight-color:transparent}
-.container{width:min(100% - 32px,var(--max));margin:auto}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800}
-.brand-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--accent);color:#fff;font-size:13px;box-shadow:0 8px 20px rgba(255,105,0,.22)}
+.container{width:min(100% - 28px,var(--max));margin:auto}
+
+/* top */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.02em}
+.brand-mark{
+  width:36px;height:36px;border-radius:11px;display:grid;place-items:center;
+  background:var(--orange);color:#fff;font-size:12px;font-weight:900;transform:rotate(-6deg);
+}
 .actions{display:flex;gap:8px}
-.icon-btn,.lang-btn{border:1px solid var(--border);background:var(--surface);border-radius:999px;cursor:pointer;transition:background .2s,border-color .2s,transform .15s}
-.icon-btn{width:40px;height:40px;display:grid;place-items:center}
-.lang-btn{height:40px;padding:0 14px;font-weight:700}
-.icon-btn:hover,.lang-btn:hover{border-color:rgba(255,105,0,.35);background:var(--surface-2)}
-.icon-btn:active,.lang-btn:active,.button:active{transform:scale(.97)}
-.hero{padding:70px 0 56px;text-align:center}
-.eyebrow{display:inline-block;padding:6px 12px;border:1px solid var(--border);background:var(--surface);border-radius:999px;color:var(--muted);font-size:.78rem;font-weight:700;margin-bottom:18px}
-h1{font-size:clamp(3rem,10vw,5.4rem);line-height:.95;letter-spacing:-.055em;font-weight:900;margin-bottom:18px}
-.hero p{max-width:620px;margin:auto;color:var(--muted);font-size:clamp(1rem,3vw,1.12rem)}
-.hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:28px}
-.button{min-height:48px;padding:0 22px;border-radius:999px;border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-weight:800;cursor:pointer;transition:background .2s,border-color .2s,transform .15s}
-.button-primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 10px 24px rgba(255,105,0,.22)}
-.button-primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
-.button-secondary{background:var(--surface)}
-.button-secondary:hover{background:var(--surface-2);border-color:rgba(255,105,0,.3)}
-.section{padding:34px 0}
-.section-head{margin-bottom:18px}
-.kicker{color:var(--accent);font-size:.74rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
-.section h2{font-size:clamp(1.6rem,5vw,2.25rem);line-height:1.1;letter-spacing:-.03em}
-.section-head p{margin-top:8px;color:var(--muted)}
-.cards{display:grid;gap:12px}
-.card{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px;border:1px solid var(--border);background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);transition:background .2s,border-color .2s,transform .15s}
-.card:hover{background:var(--surface-2);border-color:rgba(255,105,0,.25)}
-.card:active{transform:scale(.99)}
-.card-icon{width:44px;height:44px;border-radius:14px;background:rgba(255,105,0,.10);display:grid;place-items:center;font-size:1.25rem}
-.card-copy{min-width:0}
-.card-title{font-weight:800}
-.card-desc{color:var(--muted);font-size:.88rem;margin-top:2px}
-.arrow{font-size:1.1rem;color:var(--muted)}
+.chip{
+  height:38px;min-width:38px;padding:0 12px;display:grid;place-items:center;
+  border:1.5px solid var(--line);border-radius:999px;font-size:.8rem;font-weight:800;
+  transition:background .2s,border-color .2s,transform .15s;
+}
+.chip:hover{border-color:var(--orange)}
+.chip:active{transform:scale(.93)}
+
+/* hero */
+.hero{padding:44px 0 34px}
+.eyebrow{
+  display:inline-block;padding:6px 13px;margin-bottom:20px;border:1.5px solid var(--line);
+  border-radius:999px;color:var(--muted);font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+}
+h1{
+  font-size:clamp(3.4rem,14vw,6.2rem);line-height:.9;letter-spacing:-.06em;font-weight:900;
+  text-transform:uppercase;
+}
+h1 .stroke{
+  color:transparent;-webkit-text-stroke:2px var(--text);
+}
+h1 .fill{color:var(--orange)}
+.hero p{margin-top:20px;max-width:480px;color:var(--muted);font-size:clamp(.98rem,3vw,1.08rem)}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.btn{
+  min-height:52px;padding:0 26px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;
+  font-weight:900;font-size:.95rem;transition:transform .15s,box-shadow .2s;
+}
+.btn:active{transform:scale(.96)}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 10px 28px rgba(255,105,0,.32)}
+.btn-outline{border:1.5px solid var(--line)}
+.btn-outline:hover{border-color:var(--orange)}
+
+/* marquee divider */
+.marquee{
+  overflow:hidden;white-space:nowrap;border-block:1.5px solid var(--line);
+  padding:12px 0;margin:8px 0 4px;
+}
+.marquee-track{display:inline-block;animation:scroll 22s linear infinite}
+.marquee span{
+  display:inline-block;margin-inline:18px;font-weight:900;font-size:.85rem;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--muted);
+}
+.marquee b{color:var(--orange)}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+html[dir="rtl"] .marquee-track{animation-name:scroll-rtl}
+@keyframes scroll-rtl{from{transform:translateX(0)}to{transform:translateX(50%)}}
+
+/* sections */
+.section{padding:28px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:18px}
+.section h2{font-size:clamp(1.7rem,6vw,2.3rem);font-weight:900;letter-spacing:-.04em;text-transform:uppercase;line-height:1}
+.count{color:var(--muted);font-weight:900;font-size:.85rem}
+
+/* bento channel tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{
+  position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:26px;
+  min-height:150px;padding:20px;border-radius:var(--radius);overflow:hidden;
+  background:var(--surface);border:1.5px solid var(--line);
+  transition:transform .18s,border-color .2s;
+}
+.tile:hover{transform:translateY(-3px)}
+.tile:active{transform:scale(.98)}
+.tile-wide{grid-column:1 / -1;min-height:120px;flex-direction:row;align-items:center}
+.tile-icon{font-size:1.7rem;width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:rgba(255,255,255,.14);flex-shrink:0}
+.tile-name{font-weight:900;font-size:1.2rem;letter-spacing:-.02em;display:block}
+.tile-desc{display:block;font-size:.83rem;opacity:.85;margin-top:3px}
+.tile-arrow{
+  position:absolute;top:16px;inset-inline-end:16px;width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;background:rgba(255,255,255,.16);font-size:.95rem;
+}
+html[dir="rtl"] .tile-arrow{transform:scaleX(-1)}
+.tile-wide .tile-copy{min-width:0}
+.c-telegram{background:linear-gradient(135deg,#1d8fd1,#2aabee);color:#fff;border-color:transparent}
+.c-community{background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff;border-color:transparent}
+.c-wallpapers{background:linear-gradient(135deg,#c2410c,#ff6900);color:#fff;border-color:transparent}
+.c-whatsapp{background:linear-gradient(135deg,#128c7e,#25d366);color:#fff;border-color:transparent}
+.c-youtube{background:linear-gradient(135deg,#c00,#ff0033);color:#fff;border-color:transparent}
+html[data-theme="light"] .tile-icon{background:rgba(255,255,255,.22)}
+
+/* faq */
 .faq{display:grid;gap:10px}
-.faq-item{border:1px solid var(--border);background:var(--surface);border-radius:16px;overflow:hidden}
-.faq-q{width:100%;border:0;background:none;padding:16px 18px;text-align:start;display:flex;align-items:center;justify-content:space-between;gap:16px;font-weight:800;cursor:pointer}
-.faq-a{display:none;padding:0 18px 17px;color:var(--muted)}
+.faq-item{border:1.5px solid var(--line);background:var(--surface);border-radius:20px;overflow:hidden}
+.faq-q{
+  width:100%;padding:17px 20px;text-align:start;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;font-weight:800;font-size:.96rem;
+}
+.faq-a{display:none;padding:0 20px 17px;color:var(--muted);font-size:.9rem}
 .faq-item.open .faq-a{display:block}
-.faq-item.open .plus{transform:rotate(45deg)}
-.plus{font-size:1.2rem;transition:transform .18s}
-.footer{padding:34px 0 46px;color:var(--muted);font-size:.82rem;text-align:center}
-.footer a{color:var(--text);font-weight:700}
-hr{border:0;border-top:1px solid var(--border);margin:14px 0 0}
-@media(max-width:540px){.container{width:min(100% - 20px,var(--max))}.topbar{padding:12px 0}.hero{padding:58px 0 42px}.card{grid-template-columns:auto 1fr auto}.card-desc{font-size:.84rem}.lang-btn{padding:0 11px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.icon-btn,.lang-btn,.button,.card,.plus{transition:none}}
+.faq-item.open .plus{transform:rotate(45deg);color:var(--orange)}
+.plus{font-size:1.3rem;transition:transform .18s;color:var(--muted)}
+
+/* footer */
+.footer{padding:36px 0 46px;text-align:center;color:var(--muted);font-size:.8rem}
+.footer .big{
+  display:block;font-size:clamp(2rem,9vw,3rem);font-weight:900;letter-spacing:-.04em;
+  text-transform:uppercase;color:var(--text);margin-bottom:10px;
+}
+.footer a{color:var(--orange);font-weight:800}
+
+@media(max-width:520px){
+  .tiles{grid-template-columns:1fr}
+  .tile{min-height:120px;flex-direction:row;align-items:center}
+  .tile-arrow{position:static}
+}
+@media(prefers-reduced-motion:reduce){
+  .marquee-track{animation:none}
+  .tile,.chip,.btn,.plus{transition:none}
+}
 </style>
 </head>
 <body>
@@ -77,48 +160,57 @@ hr{border:0;border-top:1px solid var(--border);margin:14px 0 0}
       <span class="brand-mark">XS</span><span data-i18n="brand">Xiaomi Studio</span>
     </a>
     <div class="actions">
-      <button class="icon-btn" type="button" id="themeBtn" aria-label="Toggle theme">☀️</button>
-      <button class="lang-btn" type="button" id="langBtn">العربية</button>
+      <button class="chip" type="button" id="themeBtn" aria-label="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></button>
+      <button class="chip" type="button" id="langBtn">العربية</button>
     </div>
   </header>
 
   <main id="home">
     <section class="hero">
       <span class="eyebrow" data-i18n="eyebrow">Xiaomi community</span>
-      <h1 data-i18n="heroTitle">Xiaomi Studio</h1>
-      <p data-i18n="heroText">One clean place for Xiaomi themes, updates, Telegram channels, WhatsApp alerts, wallpapers and community support.</p>
+      <h1><span class="stroke" data-i18n="heroA">Xiaomi</span><br><span class="fill" data-i18n="heroB">Studio</span></h1>
+      <p data-i18n="heroText">Themes, wallpapers and updates for Xiaomi fans — all our channels in one place.</p>
       <div class="hero-actions">
-        <a class="button button-primary" href="https://t.me/redmi3321" target="_blank" rel="noopener" data-i18n="join">Join Telegram</a>
-        <a class="button button-secondary" href="#channels" data-i18n="explore">Explore channels</a>
+        <a class="btn btn-primary" href="https://t.me/redmi3321" target="_blank" rel="noopener" data-i18n="join">Join Telegram ↗</a>
+        <a class="btn btn-outline" href="#channels" data-i18n="explore">Explore channels</a>
       </div>
     </section>
 
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span data-i18n="mq1">Themes</span><b>•</b><span data-i18n="mq2">Wallpapers</span><b>•</b><span data-i18n="mq3">Updates</span><b>•</b><span data-i18n="mq4">Community</span><b>•</b><span data-i18n="mq5">4K</span><b>•</b>
+        <span data-i18n="mq1b">Themes</span><b>•</b><span data-i18n="mq2b">Wallpapers</span><b>•</b><span data-i18n="mq3b">Updates</span><b>•</b><span data-i18n="mq4b">Community</span><b>•</b><span data-i18n="mq5b">4K</span><b>•</b>
+      </div>
+    </div>
+
     <section class="section" id="channels">
       <div class="section-head">
-        <div class="kicker" data-i18n="channelsKicker">Community</div>
-        <h2 data-i18n="channelsTitle">Choose your channel</h2>
-        <p data-i18n="channelsText">Direct links with no extra layers.</p>
+        <h2 data-i18n="channelsTitle">Channels</h2>
+        <span class="count">05</span>
       </div>
-      <div class="cards">
-        <a class="card" href="https://t.me/redmi3321" target="_blank" rel="noopener">
-          <span class="card-icon">✈️</span><span class="card-copy"><span class="card-title" data-i18n="telegramTitle">Telegram</span><span class="card-desc" data-i18n="telegramDesc">Main updates and releases.</span></span><span class="arrow">→</span>
+      <div class="tiles">
+        <a class="tile tile-wide c-telegram" href="https://t.me/redmi3321" target="_blank" rel="noopener">
+          <span class="tile-icon">✈️</span><span class="tile-copy"><span class="tile-name" data-i18n="telegramTitle">Telegram</span><span class="tile-desc" data-i18n="telegramDesc">Main updates and releases.</span></span><span class="tile-arrow">→</span>
         </a>
-        <a class="card" href="https://t.me/themes345" target="_blank" rel="noopener">
-          <span class="card-icon">👥</span><span class="card-copy"><span class="card-title" data-i18n="communityTitle">Community</span><span class="card-desc" data-i18n="communityDesc">Talk, ask and share with Xiaomi fans.</span></span><span class="arrow">→</span>
+        <a class="tile c-community" href="https://t.me/themes345" target="_blank" rel="noopener">
+          <span class="tile-icon">👥</span><span class="tile-copy"><span class="tile-name" data-i18n="communityTitle">Community</span><span class="tile-desc" data-i18n="communityDesc">Talk, ask and share with Xiaomi fans.</span></span><span class="tile-arrow">→</span>
         </a>
-        <a class="card" href="https://t.me/themesXiaomia" target="_blank" rel="noopener">
-          <span class="card-icon">🖼️</span><span class="card-copy"><span class="card-title" data-i18n="wallpaperTitle">Wallpapers</span><span class="card-desc" data-i18n="wallpaperDesc">4K wallpapers and visual packs.</span></span><span class="arrow">→</span>
+        <a class="tile c-wallpapers" href="https://t.me/themesXiaomia" target="_blank" rel="noopener">
+          <span class="tile-icon">🖼️</span><span class="tile-copy"><span class="tile-name" data-i18n="wallpaperTitle">Wallpapers</span><span class="tile-desc" data-i18n="wallpaperDesc">4K wallpapers and visual packs.</span></span><span class="tile-arrow">→</span>
         </a>
-        <a class="card" href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" rel="noopener">
-          <span class="card-icon">◉</span><span class="card-copy"><span class="card-title" data-i18n="whatsappTitle">WhatsApp</span><span class="card-desc" data-i18n="whatsappDesc">Fast alerts and quick notifications.</span></span><span class="arrow">→</span>
+        <a class="tile c-whatsapp" href="https://whatsapp.com/channel/0029VbC2xVaD8SE4mfwh1H2H" target="_blank" rel="noopener">
+          <span class="tile-icon">◉</span><span class="tile-copy"><span class="tile-name" data-i18n="whatsappTitle">WhatsApp</span><span class="tile-desc" data-i18n="whatsappDesc">Fast alerts and quick notifications.</span></span><span class="tile-arrow">→</span>
+        </a>
+        <a class="tile c-youtube" href="https://youtube.com/@xiaomi.studio" target="_blank" rel="noopener">
+          <span class="tile-icon">▶️</span><span class="tile-copy"><span class="tile-name" data-i18n="youtubeTitle">YouTube</span><span class="tile-desc" data-i18n="youtubeDesc">Videos, reviews and theme showcases.</span></span><span class="tile-arrow">→</span>
         </a>
       </div>
     </section>
 
     <section class="section" id="faq">
       <div class="section-head">
-        <div class="kicker" data-i18n="faqKicker">FAQ</div>
-        <h2 data-i18n="faqTitle">Common questions</h2>
+        <h2 data-i18n="faqTitle">FAQ</h2>
+        <span class="count">03</span>
       </div>
       <div class="faq">
         <article class="faq-item"><button class="faq-q" type="button"><span data-i18n="q1">Is Xiaomi Studio official?</span><span class="plus">+</span></button><div class="faq-a" data-i18n="a1">No. Xiaomi Studio is an independent fan and community hub.</div></article>
@@ -129,9 +221,8 @@ hr{border:0;border-top:1px solid var(--border);margin:14px 0 0}
   </main>
 
   <footer class="footer">
-    <div><span data-i18n="footer">Xiaomi Studio — community made for Xiaomi fans.</span></div>
-    <hr>
-    <div style="margin-top:14px"><a href="#home" data-i18n="backTop">Back to top</a></div>
+    <span class="big" data-i18n="footerBig">Xiaomi Studio</span>
+    <div><span data-i18n="footer">Community made for Xiaomi fans.</span> · <a href="#home" data-i18n="backTop">Back to top</a></div>
   </footer>
 </div>
 
@@ -139,18 +230,24 @@ hr{border:0;border-top:1px solid var(--border);margin:14px 0 0}
 (() => {
   const translations = {
     en:{
-      brand:'Xiaomi Studio',eyebrow:'Xiaomi community',heroTitle:'Xiaomi Studio',
-      heroText:'One clean place for Xiaomi themes, updates, Telegram channels, WhatsApp alerts, wallpapers and community support.',
-      join:'Join Telegram',explore:'Explore channels',channelsKicker:'Community',channelsTitle:'Choose your channel',channelsText:'Direct links with no extra layers.',
-      telegramTitle:'Telegram',telegramDesc:'Main updates and releases.',communityTitle:'Community',communityDesc:'Talk, ask and share with Xiaomi fans.',wallpaperTitle:'Wallpapers',wallpaperDesc:'4K wallpapers and visual packs.',whatsappTitle:'WhatsApp',whatsappDesc:'Fast alerts and quick notifications.',
-      faqKicker:'FAQ',faqTitle:'Common questions',q1:'Is Xiaomi Studio official?',a1:'No. Xiaomi Studio is an independent fan and community hub.',q2:'Is it free to join?',a2:'Yes. The linked Telegram and WhatsApp channels are free to open and join.',q3:'Can I switch languages?',a3:'Yes. Use the language button at the top of the page.',footer:'Xiaomi Studio — community made for Xiaomi fans.',backTop:'Back to top'
+      brand:'Xiaomi Studio',eyebrow:'Xiaomi community',heroA:'Xiaomi',heroB:'Studio',
+      heroText:'Themes, wallpapers and updates for Xiaomi fans — all our channels in one place.',
+      join:'Join Telegram ↗',explore:'Explore channels',
+      mq1:'Themes',mq2:'Wallpapers',mq3:'Updates',mq4:'Community',mq5:'4K',
+      mq1b:'Themes',mq2b:'Wallpapers',mq3b:'Updates',mq4b:'Community',mq5b:'4K',
+      channelsTitle:'Channels',faqTitle:'FAQ',
+      telegramTitle:'Telegram',telegramDesc:'Main updates and releases.',communityTitle:'Community',communityDesc:'Talk, ask and share with Xiaomi fans.',wallpaperTitle:'Wallpapers',wallpaperDesc:'4K wallpapers and visual packs.',whatsappTitle:'WhatsApp',whatsappDesc:'Fast alerts and quick notifications.',youtubeTitle:'YouTube',youtubeDesc:'Videos, reviews and theme showcases.',
+      q1:'Is Xiaomi Studio official?',a1:'No. Xiaomi Studio is an independent fan and community hub.',q2:'Is it free to join?',a2:'Yes. The linked Telegram and WhatsApp channels are free to open and join.',q3:'Can I switch languages?',a3:'Yes. Use the language button at the top of the page.',footerBig:'Xiaomi Studio',footer:'Community made for Xiaomi fans.',backTop:'Back to top'
     },
     ar:{
-      brand:'Xiaomi Studio',eyebrow:'مجتمع شاومي',heroTitle:'Xiaomi Studio',
-      heroText:'مكان واحد بسيط لثيمات شاومي والتحديثات وقنوات تيليجرام وتنبيهات واتساب والخلفيات والمجتمع.',
-      join:'انضم إلى تيليجرام',explore:'استكشف القنوات',channelsKicker:'المجتمع',channelsTitle:'اختر القناة المناسبة',channelsText:'روابط مباشرة بدون طبقات إضافية.',
-      telegramTitle:'تيليجرام',telegramDesc:'أهم التحديثات والإصدارات.',communityTitle:'المجتمع',communityDesc:'اسأل وشارك وتواصل مع محبي شاومي.',wallpaperTitle:'الخلفيات',wallpaperDesc:'خلفيات 4K وحزم بصرية.',whatsappTitle:'واتساب',whatsappDesc:'تنبيهات سريعة وإشعارات مباشرة.',
-      faqKicker:'الأسئلة',faqTitle:'أسئلة شائعة',q1:'هل Xiaomi Studio موقع رسمي؟',a1:'لا. Xiaomi Studio منصة مستقلة لمحبي شاومي والمجتمع.',q2:'هل الانضمام مجاني؟',a2:'نعم. روابط تيليجرام وواتساب مجانية للفتح والانضمام.',q3:'هل أستطيع تغيير اللغة؟',a3:'نعم. استخدم زر اللغة الموجود أعلى الصفحة.',footer:'Xiaomi Studio — مجتمع لمحبي شاومي.',backTop:'العودة للأعلى'
+      brand:'Xiaomi Studio',eyebrow:'مجتمع شاومي',heroA:'Xiaomi',heroB:'Studio',
+      heroText:'ثيمات وخلفيات وتحديثات لمحبي شاومي — كل قنواتنا في مكان واحد.',
+      join:'↗ انضم إلى تيليجرام',explore:'استكشف القنوات',
+      mq1:'ثيمات',mq2:'خلفيات',mq3:'تحديثات',mq4:'مجتمع',mq5:'4K',
+      mq1b:'ثيمات',mq2b:'خلفيات',mq3b:'تحديثات',mq4b:'مجتمع',mq5b:'4K',
+      channelsTitle:'القنوات',faqTitle:'الأسئلة',
+      telegramTitle:'تيليجرام',telegramDesc:'أهم التحديثات والإصدارات.',communityTitle:'المجتمع',communityDesc:'اسأل وشارك وتواصل مع محبي شاومي.',wallpaperTitle:'الخلفيات',wallpaperDesc:'خلفيات 4K وحزم بصرية.',whatsappTitle:'واتساب',whatsappDesc:'تنبيهات سريعة وإشعارات مباشرة.',youtubeTitle:'يوتيوب',youtubeDesc:'فيديوهات ومراجعات وعرض للثيمات.',
+      q1:'هل Xiaomi Studio موقع رسمي؟',a1:'لا. Xiaomi Studio منصة مستقلة لمحبي شاومي والمجتمع.',q2:'هل الانضمام مجاني؟',a2:'نعم. روابط تيليجرام وواتساب مجانية للفتح والانضمام.',q3:'هل أستطيع تغيير اللغة؟',a3:'نعم. استخدم زر اللغة الموجود أعلى الصفحة.',footerBig:'Xiaomi Studio',footer:'مجتمع لمحبي شاومي.',backTop:'العودة للأعلى'
     }
   };
   const langBtn=document.getElementById('langBtn');
@@ -164,7 +261,7 @@ hr{border:0;border-top:1px solid var(--border);margin:14px 0 0}
     document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.dataset.i18n;if(t[key])el.textContent=t[key]});
     langBtn.textContent=lang==='ar'?'English':'العربية';
   }
-  function applyTheme(){root.dataset.theme=theme;themeBtn.textContent=theme==='dark'?'☀️':'🌙';}
+  const SUN_ICON='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';const MOON_ICON='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.6 14.4A8.6 8.6 0 0 1 9.6 3.4a8.6 8.6 0 1 0 11 11z"/></svg>';function applyTheme(){root.dataset.theme=theme;themeBtn.innerHTML=theme==='dark'?SUN_ICON:MOON_ICON;}
   langBtn.addEventListener('click',()=>{lang=lang==='en'?'ar':'en';localStorage.setItem('xiaomi-lang',lang);applyLanguage();});
   themeBtn.addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';localStorage.setItem('xiaomi-theme',theme);applyTheme();});
   document.querySelectorAll('.faq-q').forEach(btn=>btn.addEventListener('click',()=>btn.parentElement.classList.toggle('open')));
