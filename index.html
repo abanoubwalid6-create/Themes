@@ -101,9 +101,10 @@ html[dir="rtl"] .marquee-track{animation-name:scroll-rtl}
   position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:26px;
   min-height:150px;padding:20px;border-radius:var(--radius);overflow:hidden;
   background:var(--surface);border:1.5px solid var(--line);
-  transition:transform .18s,border-color .2s;
+  transition:transform .18s,border-color .2s,background-color .35s ease,color .35s ease;
 }
 .tile:hover{transform:translateY(-3px)}
+.tile.reveal.in:hover{transform:translateY(-6px)}
 .tile:active{transform:scale(.98)}
 .tile-wide{grid-column:1 / -1;min-height:120px;flex-direction:row;align-items:center}
 .tile-icon{font-size:1.7rem;width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:rgba(255,255,255,.14);flex-shrink:0}
@@ -148,7 +149,7 @@ html[data-theme="light"] .tile-icon{background:rgba(255,255,255,.22)}
   .tile-arrow{position:static}
 }
 /* smooth theme transition */
-html,body,.tile,.faq-item,.chip,.btn-outline,.marquee,.eyebrow{
+html,body,.faq-item,.chip,.btn-outline,.marquee,.eyebrow{
   transition:background-color .35s ease,color .35s ease,border-color .35s ease;
 }
 /* scroll reveal (GPU-friendly: transform + opacity only) */
@@ -280,16 +281,21 @@ document.documentElement.classList.add('js');
   langBtn.addEventListener('click',()=>{lang=lang==='en'?'ar':'en';localStorage.setItem('xiaomi-lang',lang);applyLanguage();});
   themeBtn.addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';localStorage.setItem('xiaomi-theme',theme);applyTheme();});
   document.querySelectorAll('.faq-q').forEach(btn=>btn.addEventListener('click',()=>btn.parentElement.classList.toggle('open')));
-  // staggered scroll reveal
-  const revealEls=document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    const io=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-    },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
-    revealEls.forEach(el=>io.observe(el));
-  }else{
-    revealEls.forEach(el=>el.classList.add('in'));
-  }
+  // staggered scroll reveal, with failsafes: never leave content hidden
+  const showAllReveals=()=>document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+  window.addEventListener('error',showAllReveals);
+  try{
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+      },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+      // if the hero has not revealed within 2s, the observer is broken on this browser: show everything
+      setTimeout(()=>{const first=document.querySelector('.reveal');if(first&&!first.classList.contains('in'))showAllReveals();},2000);
+    }else{
+      showAllReveals();
+    }
+  }catch(e){showAllReveals();}
   applyLanguage();applyTheme();
 })();
 </script>
